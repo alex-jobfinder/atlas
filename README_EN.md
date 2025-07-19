@@ -281,27 +281,13 @@ Read the node settings(json file) output by Export<br>
     </tr>
     <tr>
         <td width="200">
-            Threshold
+            HSV
         </td>
         <td width="320">
-            <img src="https://user-images.githubusercontent.com/37477845/172042985-3e7908cc-f485-4684-884c-8cfe3d020004.png" loading="lazy" width="300px">
+            <img src="https://github.com/user-attachments/assets/1f600720-42c1-4134-8193-558bd332e511" loading="lazy" width="300px">
         </td>
         <td width="760">
-            A node that binarizes the input image and outputs the image<br>
-            Specify the binarization algorithm with "type"<br>
-            Change threshold with "threshold"<br><br>
-            In "type", "Otsu binarization (THRESH_OTSU)" is an automatic threshold determination algorithm, so the "threshold" value is ignored.
-        </td>
-    </tr>
-    <tr>
-        <td width="200">
-            Simple Filter
-        </td>
-        <td width="320">
-            <img src="https://user-images.githubusercontent.com/37477845/178098739-ee15159c-d66f-4b5d-822d-dbaf686448d6.png" loading="lazy" width="300px">
-        </td>
-        <td width="760">
-            A node that performs 3x3 2D filtering processing on the input image and outputs the image
+            A node that converts the input image to HSV, manipulates the HSV, and outputs a BGR image<br>
         </td>
     </tr>
     <tr>
@@ -325,6 +311,42 @@ Read the node settings(json file) output by Export<br>
         </td>
         <td width="760">
             A node that resizes the input image with the specified height, width and interpolation method and outputs the image.
+        </td>
+    </tr>
+    <tr>
+        <td width="200">
+            Sepia
+        </td>
+        <td width="320">
+            <img src="https://github.com/user-attachments/assets/78ac7af1-711a-49dc-9e05-f350d2319a92" loading="lazy" width="300px">
+        </td>
+        <td width="760">
+            A node that converts the input image to a sepia image and outputs it
+        </td>
+    </tr>
+    <tr>
+        <td width="200">
+            Simple Filter
+        </td>
+        <td width="320">
+            <img src="https://user-images.githubusercontent.com/37477845/178098739-ee15159c-d66f-4b5d-822d-dbaf686448d6.png" loading="lazy" width="300px">
+        </td>
+        <td width="760">
+            A node that performs 3x3 2D filtering processing on the input image and outputs the image
+        </td>
+    </tr>
+    <tr>
+        <td width="200">
+            Threshold
+        </td>
+        <td width="320">
+            <img src="https://user-images.githubusercontent.com/37477845/172042985-3e7908cc-f485-4684-884c-8cfe3d020004.png" loading="lazy" width="300px">
+        </td>
+        <td width="760">
+            A node that binarizes the input image and outputs the image<br>
+            Specify the binarization algorithm with "type"<br>
+            Change threshold with "threshold"<br><br>
+            In "type", "Otsu binarization (THRESH_OTSU)" is an automatic threshold determination algorithm, so the "threshold" value is ignored.
         </td>
     </tr>
 </table>
