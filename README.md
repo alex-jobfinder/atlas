@@ -281,28 +281,13 @@ Exportで出力したノード設定(jsonファイル)を読み込む<br>
     </tr>
     <tr>
         <td width="200">
-            Threshold
+            HSV
         </td>
         <td width="320">
-            <img src="https://user-images.githubusercontent.com/37477845/172042985-3e7908cc-f485-4684-884c-8cfe3d020004.png" loading="lazy" width="300px">
+            <img src="https://github.com/user-attachments/assets/1f600720-42c1-4134-8193-558bd332e511" loading="lazy" width="300px">
         </td>
         <td width="760">
-            入力画像を2値化し、画像を出力するノード<br>
-            「type」で2値化アルゴリズムを指定<br>
-            「threshold」で閾値変更<br><br>
-            「type」で「大津の2値化(THRESH_OTSU)」は<br>
-            閾値自動決定アルゴリズムのため「threshold」値は無視
-        </td>
-    </tr>
-    <tr>
-        <td width="200">
-            Simple Filter
-        </td>
-        <td width="320">
-            <img src="https://user-images.githubusercontent.com/37477845/178098739-ee15159c-d66f-4b5d-822d-dbaf686448d6.png" loading="lazy" width="300px">
-        </td>
-        <td width="760">
-            入力画像に3×3の2次元フィルタリング処理を行い、画像を出力するノード
+            入力画像をHSV変換し、HSV操作後、BGR画像を出力するノード<br>
         </td>
     </tr>
     <tr>
@@ -326,6 +311,43 @@ Exportで出力したノード設定(jsonファイル)を読み込む<br>
         </td>
         <td width="760">
             入力画像を指定の高さ、幅、補間方法でリサイズして、画像を出力するノード
+        </td>
+    </tr>
+    <tr>
+        <td width="200">
+            Sepia
+        </td>
+        <td width="320">
+            <img src="https://github.com/user-attachments/assets/78ac7af1-711a-49dc-9e05-f350d2319a92" loading="lazy" width="300px">
+        </td>
+        <td width="760">
+            入力画像をセピア画像に変換し出力するノード
+        </td>
+    </tr>
+    <tr>
+        <td width="200">
+            Simple Filter
+        </td>
+        <td width="320">
+            <img src="https://user-images.githubusercontent.com/37477845/178098739-ee15159c-d66f-4b5d-822d-dbaf686448d6.png" loading="lazy" width="300px">
+        </td>
+        <td width="760">
+            入力画像に3×3の2次元フィルタリング処理を行い、画像を出力するノード
+        </td>
+    </tr>
+    <tr>
+        <td width="200">
+            Threshold
+        </td>
+        <td width="320">
+            <img src="https://user-images.githubusercontent.com/37477845/172042985-3e7908cc-f485-4684-884c-8cfe3d020004.png" loading="lazy" width="300px">
+        </td>
+        <td width="760">
+            入力画像を2値化し、画像を出力するノード<br>
+            「type」で2値化アルゴリズムを指定<br>
+            「threshold」で閾値変更<br><br>
+            「type」で「大津の2値化(THRESH_OTSU)」は<br>
+            閾値自動決定アルゴリズムのため「threshold」値は無視
         </td>
     </tr>
 </table>
