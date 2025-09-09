@@ -1,0 +1,33 @@
+{
+    "start": 1376353440000,
+    "step": 180000,
+    "legend": [
+        "SUM(class=GarbageCollectorMXBean id=PS_MarkSweep name=collectionTime nf.ami=ami-ae80c7c7 nf.app=atlas_backend nf.asg=atlas_backend-publish-v107 nf.cluster=atlas_backend-publish nf.node=i-274a814a nf.region=us-east-1 nf.vmtype=m2.2xlarge nf.zone=us-east-1e type=COUNTER)"
+    ],
+    "metrics": [
+        {
+            "class": "GarbageCollectorMXBean",
+            "id": "PS_MarkSweep",
+            "name": "collectionTime",
+            "nf.ami": "ami-ae80c7c7",
+            "nf.app": "atlas_backend",
+            "nf.asg": "atlas_backend-publish-v107",
+            "nf.cluster": "atlas_backend-publish",
+            "nf.node": "i-274a814a",
+            "nf.region": "us-east-1",
+            "nf.vmtype": "m2.2xlarge",
+            "nf.zone": "us-east-1e",
+            "type": "COUNTER"
+        }
+    ],
+    "notices": [],
+    "explain": {
+        "dataFetchTime": 7,
+        "inputLines": 2,
+        "intermediateLines": 2,
+        "graphLines": 1,
+        "inputDatapoints": 1921,
+        "intermediateDatapoints": 1921,
+        "graphDatapoints": 481
+    }
+}

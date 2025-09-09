@@ -365,3 +365,33 @@ __all__ = [
     "VisionType",
     "build_graph_url",
 ]
+
+
+
+## EXAMPLE USAGE DONT DELETE
+"""
+from atlas.atlas_graph_models import (
+    GraphRequest, OutputFormat, LayoutMode, AxisScale, TickLabelsMode,
+    SortMode, SortOrder, PaletteSelection, PaletteName, Theme, build_graph_url
+)
+
+req = GraphRequest(
+    q="name,sps,:eq,(,nf.cluster,),:by",
+    s="e-3h",
+    e="now",
+    tz="UTC",
+    layout=LayoutMode.CANVAS,
+    w=700,
+    h=300,
+    tick_labels=TickLabelsMode.DECIMAL,
+    scale=AxisScale.LINEAR,
+    sort=SortMode.MAX,
+    order=SortOrder.DESC,
+    palette=PaletteSelection(name=PaletteName.ARMYTAGE),
+    format=OutputFormat.PNG,
+    theme=Theme.LIGHT,
+)
+url = build_graph_url("https://atlas.example.com/api/v1/graph", req)
+# -> https://atlas.example.com/api/v1/graph?q=...&w=700&h=300&format=png
+
+"""

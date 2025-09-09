@@ -134,7 +134,22 @@ chart-runner: ## Render PNG(s) from JSON: RUNNER_IN=<json> RUNNER_OUTPREFIX=<out
 	@project/sbt 'project atlas-chart' \
 	  'runMain com.netflix.atlas.chart.tools.ChartRenderRunner --input $(RUNNER_IN) --output $(RUNNER_OUTPREFIX).png --both'
 
+# CSV runner (Scala)
+.PHONY: chart-runner-csv
+CSV_IN ?= atlas-chart/src/test/resources/graphengine/data/default_non_uniformly_drawn_spikes.csv
+CSV_OUT ?= atlas-chart/target/manual/my_csv_stack.png
+CSV_EXPR ?= :stack
+CSV_THEME ?= light
+CSV_BOTH ?= false
 
+chart-runner-csv: ## Render CSV to PNG via ChartRenderRunner
+	@echo "🚀 Rendering CSV $(CSV_IN) -> $(CSV_OUT) (expr=$(CSV_EXPR), theme=$(CSV_THEME), both=$(CSV_BOTH))"
+	@args="--data $(CSV_IN) --data-format csv --expr $(CSV_EXPR) --output $(CSV_OUT)"; \
+	 case "$(CSV_BOTH)" in 1|true|yes|on) args="$$args --both";; \
+	 *) args="$$args --theme $(CSV_THEME)";; \
+	 esac; \
+	 echo project/sbt 'project atlas-chart' 'runMain com.netflix.atlas.chart.tools.ChartRenderRunner '"$$args"; \
+	 project/sbt 'project atlas-chart' 'runMain com.netflix.atlas.chart.tools.ChartRenderRunner '"$$args"
 # ----------------------
 # Python chart utilities
 # ----------------------
@@ -379,3 +394,25 @@ py-chart-from-json: ## Render a PNG from a local atlas-chart JSON (no server)
 	 if [ -n "$(YLABEL_RIGHT)" ]; then args="$$args --ylabel-right $(YLABEL_RIGHT)"; fi; \
 	 echo uv run python -m src_python_gui.chart_from_json $$args; \
 	 uv run python -m src_python_gui.chart_from_json $$args
+
+.PHONY: py-chart-from-json-verify
+py-chart-from-json-verify: ## Render PNG from JSON and validate the output file
+	@$(MAKE) --no-print-directory py-chart-from-json \
+	  PY_JSON_IN=$(PY_JSON_IN) PY_JSON_OUT=$(PY_JSON_OUT) THEME=$(THEME) OVERLAY=$(OVERLAY) \
+	  WIDTH=$(WIDTH) HEIGHT=$(HEIGHT) STYLE=$(STYLE) AXIS_GROUPS=$(AXIS_GROUPS) \
+	  YLABEL_LEFT=$(YLABEL_LEFT) YLABEL_RIGHT=$(YLABEL_RIGHT)
+	@test -f "$(PY_JSON_OUT)" || { echo "❌ PNG not created: $(PY_JSON_OUT)"; exit 1; }
+	@echo "✅ File exists: $(PY_JSON_OUT)"
+	@mime=$$(file -b --mime-type "$(PY_JSON_OUT)"); \
+	  echo "mime=$$mime"; \
+	  echo $$mime | grep -q '^image/png$$' || { echo "❌ Not a PNG"; exit 1; }
+	@bytes=$$(wc -c < "$(PY_JSON_OUT)"); echo "size=$$bytes bytes"; \
+	  test $$bytes -gt 0 || { echo "❌ Empty file"; exit 1; }
+	@uv run python -c "from PIL import Image; p=r'$(PY_JSON_OUT)'; im=Image.open(p); im.verify(); print('✅ Pillow verified PNG:', im.format, im.size, im.mode)"
+
+.PHONY: chart-runner-py
+chart-runner-py: ## Render bundled sample JSON via Python renderer
+	@$(MAKE) --no-print-directory py-chart-from-json \
+	  PY_JSON_IN=atlas-chart/src/test/resources/graphengine/data/default_non_uniformly_drawn_spikes.json \
+	  PY_JSON_OUT=atlas-chart/target/manual/default_non_uniformly_drawn_spikes_py.png \
+	  THEME=light OVERLAY=false WIDTH=700 HEIGHT=200 STYLE=line
