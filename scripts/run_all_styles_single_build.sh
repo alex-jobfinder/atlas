@@ -41,11 +41,11 @@ if [ -n "$1" ]; then
 else
     # Run all styles in one sbt session
     echo "Running all Atlas graph styles in single build session..."
-    
+
     # Create a temporary script with all the runMain commands
     TEMP_SCRIPT=$(mktemp)
     echo "project atlas-eval" > "$TEMP_SCRIPT"
-    
+
     for style_file in "$STYLES_DIR"/*.args; do
         if [ -f "$style_file" ]; then
             style_name=$(basename "$style_file" .args)
@@ -56,12 +56,12 @@ else
             echo "echo \"---\"" >> "$TEMP_SCRIPT"
         fi
     done
-    
+
     # Run all commands in one sbt session
     sbt < "$TEMP_SCRIPT"
-    
+
     # Clean up
     rm "$TEMP_SCRIPT"
-    
+
     echo "All styles completed!"
 fi

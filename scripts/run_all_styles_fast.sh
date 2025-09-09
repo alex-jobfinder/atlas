@@ -29,7 +29,7 @@ if [ -n "$1" ]; then
 else
     # Run all styles using sbt batch mode - much faster!
     echo "Running all Atlas graph styles in optimized batch mode..."
-    
+
     # Create sbt commands for all styles
     SBT_COMMANDS=""
     for style_file in "$STYLES_DIR"/*.args; do
@@ -39,10 +39,10 @@ else
             SBT_COMMANDS="${SBT_COMMANDS}runMain com.netflix.atlas.eval.tools.LocalGraphRunner $ARGS;"
         fi
     done
-    
+
     # Run all commands in one sbt session using batch mode
     echo "Executing all styles..."
     sbt "project atlas-eval" "$SBT_COMMANDS"
-    
+
     echo "All styles completed!"
 fi

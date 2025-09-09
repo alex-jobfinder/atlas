@@ -1,0 +1,2165 @@
+601 results - 170 files
+
+getting-started.md:
+  51  # graph all metrics with a name tag value of ssCpuUser, using an :avg aggregation
+  52: curl -Lo graph.png 'http://localhost:7101/api/v1/graph?q=name,ssCpuUser,:eq,:avg'
+  53  
+  54  # duplicate the ssCpuUser signal, check if it is greater than 22.8 and display the result as a vertical span with 30% alpha
+  55: curl -Lo graph.png 'http://localhost:7101/api/v1/graph?q=name,ssCpuUser,:eq,:avg,:dup,22.8,:gt,:vspan,30,:alpha'
+  56  ```
+
+  78  ```
+  79: open 'http://localhost:7101/api/v1/graph?q=name,randomValue,:eq,:sum,(,name,),:by'
+  80  ```
+
+overview.md:
+  136  ```
+  137: http://atlas/api/v1/graph
+  138    ?tz=UTC
+
+python-atlas-guide.md:
+   98  ```
+   99: http://localhost:7101/api/v1/graph?q=name,server.requestCount,:eq,:sum
+  100  ```
+
+  104  ```
+  105: http://localhost:7101/api/v1/graph?q=name,server.requestCount,:eq,path,v1_play,:eq,:and,status,200,:eq,:and,:sum
+  106  ```
+
+  110  ```
+  111: http://localhost:7101/api/v1/graph?q=name,server.requestLatency,:eq,:avg
+  112  ```
+
+api/graph/anonymization.md:
+   6  @@@ atlas-uri { hilite=tick_labels%3Doff }
+   7: /api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+   8  @@@
+
+  10  @@@ atlas-graph { show-expr=false }
+  11: /api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+  12  @@@
+
+  16  @@@ atlas-uri { hilite=only_graph%3D1 }
+  17: /api/v1/graph?e=2012-01-01T00:00&only_graph=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+  18  @@@
+
+  20  @@@ atlas-graph { show-expr=false }
+  21: /api/v1/graph?e=2012-01-01T00:00&only_graph=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+  22  @@@
+
+api/graph/axis-bounds.md:
+  27  @@@ atlas-uri
+  28: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+  29  @@@
+
+  31  @@@ atlas-graph { show-expr=false }
+  32: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+  33  @@@
+
+  37  @@@ atlas-uri
+  38: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+  39  @@@
+
+  41  @@@ atlas-graph { show-expr=false }
+  42: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+  43  @@@
+
+  47  @@@ atlas-uri
+  48: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg
+  49  @@@
+
+  51  @@@ atlas-graph { show-expr=false }
+  52: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg
+  53  @@@
+
+  57  @@@ atlas-uri
+  58: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg,:stack
+  59  @@@
+
+  61  @@@ atlas-graph { show-expr=false }
+  62: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg,:stack
+  63  @@@
+
+  69  @@@ atlas-uri
+  70: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=0&u=60e3&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+  71  @@@
+
+  73  @@@ atlas-graph { show-expr=false }
+  74: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=0&u=60e3&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+  75  @@@
+
+  83  @@@ atlas-uri { hilite=l%3dauto-data }
+  84: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=auto-data&&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+  85  @@@
+
+  87  @@@ atlas-graph { show-expr=false }
+  88: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=auto-data&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+  89  @@@
+
+  93  @@@ atlas-uri { hilite=u%3dauto-data }
+  94: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&u=auto-data&&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+  95  @@@
+
+  97  @@@ atlas-graph { show-expr=false }
+  98: /api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&u=auto-data&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+  99  @@@
+
+api/graph/axis-scale.md:
+  21  @@@ atlas-uri { hilite=scale%3dlinear }
+  22: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=linear
+  23  @@@
+
+  25  @@@ atlas-graph { show-expr=false }
+  26: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=linear
+  27  @@@
+
+  39  @@@ atlas-uri { hilite=scale%3dlog }
+  40: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log
+  41  @@@
+
+  43  @@@ atlas-graph { show-expr=false }
+  44: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log
+  45  @@@
+
+  54  @@@ atlas-uri { hilite=scale%3dlog-linear }
+  55: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log-linear
+  56  @@@
+
+  58  @@@ atlas-graph { show-expr=false }
+  59: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log-linear
+  60  @@@
+
+  73  @@@ atlas-uri { hilite=scale%3dpow2 }
+  74: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=pow2
+  75  @@@
+
+  77  @@@ atlas-graph { show-expr=false }
+  78: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=pow2
+  79  @@@
+
+  92  @@@ atlas-uri { hilite=scale%3dsqrt }
+  93: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=sqrt
+  94  @@@
+
+  96  @@@ atlas-graph { show-expr=false }
+  97: /api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=sqrt
+  98  @@@
+
+api/graph/basics.md:
+   20  @@@ atlas-uri
+   21: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d
+   22  @@@
+
+   24  @@@ atlas-graph { show-expr=false }
+   25: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d
+   26  @@@
+
+   44  @@@ atlas-uri { hilite=title }
+   45: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&title=Starts+Per+Second&ylabel=sps
+   46  @@@
+
+   48  @@@ atlas-graph { show-expr=false }
+   49: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&title=Starts+Per+Second&ylabel=sps
+   50  @@@
+
+   57  @@@ atlas-uri { hilite=500e3 }
+   58: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,500e3&s=e-2d
+   59  @@@
+
+   61  @@@ atlas-graph { show-expr=false }
+   62: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,500e3&s=e-2d
+   63  @@@
+
+   69  @@@ atlas-uri { hilite=:by }
+   70: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-2d
+   71  @@@
+
+   73  @@@ atlas-graph { show-expr=false }
+   74: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-2d
+   75  @@@
+
+   83  @@@ atlas-uri { hilite=:neg }
+   84: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg&s=e-2d
+   85  @@@
+
+   87  @@@ atlas-graph { show-expr=false }
+   88: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg&s=e-2d
+   89  @@@
+
+   95  @@@ atlas-uri { hilite=:abs }
+   96: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg,:abs&s=e-2d
+   97  @@@
+
+   99  @@@ atlas-graph { show-expr=false }
+  100: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg,:abs&s=e-2d
+  101  @@@
+
+  108  @@@ atlas-uri { hilite=:div }
+  109: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,1000,:div&s=e-2d
+  110  @@@
+
+  112  @@@ atlas-graph { show-expr=false }
+  113: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,1000,:div&s=e-2d
+  114  @@@
+
+  127  @@@ atlas-uri { hilite=:div }
+  128: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:dup,:div&s=e-2d
+  129  @@@
+
+  131  @@@ atlas-graph { show-expr=false }
+  132: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:dup,:div&s=e-2d
+  133  @@@
+
+  139  @@@ atlas-uri { hilite=:div }
+  140: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1000,:div&s=e-2d
+  141  @@@
+
+  143  @@@ atlas-graph { show-expr=false }
+  144: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1000,:div&s=e-2d
+  145  @@@
+
+  150  @@@ atlas-uri { hilite=:mul }
+  151: /api/v1/graph?e=2012-01-01T00:00&q=0.001,name,sps,:eq,(,nf.cluster,),:by,:mul&s=e-2d
+  152  @@@
+
+  154  @@@ atlas-graph { show-expr=false }
+  155: /api/v1/graph?e=2012-01-01T00:00&q=0.001,name,sps,:eq,(,nf.cluster,),:by,:mul&s=e-2d
+  156  @@@
+
+api/graph/color-palettes.md:
+   25  @@@ atlas-uri { hilite=palette%3Darmytage }
+   26: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=armytage&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   27  @@@
+
+   29  @@@ atlas-graph { show-expr=false }
+   30: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=armytage&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   31  @@@
+
+   40  @@@ atlas-uri { hilite=palette%3Ddark24 }
+   41: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=dark24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   42  @@@
+
+   44  @@@ atlas-graph { show-expr=false }
+   45: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=dark24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   46  @@@
+
+   55  @@@ atlas-uri { hilite=palette%3Dlight24 }
+   56: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   57  @@@
+
+   59  @@@ atlas-graph { show-expr=false }
+   60: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   61  @@@
+
+   68  @@@ atlas-uri { hilite=palette%3Depic }
+   69: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=epic&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   70  @@@
+
+   72  @@@ atlas-graph { show-expr=false }
+   73: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=epic&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   74  @@@
+
+   80  @@@ atlas-uri { hilite=palette%3Dblues }
+   81: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=blues&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+   82  @@@
+
+   84  @@@ atlas-graph { show-expr=false }
+   85: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=blues&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+   86  @@@
+
+   92  @@@ atlas-uri { hilite=palette%3Dgreens }
+   93: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=greens&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+   94  @@@
+
+   96  @@@ atlas-graph { show-expr=false }
+   97: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=greens&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+   98  @@@
+
+  104  @@@ atlas-uri { hilite=palette%3Doranges }
+  105: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=oranges&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  106  @@@
+
+  108  @@@ atlas-graph { show-expr=false }
+  109: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=oranges&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  110  @@@
+
+  116  @@@ atlas-uri { hilite=palette%3Dpurples }
+  117: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=purples&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  118  @@@
+
+  120  @@@ atlas-graph { show-expr=false }
+  121: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=purples&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  122  @@@
+
+  128  @@@ atlas-uri { hilite=palette%3Dreds }
+  129: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=reds&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  130  @@@
+
+  132  @@@ atlas-graph { show-expr=false }
+  133: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=reds&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  134  @@@
+
+  143  @@@ atlas-uri
+  144: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=(,1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027,)&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  145  @@@
+
+  147  @@@ atlas-graph { show-expr=false }
+  148: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=(,1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027,)&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+  149  @@@
+
+  177  <p>@@@ atlas-graph { show-expr=false }
+  178: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=armytage&layout=iw&w=350&h=150&no_legend_stats=1
+  179  @@@</p></td>
+
+  181  <p>@@@ atlas-graph { show-expr=false }
+  182: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=hash:armytage&layout=iw&w=350&h=150&no_legend_stats=1
+  183  @@@</p></td>
+
+  187  <p>@@@ atlas-graph { show-expr=false }
+  188: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=40e3,20e3,name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=armytage&layout=iw&w=350&h=150&no_legend_stats=1
+  189  @@@</p></td>
+
+  191  <p>@@@ atlas-graph { show-expr=false }
+  192: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=40e3,20e3,name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=hash:armytage&layout=iw&w=350&h=150&no_legend_stats=1
+  193  @@@</p></td>
+
+  200  @@@ atlas-uri
+  201: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=hash:armytage&q=name,sps,:eq,(,nf.cluster,),:by,:stack&tz=UTC
+  202  @@@
+
+  204  @@@ atlas-graph { show-expr=false }
+  205: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=hash:armytage&q=name,sps,:eq,(,nf.cluster,),:by,:stack&tz=UTC
+  206  @@@
+
+api/graph/examples.md:
+  13  <p>@@@ atlas-graph { show-expr=false }
+  14: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq&layout=image&zoom=0.20
+  15  @@@</p></a></td>
+
+  17  <p>@@@ atlas-graph { show-expr=false }
+  18: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:area&layout=image&zoom=0.20
+  19  @@@</p></a></td>
+
+  21  <p>@@@ atlas-graph { show-expr=false }
+  22: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by,:stack&layout=image&zoom=0.20
+  23  @@@</p></a></td>
+
+  25  <p>@@@ atlas-graph { show-expr=false }
+  26: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&layout=image&zoom=0.20
+  27  @@@</p></a></td>
+
+  37  <p>@@@ atlas-graph { show-expr=false }
+  38: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:dup,500e3,:gt,:vspan,40,:alpha,500e3&layout=image&zoom=0.20
+  39  @@@</p></a></td>
+
+  41  <p>@@@ atlas-graph { show-expr=false }
+  42: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:dup,12h,:offset,40,:alpha,:area,:swap,:area,:swap&layout=image&zoom=0.20
+  43  @@@</p></a></td>
+
+  45  <p>@@@ atlas-graph { show-expr=false }
+  46: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:dup,12h,:offset,8,:lw&layout=image&zoom=0.20
+  47  @@@</p></a></td>
+
+  49  <p>@@@ atlas-graph { show-expr=false }
+  50: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=1,1,1,1,1,1,1,1,1&stack=1&layout=image&zoom=0.20
+  51  @@@</p></a></td>
+
+  61  <p>@@@ atlas-graph { show-expr=false }
+  62: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:stack&u=500e3&l=350e3&layout=image&zoom=0.20
+  63  @@@</p></a></td>
+
+  65  <p>@@@ atlas-graph { show-expr=false }
+  66: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq&o=1&layout=image&zoom=0.20
+  67  @@@</p></a></td>
+
+  69  <p>@@@ atlas-graph { show-expr=false }
+  70: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,nf.cluster,nccp-(p|s),:re,:and,(,nf.cluster,),:by,:stack&axis_per_line=1&layout=image&zoom=0.20
+  71  @@@</p></a></td>
+
+  73  <p>@@@ atlas-graph { show-expr=false }
+  74: /api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq&tz=UTC&tz=US/Pacific&layout=image&zoom=0.20
+  75  @@@</p></a></td>
+
+api/graph/graph.md:
+  23  
+  24: `/api/v1/graph?q=<expr>[&OPTIONS]`
+  25  
+
+  35  used by the user to select and manipulate data. The simplest API query you can make is
+  36: `/api/v1/graph?q=42`. This will produce a graph from Atlas with a straight line having a
+  37  value of `42` for 3 hours[*](#defaults) with a legend including statistics for the query period.
+
+api/graph/heatmap.md:
+  15  @@@ atlas-uri { hilite=:percentile-heatmap }
+  16: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,requestLatency,:eq,:percentile-heatmap,&scale=log-linear
+  17  @@@
+
+  27  @@@ atlas-example
+  28: No Heatmap Bounds: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  29: With Bounds (`&heatmap_l=1.2&heatmap_u=1.3`): /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_l=1.2&heatmap_u=1.3
+  30  @@@
+
+  39  @@@ atlas-example
+  40: Default Palette: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  41: Reds Palette (`&heatmap_palette=reds`): /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=reds
+  42  @@@
+
+  49  @@@ atlas-uri { hilite=heatmap_palette }
+  50: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
+  51  @@@
+
+  53  @@@ atlas-graph { show-expr=false }
+  54: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
+  55  @@@
+
+  65  @@@ atlas-example
+  66: Heatmap First: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap,name,sps,:eq,
+  67: Heatmap Second: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  68  @@@
+
+  75  @@@ atlas-graph { show-expr=true }
+  76: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_label=SPS%20Heatmap%20by%20Cluster
+  77  @@@
+
+  85  @@@ atlas-example
+  86: Linear: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  87: Log Linear: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_scale=log-linear
+  88  @@@
+
+api/graph/layout.md:
+  43  @@@ atlas-uri { hilite=layout }
+  44: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=canvas&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  45  @@@
+
+  47  @@@ atlas-graph { show-expr=false }
+  48: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=canvas&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  49  @@@
+
+  53  @@@ atlas-uri { hilite=layout }
+  54: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=image&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  55  @@@
+
+  57  @@@ atlas-graph { show-expr=false }
+  58: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=image&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  59  @@@
+
+  63  @@@ atlas-uri { hilite=layout }
+  64: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=iw&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  65  @@@
+
+  67  @@@ atlas-graph { show-expr=false }
+  68: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=iw&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  69  @@@
+
+  73  @@@ atlas-uri { hilite=layout }
+  74: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=ih&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  75  @@@
+
+  77  @@@ atlas-graph { show-expr=false }
+  78: /api/v1/graph?e=2012-01-01T09:00&h=175&layout=ih&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+  79  @@@
+
+api/graph/legends.md:
+   16  @@@ atlas-uri
+   17: /api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add&s=e-1w
+   18  @@@
+
+   20  @@@ atlas-graph { show-expr=false }
+   21: /api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add&s=e-1w
+   22  @@@
+
+   28  @@@ atlas-uri { hilite=:legend }
+   29: /api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add,time+value,:legend&s=e-1w
+   30  @@@
+
+   32  @@@ atlas-graph { show-expr=false }
+   33: /api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add,time+value,:legend&s=e-1w
+   34  @@@
+
+   42  @@@ atlas-uri { hilite=:legend }
+   43: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend&s=e-1w
+   44  @@@
+
+   46  @@@ atlas-graph { show-expr=false }
+   47: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend&s=e-1w
+   48  @@@
+
+   52  @@@ atlas-uri { hilite=:legend }
+   53: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,cluster+$(nf.cluster)+sps,:legend&s=e-1w
+   54  @@@
+
+   56  @@@ atlas-graph { show-expr=false }
+   57: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,cluster+$(nf.cluster)+sps,:legend&s=e-1w
+   58  @@@
+
+   64  @@@ atlas-uri { hilite=legend }
+   65: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+   66  @@@
+
+   68  @@@ atlas-graph { show-expr=false }
+   69: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+   70  @@@
+
+   77  @@@ atlas-uri { hilite=no_legend_stats }
+   78: /api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+   79  @@@
+
+   81  @@@ atlas-graph { show-expr=false }
+   82: /api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+   83  @@@
+
+   91  @@@ atlas-uri
+   92: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h
+   93  @@@
+
+   95  @@@ atlas-graph { show-expr=false }
+   96: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h
+   97  @@@
+
+  104  @@@ atlas-uri { hilite=sort }
+  105: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max
+  106  @@@
+
+  108  @@@ atlas-graph { show-expr=false }
+  109: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max
+  110  @@@
+
+  114  @@@ atlas-uri { hilite=order }
+  115: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max&order=desc
+  116  @@@
+
+  118  @@@ atlas-graph { show-expr=false }
+  119: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max&order=desc
+  120  @@@
+
+  129  @@@ atlas-uri
+  130: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by,:dup,:max,120e3,:gt,30,:alpha,:vspan,trigger,:legend,:swap,max,:sort,desc,:order,$nf.cluster,:legend&s=e-12h
+  131  @@@
+
+  133  @@@ atlas-graph { show-expr=false }
+  134: /api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by,:dup,:max,120e3,:gt,30,:alpha,:vspan,trigger,:legend,:swap,max,:sort,desc,:order,$nf.cluster,:legend&s=e-12h
+  135  @@@
+
+api/graph/line-attributes.md:
+  13  @@@ atlas-uri { hilite=:color }
+  14: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,f00,:color&s=e-1w
+  15  @@@
+
+  17  @@@ atlas-graph { show-expr=false }
+  18: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,f00,:color&s=e-1w
+  19  @@@
+
+  24  @@@ atlas-uri { hilite=:color }
+  25: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,f00,:color&s=e-1w
+  26  @@@
+
+  28  @@@ atlas-graph { show-expr=false }
+  29: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,f00,:color&s=e-1w
+  30  @@@
+
+  37  @@@ atlas-uri { hilite=:alpha }
+  38: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40,:alpha&s=e-2d
+  39  @@@
+
+  41  @@@ atlas-graph { show-expr=false }
+  42: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40,:alpha&s=e-2d
+  43  @@@
+
+  47  @@@ atlas-uri { hilite=:color }
+  48: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40ff0000,:color&s=e-2d
+  49  @@@
+
+  51  @@@ atlas-graph { show-expr=false }
+  52: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40ff0000,:color&s=e-2d
+  53  @@@
+
+  59  @@@ atlas-uri { hilite=:lw }
+  60: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,3,:lw&s=e-1w
+  61  @@@
+
+  63  @@@ atlas-graph { show-expr=false }
+  64: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,3,:lw&s=e-1w
+  65  @@@
+
+api/graph/line-styles.md:
+   20  @@@ atlas-uri { hilite=:line }
+   21: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:line&s=e-1w
+   22  @@@
+
+   24  @@@ atlas-graph { show-expr=false }
+   25: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:line&s=e-1w
+   26  @@@
+
+   34  @@@ atlas-uri { hilite=:area }
+   35: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
+   36  @@@
+
+   38  @@@ atlas-graph { show-expr=false }
+   39: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
+   40  @@@
+
+   44  @@@ atlas-uri { hilite=:area }
+   45: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:area,40,:alpha&s=e-1w
+   46  @@@
+
+   48  @@@ atlas-graph { show-expr=false }
+   49: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:area,40,:alpha&s=e-1w
+   50  @@@
+
+   57  @@@ atlas-uri { hilite=:stack }
+   58: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:stack&s=e-1w
+   59  @@@
+
+   61  @@@ atlas-graph { show-expr=false }
+   62: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:stack&s=e-1w
+   63  @@@
+
+   67  @@@ atlas-uri { hilite=:stack }
+   68: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:stack&s=e-1w
+   69  @@@
+
+   71  @@@ atlas-graph { show-expr=false }
+   72: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:stack&s=e-1w
+   73  @@@
+
+   81  @@@ atlas-uri { hilite=:pct }
+   82: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&s=e-1w
+   83  @@@
+
+   85  @@@ atlas-graph { show-expr=false }
+   86: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&s=e-1w
+   87  @@@
+
+   99  @@@ atlas-uri { hilite=:heatmap }
+  100: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  101  @@@
+
+  103  @@@ atlas-graph { show-expr=false }
+  104: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  105  @@@
+
+  113  @@@ atlas-uri { hilite=:vspan }
+  114: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,50e3,:gt,:vspan&s=e-1w
+  115  @@@
+
+  117  @@@ atlas-graph { show-expr=false }
+  118: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,50e3,:gt,:vspan&s=e-1w
+  119  @@@
+
+  127  @@@ atlas-uri
+  128: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,5003,:gt,:vspan,40,:alpha,50e3&s=e-1w
+  129  @@@
+
+  131  @@@ atlas-graph { show-expr=false }
+  132: /api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,50e3,:gt,:vspan,40,:alpha,50e3&s=e-1w
+  133  @@@
+
+  140  @@@ atlas-uri
+  141: /api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
+  142  @@@
+
+  144  @@@ atlas-graph { show-expr=false }
+  145: /api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
+  146  @@@
+
+api/graph/multi-y.md:
+  13  @@@ atlas-uri
+  14: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,42,1,:axis
+  15  @@@
+
+  17  @@@ atlas-graph { show-expr=false }
+  18: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,42,1,:axis
+  19  @@@
+
+  25  @@@ atlas-uri
+  26: /api/v1/graph?e=2012-01-01T00:00&l=0&q=name,sps,:eq,42,1,:axis
+  27  @@@
+
+  29  @@@ atlas-graph { show-expr=false }
+  30: /api/v1/graph?e=2012-01-01T00:00&l=0&q=name,sps,:eq,42,1,:axis
+  31  @@@
+
+  37  @@@ atlas-uri
+  38: /api/v1/graph?e=2012-01-01T00:00&l.1=0&q=name,sps,:eq,42,1,:axis
+  39  @@@
+
+  41  @@@ atlas-graph { show-expr=false }
+  42: /api/v1/graph?e=2012-01-01T00:00&l.1=0&q=name,sps,:eq,42,1,:axis
+  43  @@@
+
+  49  @@@ atlas-uri { hilite=axis_per_line%3D1 }
+  50: /api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,nf.cluster,nccp-p,:re,:and,(,nf.cluster,),:by
+  51  @@@
+
+  53  @@@ atlas-graph { show-expr=false }
+  54: /api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,nf.cluster,nccp-p,:re,:and,(,nf.cluster,),:by
+  55  @@@
+
+  59  @@@ atlas-uri { hilite=axis_per_line%3D1 }
+  60: /api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,(,nf.cluster,),:by
+  61  @@@
+
+  63  @@@ atlas-graph { show-expr=false }
+  64: /api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,(,nf.cluster,),:by
+  65  @@@
+
+  74  @@@ atlas-uri
+  75: /api/v1/graph?e=2012-01-01T00:00&l=01&q=name,sps,:eq,(,nf.cluster,),:by,minuteOfHour,:time,1,:axis
+  76  @@@
+
+  78  @@@ atlas-graph { show-expr=false }
+  79: /api/v1/graph?e=2012-01-01T00:00&l=01&q=name,sps,:eq,(,nf.cluster,),:by,minuteOfHour,:time,1,:axis
+  80  @@@
+
+  87  @@@ atlas-uri
+  88: /api/v1/graph?e=2012-01-01T00:00&l=01&palette.0=reds&palette.1=blues&q=name,sps,:eq,(,nf.cluster,),:by,:stack,minuteOfHour,:time,1,:axis
+  89  @@@
+
+  91  @@@ atlas-graph { show-expr=false }
+  92: /api/v1/graph?e=2012-01-01T00:00&l=01&palette.0=reds&palette.1=blues&q=name,sps,:eq,(,nf.cluster,),:by,:stack,minuteOfHour,:time,1,:axis
+  93  @@@
+
+api/graph/outputs.md:
+   14  @@@ atlas-uri { hilite=format%3Dpng }
+   15: /api/v1/graph?e=2012-01-01T09:00&format=png&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-3m&tz=UTC
+   16  @@@
+
+   18  @@@ atlas-graph { show-expr=false }
+   19: /api/v1/graph?e=2012-01-01T09:00&format=png&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-3m&tz=UTC
+   20  @@@
+
+   26  @@@ atlas-uri { hilite=format%3Dcsv }
+   27: /api/v1/graph?e=2012-01-01T09:00&format=csv&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+   28  @@@
+
+   46  @@@ atlas-uri { hilite=format%3Dtxt }
+   47: /api/v1/graph?e=2012-01-01T09:00&format=txt&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+   48  @@@
+
+   65  @@@ atlas-uri { hilite=format%3Djson }
+   66: /api/v1/graph?e=2012-01-01T09:00&format=json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+   67  @@@
+
+   94  @@@ atlas-uri { hilite=format%3Dstd.json }
+   95: /api/v1/graph?e=2012-01-01T09:00&format=std.json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+   96  @@@
+
+  123  @@@ atlas-uri { hilite=format%3Dstats.json }
+  124: /api/v1/graph?e=2012-01-01T09:00&format=stats.json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+  125  @@@
+
+api/graph/theme.md:
+   5  @@@ atlas-uri { hilite=theme%3Dlight }
+   6: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=light&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+   7  @@@
+
+   9  @@@ atlas-graph { show-expr=false }
+  10: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=light&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+  11  @@@
+
+  15  @@@ atlas-uri { hilite=theme%3Ddark }
+  16: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+  17  @@@
+
+  19  @@@ atlas-graph { show-expr=false }
+  20: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+  21  @@@
+
+api/graph/tick.md:
+  14  @@@ atlas-uri { hilite=tick_labels }
+  15: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=decimal
+  16  @@@
+
+  18  @@@ atlas-graph { show-expr=false }
+  19: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=decimal
+  20  @@@
+
+  24  @@@ atlas-uri { hilite=tick_labels }
+  25: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1e180,:mul&s=e-1w&tick_labels=decimal
+  26  @@@
+
+  28  @@@ atlas-graph { show-expr=false }
+  29: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1e180,:mul&s=e-1w&tick_labels=decimal
+  30  @@@
+
+  38  @@@ atlas-uri { hilite=tick_labels }
+  39: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=binary
+  40  @@@
+
+  42  @@@ atlas-graph { show-expr=false }
+  43: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=binary
+  44  @@@
+
+  52  @@@ atlas-uri { hilite=tick_labels }
+  53: /api/v1/graph?e=2012-01-01T00:00&q=name,requestLatency,:eq,nf.node,wii-node,:eq,:and&tick_labels=duration
+  54  @@@
+
+  56  @@@ atlas-graph { show-expr=false }
+  57: /api/v1/graph?e=2012-01-01T00:00&q=name,requestLatency,:eq,nf.node,wii-node,:eq,:and&tick_labels=duration
+  58  @@@
+
+  65  @@@ atlas-uri { hilite=tick_labels }
+  66: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+  67  @@@
+
+  69  @@@ atlas-graph { show-expr=false }
+  70: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+  71  @@@
+
+  83  @@@ atlas-graph { show-expr=false }
+  84: /api/v1/graph?e=2012-01-01T00:00&ylabel=bytes&q=hourOfDay,:time,6e10,:const,5,:sub,:add,disk bytes used,:legend
+  85  @@@
+
+api/graph/time-shift.md:
+   3  @@@ atlas-uri { hilite=:offset }
+   4: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset
+   5  @@@
+
+   7  @@@ atlas-graph { show-expr=false }
+   8: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset
+   9  @@@
+
+  13  @@@ atlas-uri { hilite=:offset }
+  14: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset,:list,(,$nf.cluster+(offset=$atlas.offset),:legend,),:each
+  15  @@@
+
+  17  @@@ atlas-graph { show-expr=false }
+  18: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset,:list,(,$nf.cluster+(offset=$atlas.offset),:legend,),:each
+  19  @@@
+
+api/graph/time-zone.md:
+  12  @@@ atlas-uri { hilite=tz%3DUTC }
+  13: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&tz=UTC
+  14  @@@
+
+  16  @@@ atlas-graph { show-expr=false }
+  17: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&tz=UTC
+  18  @@@
+
+  25  @@@ atlas-uri { hilite=tz }
+  26: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&tz=US/Eastern&tz=US/Pacific&tz=UTC
+  27  @@@
+
+  29  @@@ atlas-graph { show-expr=false }
+  30: /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&tz=US/Eastern&tz=US/Pacific&tz=UTC
+  31  @@@
+
+  38  @@@ atlas-uri { hilite=tz }
+  39: /api/v1/graph?e=2015-11-01T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+  40  @@@
+
+  42  @@@ atlas-graph { show-expr=false }
+  43: /api/v1/graph?e=2015-11-01T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+  44  @@@
+
+  48  @@@ atlas-uri { hilite=tz }
+  49: /api/v1/graph?e=2015-03-08T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+  50  @@@
+
+  52  @@@ atlas-graph { show-expr=false }
+  53: /api/v1/graph?e=2015-03-08T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+  54  @@@
+
+  59  @@@ atlas-uri { hilite=tz }
+  60: /api/v1/graph?e=2015-11-05T08:00&q=name,sps,:eq&s=e-1w&tz=US/Pacific&tz=UTC
+  61  @@@
+
+  63  @@@ atlas-graph { show-expr=false }
+  64: /api/v1/graph?e=2015-11-05T08:00&q=name,sps,:eq&s=e-1w&tz=US/Pacific&tz=UTC
+  65  @@@
+
+api/graph/vision.md:
+   17  @@@ atlas-uri { hilite=vision }
+   18: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=normal
+   19  @@@
+
+   21  @@@ atlas-graph { show-expr=false }
+   22: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=normal
+   23  @@@
+
+   27  @@@ atlas-uri { hilite=vision }
+   28: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanopia
+   29  @@@
+
+   31  @@@ atlas-graph { show-expr=false }
+   32: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanopia
+   33  @@@
+
+   37  @@@ atlas-uri { hilite=vision }
+   38: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanomaly
+   39  @@@
+
+   41  @@@ atlas-graph { show-expr=false }
+   42: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanomaly
+   43  @@@
+
+   47  @@@ atlas-uri { hilite=vision }
+   48: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranopia
+   49  @@@
+
+   51  @@@ atlas-graph { show-expr=false }
+   52: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranopia
+   53  @@@
+
+   57  @@@ atlas-uri { hilite=vision }
+   58: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranomaly
+   59  @@@
+
+   61  @@@ atlas-graph { show-expr=false }
+   62: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranomaly
+   63  @@@
+
+   67  @@@ atlas-uri { hilite=vision }
+   68: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanopia
+   69  @@@
+
+   71  @@@ atlas-graph { show-expr=false }
+   72: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanopia
+   73  @@@
+
+   77  @@@ atlas-uri { hilite=vision }
+   78: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanomaly
+   79  @@@
+
+   81  @@@ atlas-graph { show-expr=false }
+   82: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanomaly
+   83  @@@
+
+   87  @@@ atlas-uri { hilite=vision }
+   88: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatopsia
+   89  @@@
+
+   91  @@@ atlas-graph { show-expr=false }
+   92: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatopsia
+   93  @@@
+
+   97  @@@ atlas-uri { hilite=vision }
+   98: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatomaly
+   99  @@@
+
+  101  @@@ atlas-graph { show-expr=false }
+  102: /api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatomaly
+  103  @@@
+
+asl/alerting-expressions.md:
+  17  @@@ atlas-graph { show-expr=true }
+  18: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum
+  19  @@@
+
+  24  @@@ atlas-graph { show-expr=false }
+  25: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt
+  26  @@@
+
+  39  @@@ atlas-example
+  40: Input: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt
+  41: Rolling Count: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count
+  42: Dampened Signal: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count,4,:gt
+  43  @@@
+
+  51  @@@ atlas-graph { show-expr=true }
+  52: /api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,input,:legend,:rot,threshold,:legend,:rot
+  53  @@@
+
+asl/des.md:
+   30  @@@ atlas-graph { show-expr=false }
+   31: /api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-2d&q=:true,800,:fadd,input,:legend,:true,400,:fadd,30,0.1,1,:des,training+%3D+30,:legend,:true,90,0.1,1,:des,training+%3D+90,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+   32  @@@
+
+   38  @@@ atlas-graph { show-expr=false }
+   39: /api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-6h&w=750&h=150&q=nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:sum,:dup,10,0.1,0.5,:des,0.9,:mul,:2over,:lt,:rot,$$name,:legend,:rot,prediction,:legend,:rot,:vspan,60,:alpha,alert+triggered,:legend
+   40  @@@
+
+   47  @@@ atlas-graph { show-expr=false }
+   48: /api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-2d&q=:true,1200,:fadd,input,:legend,:true,10,1,1,:des,800,:fadd,alpha+%3D+1,:legend,:true,10,0.1,1,:des,400,:fadd,alpha+%3D+0.1,:legend,:true,10,0.01,1,:des,alpha+%3D+0.01,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+   49  @@@
+
+   56  @@@ atlas-graph { show-expr=false }
+   57: /api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-2d&q=:true,1200,:fadd,input,:legend,:true,10,0.01,1,:des,800,:fadd,beta+%3D+1,:legend,:true,10,0.01,0.1,:des,400,:fadd,beta+%3D+0.1,:legend,:true,10,0.01,0.01,:des,beta+%3D+0.01,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+   58  @@@
+
+   73  @@@ atlas-graph { show-expr=false }
+   74: /api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-6h&w=750&h=150&q=:true,input,:legend,:true,:des-fast,des-fast,:legend,:true,:des-slower,des-slower,:legend,:true,:des-slow,des-slow,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each
+   75  @@@
+
+   79  @@@ atlas-graph { show-expr=false }
+   80: /api/v1/graph?tz=UTC&e=2012-01-02T09:00&s=e-6h&w=750&h=150&q=:true,input,:legend,:true,:des-fast,des-fast,:legend,:true,:des-slower,des-slower,:legend,:true,:des-slow,des-slow,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+   81  @@@
+
+  122  @@@ atlas-graph { show-expr=false }
+  123: /api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-6h&w=750&h=150&q=:true,:true,0.85,:mul,:des-fast,:2over,:lt,:vspan,40,:alpha,:rot,input,:legend,:rot,des-fast,:legend,:rot,triggered,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+  124  @@@
+
+  126  @@@ atlas-graph { show-expr=false }
+  127: /api/v1/graph?tz=UTC&e=2012-01-02T09:00&s=e-6h&w=750&h=150&q=:true,:true,0.85,:mul,:des-fast,:2over,:lt,:vspan,40,:alpha,:rot,input,:legend,:rot,des-fast,:legend,:rot,triggered,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+  128  @@@
+
+  147  @@@ atlas-graph { show-expr=true }
+  148: /api/v1/graph?e=2012-01-01T09:00&h=150&l=0&q=nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:sum,10,0.1,0.02,0.15,0.15,10,:des-epic-viz&s=e-6h&tz=UTC&w=750
+  149  @@@
+
+  153  @@@ atlas-graph { show-expr=true }
+  154: /api/v1/graph?e=2012-01-02T09:00&h=150&l=0&q=nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:sum,10,0.1,0.02,0.15,NaN,10,:des-epic-viz&s=e-6h&tz=UTC&w=750
+  155  @@@
+
+asl/tutorial.md:
+   84  @@@ atlas-stacklang
+   85: /api/v1/graph?q=node,i-01,:eq
+   86  @@@
+
+  104  @@@ atlas-stacklang
+  105: /api/v1/graph?q=node,i-01,:eq,name,cpuUsage,:eq,:and
+  106  @@@
+
+  123  @@@ atlas-stacklang
+  124: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and
+  125  @@@
+
+  127  @@@ atlas-stacklang
+  128: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:sum
+  129  @@@
+
+  142  @@@ atlas-stacklang
+  143: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:max
+  144  @@@
+
+  149  @@@ atlas-stacklang
+  150: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:dup,:sum,:swap,:count,:div
+  151  @@@
+
+  155  @@@ atlas-stacklang
+  156: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg
+  157  @@@
+
+  164  @@@ atlas-stacklang
+  165: /api/v1/graph?q=name,cpuUsage,:eq,:max,(,app,),:by
+  166  @@@
+
+  184  @@@ atlas-stacklang
+  185: /api/v1/graph?q=app,web,:eq,name,cpu,:eq,:and,:sum,:abs
+  186  @@@
+
+  191  @@@ atlas-stacklang
+  192: /api/v1/graph?q=app,web,:eq,name,cpu,:eq,:and,:sum,:neg,:abs
+  193  @@@
+
+  205  @@@ atlas-stacklang
+  206: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg,average+cpu+usage,:legend
+  207  @@@
+
+  212  @@@ atlas-stacklang
+  213: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg,(,app,),:by,$(app),:legend
+  214  @@@
+
+  219  @@@ atlas-stacklang
+  220: /api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg,(,app,),:by,:stack,$(app),:legend
+  221  @@@
+
+asl/ref/-rot.md:
+  15  @@@ atlas-stacklang
+  16: /api/v1/graph?q=a,b,c,d,:-rot
+  17  @@@
+
+asl/ref/2over.md:
+  15  @@@ atlas-stacklang
+  16: /api/v1/graph?q=a,b,:2over
+  17  @@@
+
+asl/ref/abs.md:
+  12  @@@ atlas-example { hilite=:abs }
+  13: 0: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=0,:abs
+  14: 64: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=64,:abs
+  15: -64: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=-64,:abs
+  16  @@@
+
+asl/ref/add.md:
+  22  @@@ atlas-example { hilite=:add }
+  23: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3
+  24: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3,:add
+  25  @@@
+
+  29  @@@ atlas-example { hilite=:add }
+  30: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  31: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:add
+  32  @@@
+
+asl/ref/alpha.md:
+  13  @@@ atlas-example { hilite=:alpha }
+  14: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack
+  15: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack,40,:alpha
+  16  @@@
+
+  18  @@@ atlas-example { hilite=:alpha }
+  19: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack,f00,:color
+  20: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack,f00,:color,40,:alpha
+  21  @@@
+
+asl/ref/and.md:
+  17  @@@ atlas-stacklang { hilite=:and }
+  18: /api/v1/graph?q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and
+  19  @@@
+
+  81  @@@ atlas-example { hilite=:and }
+  82: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt
+  83: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt,:and
+  84  @@@
+
+asl/ref/area.md:
+  12  @@@ atlas-example { hilite=:area }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:area
+  15  @@@
+
+asl/ref/as.md:
+  16  @@@ atlas-example { hilite=:as }
+  17: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by,nf.cluster,c,:as,$c,:legend
+  19  @@@
+
+asl/ref/avg.md:
+  17  @@@ atlas-stacklang { hilite=:avg }
+  18: /api/v1/graph?q=name,ssCpuUser,:eq,:avg
+  19  @@@
+
+  93  @@@ atlas-example { hilite=:avg }
+  94: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  95: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:avg
+  96  @@@
+
+asl/ref/axis.md:
+  13  @@@ atlas-example { hilite=:axis }
+  14: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,42
+  15: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,42,1,:axis
+  16  @@@
+
+asl/ref/bottomk-others-avg.md:
+  16  @@@ atlas-example { hilite=:bottomk-others-avg }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-avg
+  19  @@@
+
+asl/ref/bottomk-others-max.md:
+  16  @@@ atlas-example { hilite=:bottomk-others-max }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-max
+  19  @@@
+
+asl/ref/bottomk-others-min.md:
+  16  @@@ atlas-example { hilite=:bottomk-others-min }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-min
+  19  @@@
+
+asl/ref/bottomk-others-sum.md:
+  16  @@@ atlas-example { hilite=:bottomk-others-sum }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-sum
+  19  @@@
+
+asl/ref/bottomk.md:
+  15  @@@ atlas-example { hilite=:bottomk }
+  16: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  17: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk
+  18  @@@
+
+asl/ref/by.md:
+  15  @@@ atlas-stacklang { hilite=:by }
+  16: /api/v1/graph?q=name,ssCpu,:re,(,name,),:by
+  17  @@@
+
+  94  @@@ atlas-example { hilite=:by }
+  95: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,nf.node,),:by
+  96: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,nf.node,),:by,:count,(,nf.cluster,),:by
+  97  @@@
+
+asl/ref/call.md:
+  12  @@@ atlas-stacklang
+  13: /api/v1/graph?q=(,a,),:call
+  14  @@@
+
+asl/ref/cg.md:
+  11  @@@ atlas-example { hilite=:cg }
+  12: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.app,),:by
+  13: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.app,),:by,(,nf.cluster,),:cg
+  14  @@@
+
+asl/ref/clamp-max.md:
+  35  @@@ atlas-example { hilite=:clamp-max }
+  36: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+  37: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,60e3,:clamp-max
+  38  @@@
+
+asl/ref/clamp-min.md:
+  15  @@@ atlas-example { hilite=:clamp-min }
+  16: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+  17: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,200e3,:clamp-min
+  18  @@@
+
+asl/ref/clear.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=a,b,c,:clear
+  13  @@@
+
+asl/ref/color.md:
+  28  @@@ atlas-example { hilite=:color }
+  29: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq
+  30: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,ff0000,:color
+  31  @@@
+
+asl/ref/const.md:
+  11  @@@ atlas-example { hilite=:const }
+  12: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42
+  13: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,:const
+  14  @@@
+
+asl/ref/contains.md:
+  11  @@@ atlas-stacklang { hilite=:contains }
+  12: /api/v1/graph?q=name,Cpu,:contains
+  13  @@@
+
+asl/ref/count.md:
+  13  @@@ atlas-stacklang { hilite=:count }
+  14: /api/v1/graph?q=name,ssCpuUser,:eq,:count
+  15  @@@
+
+  89  @@@ atlas-example { hilite=:count }
+  90: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  91: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:count
+  92  @@@
+
+asl/ref/cq.md:
+  13  @@@ atlas-stacklang
+  14: /api/v1/graph?q=name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq,:cq
+  15  @@@
+
+  17  @@@ atlas-example { hilite=:cq }
+  18: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq
+  19: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq,:cq
+  20  @@@
+
+  22  @@@ atlas-example { hilite=:cq }
+  23: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,nf.app,alerttest,:eq
+  24: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,nf.app,alerttest,:eq,:cq
+  25  @@@
+
+asl/ref/decode.md:
+  32  @@@ atlas-example { hilite=:decode }
+  33: Hex to ASCII: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=1,one_21_25_26_3F,:legend,hex,:decode
+  34  @@@
+
+asl/ref/delay.md:
+  15  @@@ atlas-example { hilite=:delay }
+  16: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum
+  17: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,5,:delay
+  18: Combined: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:dup,5,:delay
+  19  @@@
+
+asl/ref/depth.md:
+  14  @@@ atlas-stacklang
+  15: /api/v1/graph?q=,:depth
+  16  @@@
+
+  24  @@@ atlas-stacklang
+  25: /api/v1/graph?q=a,:depth
+  26  @@@
+
+  38  @@@ atlas-stacklang
+  39: /api/v1/graph?q=a,b,:depth
+  40  @@@
+
+asl/ref/derivative.md:
+  10  @@@ atlas-example { hilite=:derivative }
+  11: Derivative: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:derivative
+  12: Integral: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:integral
+  13: Integral Then Derivative: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:integral,:derivative
+  14  @@@
+
+asl/ref/des-epic-signal.md:
+  16  @@@ atlas-example { hilite=:des-epic-signal }
+  17: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+  18: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,10,0.1,0.5,0.2,0.2,4,:des-epic-signal
+  19  @@@
+
+asl/ref/des-epic-viz.md:
+  16  @@@ atlas-example { hilite=:des-epic-viz }
+  17: Example: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,10,0.1,0.5,0.2,0.2,4,:des-epic-viz
+  18  @@@
+
+asl/ref/des-fast.md:
+  11  @@@ atlas-example { hilite=:des-fast }
+  12: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  13: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-fast
+  14  @@@
+
+asl/ref/des-simple.md:
+  13  @@@ atlas-example { hilite=:des-simple }
+  14: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  15: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-simple
+  16  @@@
+
+asl/ref/des-slow.md:
+  11  @@@ atlas-example { hilite=:des-slow }
+  12: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  13: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-slow
+  14  @@@
+
+asl/ref/des-slower.md:
+  11  @@@ atlas-example { hilite=:des-slower }
+  12: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  13: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-slower
+  14  @@@
+
+asl/ref/des.md:
+  13  @@@ atlas-example { hilite=:des }
+  14: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum
+  15: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,5,0.1,0.5,:des
+  16  @@@
+
+asl/ref/dist-avg.md:
+  16  @@@ atlas-stacklang
+  17: /api/v1/graph?q=statistic,totalTime,:eq,:sum,statistic,count,:eq,:sum,:div
+  18  @@@
+
+  22  @@@ atlas-stacklang
+  23: /api/v1/graph?q=statistic,totalTime,:eq,:sum,statistic,count,:eq,:sum,:div,nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:cq
+  24  @@@
+
+  28  @@@ atlas-stacklang
+  29: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg
+  30  @@@
+
+  34  @@@ atlas-stacklang
+  35: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg,(,nf.asg,),:by
+  36  @@@
+
+  42  @@@ atlas-example { hilite=:dist-avg }
+  43: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq
+  44: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq,:dist-avg
+  45  @@@
+
+asl/ref/dist-max.md:
+  13  @@@ atlas-stacklang
+  14: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,statistic,max,:eq,:and,:max
+  15  @@@
+
+  19  @@@ atlas-stacklang
+  20: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-max
+  21  @@@
+
+  26  @@@ atlas-example { hilite=:dist-max }
+  27: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq
+  28: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq,:dist-max
+  29  @@@
+
+asl/ref/dist-stddev.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=statistic,count,:eq,:sum,statistic,totalOfSquares,:eq,:sum,:mul,statistic,totalTime,:eq,:sum,:dup,:mul,:sub,statistic,count,:eq,:sum,:dup,:mul,:div,:sqrt,nf.cluster,foo,:eq, name,http.req.latency,:eq,:and,:cq
+  13  @@@
+
+  17  @@@ atlas-stacklang
+  18: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-stddev
+  19  @@@
+
+  24  @@@ atlas-example { hilite=:dist-stddev }
+  25: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq
+  26: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq,:dist-stddev
+  27  @@@
+
+asl/ref/div.md:
+  22  @@@ atlas-example { hilite=:div }
+  23: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,42
+  24: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,42,:div
+  25  @@@
+
+  29  @@@ atlas-example { hilite=:div }
+  30: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  31: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:div
+  32  @@@
+
+asl/ref/drop.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=a,b,c,:drop
+  13  @@@
+
+  29  @@@ atlas-stacklang
+  30: /api/v1/graph?q=:drop
+  31  @@@
+
+asl/ref/dup.md:
+  12  @@@ atlas-example { hilite=:dup }
+  13: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time
+  14: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup
+  15  @@@
+
+asl/ref/each.md:
+  14  @@@ atlas-stacklang
+  15: /api/v1/graph?q=(,a,b,),(,:dup,),:each
+  16  @@@
+
+asl/ref/ends.md:
+  11  @@@ atlas-stacklang { hilite=:ends }
+  12: /api/v1/graph?q=name,ssCpuUser,:ends
+  13  @@@
+
+asl/ref/eq.md:
+  11  @@@ atlas-stacklang { hilite=:eq }
+  12: /api/v1/graph?q=name,ssCpuUser,:eq
+  13  @@@
+
+asl/ref/eureka-avg.md:
+  13  @@@ atlas-stacklang { hilite=:eureka-avg }
+  14: /api/v1/graph?q=name,sps,:eq,nf.app,nccp,:eq,:and,:eureka-avg
+  15  @@@
+
+asl/ref/fadd.md:
+  25  @@@ atlas-example { hilite=:fadd }
+  26: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3
+  27: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3,:fadd
+  28  @@@
+
+  32  @@@ atlas-example { hilite=:fadd }
+  33: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  34: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fadd
+  35  @@@
+
+asl/ref/fcall.md:
+  12  @@@ atlas-stacklang
+  13: /api/v1/graph?q=duplicate,(,:dup,),:set,a,duplicate,:fcall
+  14  @@@
+
+asl/ref/fdiv.md:
+  25  @@@ atlas-example { hilite=:fdiv }
+  26: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+  27: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,1024,:fdiv
+  28  @@@
+
+  32  @@@ atlas-example { hilite=:fdiv }
+  33: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  34: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fdiv
+  35  @@@
+
+asl/ref/filter.md:
+  13  @@@ atlas-example { hilite=:filter }
+  14: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  15: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,0,:filter
+  16  @@@
+
+  22  @@@ atlas-example { hilite=:filter }
+  23: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  24: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:dup,avg,:stat,5e3,:gt,:over,avg,:stat,20e3,:lt,:and,:filter
+  25  @@@
+
+  33  @@@ atlas-example { hilite=:filter }
+  34: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  35: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-avg,5e3,:gt,:stat-avg,20e3,:lt,:and,:filter
+  36  @@@
+
+asl/ref/fmul.md:
+  13  @@@ atlas-example { hilite=:fmul }
+  14: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+  15: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,1024,:fmul
+  16  @@@
+
+  20  @@@ atlas-example { hilite=:fmul }
+  21: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  22: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fmul
+  23  @@@
+
+asl/ref/format.md:
+  14  @@@ atlas-stacklang
+  15: /api/v1/graph?q=foo%s,(,bar,),:format
+  16  @@@
+
+asl/ref/freeze.md:
+  47  @@@ atlas-stacklang
+  48: /api/v1/graph?q=a,b,c,:freeze
+  49  @@@
+
+asl/ref/fsub.md:
+  25  @@@ atlas-example { hilite=:fsub }
+  26: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+  27: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30000,:fsub
+  28  @@@
+
+  32  @@@ atlas-example { hilite=:fsub }
+  33: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  34: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fsub
+  35  @@@
+
+asl/ref/ge.md:
+  17  @@@ atlas-stacklang { hilite=:ge }
+  18: /api/v1/graph?q=name,ssCpuSystem,:ge
+  19  @@@
+
+  86  @@@ atlas-example { hilite=:ge }
+  87: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time
+  88: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:ge
+  89  @@@
+
+asl/ref/get.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=k,v,:set,k,:get
+  13  @@@
+
+asl/ref/gt.md:
+  17  @@@ atlas-stacklang { hilite=:gt }
+  18: /api/v1/graph?q=name,ssCpuSystem,:gt
+  19  @@@
+
+  82  @@@ atlas-example { hilite=:gt }
+  83: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time
+  84: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:gt
+  85  @@@
+
+asl/ref/has.md:
+  10  @@@ atlas-stacklang { hilite=:eq }
+  11: /api/v1/graph?q=nf.node,:has
+  12  @@@
+
+asl/ref/head.md:
+  12  @@@ atlas-example { hilite=:head }
+  13: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by
+  14: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,2,:head
+  15  @@@
+
+asl/ref/heatmap.md:
+  15  @@@ atlas-example { hilite=:heatmap }
+  16: Default: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  17  @@@
+
+asl/ref/in.md:
+  11  @@@ atlas-stacklang { hilite=:in }
+  12: /api/v1/graph?q=name,(,ssCpuUser,ssCpuSystem,),:in
+  13  @@@
+
+asl/ref/integral.md:
+  33  @@@ atlas-example { hilite=:integral }
+  34: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1
+  35: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:integral
+  36  @@@
+
+  38  @@@ atlas-example { hilite=:integral }
+  39: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:per-step
+  40: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:per-step,:integral
+  41  @@@
+
+asl/ref/le.md:
+  17  @@@ atlas-stacklang { hilite=:le }
+  18: /api/v1/graph?q=name,ssCpuSystem,:le
+  19  @@@
+
+  82  @@@ atlas-example { hilite=:le }
+  83: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time
+  84: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:le
+  85  @@@
+
+asl/ref/legend.md:
+  21  @@@ atlas-example { hilite=:legend }
+  22: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by
+  23: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,$name,:legend
+  24  @@@
+
+  26  @@@ atlas-example { hilite=:legend }
+  27: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  28: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,cluster+$nf.cluster,:legend
+  29  @@@
+
+asl/ref/limit.md:
+  14  @@@ atlas-example { hilite=:limit }
+  15: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by
+  16: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,3,:limit
+  17  @@@
+
+asl/ref/line.md:
+  14  @@@ atlas-example { hilite=:line }
+  15: Default: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:line
+  16  @@@
+
+asl/ref/list.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=a,b,:list
+  13  @@@
+
+  25  @@@ atlas-stacklang
+  26: /api/v1/graph?q=,:list
+  27  @@@
+
+asl/ref/ls.md:
+  19  @@@ atlas-example { hilite=:ls }
+  20: Line: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,line,:ls
+  21: Area: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,area,:ls
+  22  @@@
+
+  24  @@@ atlas-example { hilite=:ls }
+  25: Stack: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,stack,:ls
+  26: VSpan: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,200e3,:gt,vspan,:ls
+  27  @@@
+
+asl/ref/lt.md:
+  17  @@@ atlas-stacklang { hilite=:lt }
+  18: /api/v1/graph?q=name,ssCpuSystem,:lt
+  19  @@@
+
+  82  @@@ atlas-example { hilite=:lt }
+  83: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time
+  84: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:lt
+  85  @@@
+
+asl/ref/lw.md:
+  12  @@@ atlas-example { hilite=:lw }
+  13: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by
+  14: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,2,:lw
+  15  @@@
+
+asl/ref/map.md:
+  12  @@@ atlas-stacklang
+  13: /api/v1/graph?q=(,a%s,b%s,),(,(,.netflix.com,),:format,),:map
+  14  @@@
+
+asl/ref/max.md:
+  13  @@@ atlas-stacklang { hilite=:max }
+  14: /api/v1/graph?q=name,ssCpuUser,:eq,:max
+  15  @@@
+
+  90  @@@ atlas-example { hilite=:max }
+  91: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+  92: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by,:max
+  93  @@@
+
+asl/ref/median.md:
+   9  @@@ atlas-example { hilite=:median }
+  10: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq
+  11: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq,:median
+  12  @@@
+
+asl/ref/min.md:
+  13  @@@ atlas-stacklang { hilite=:min }
+  14: /api/v1/graph?q=name,ssCpuUser,:eq,:min
+  15  @@@
+
+  90  @@@ atlas-example { hilite=:min }
+  91: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+  92: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by,:min
+  93  @@@
+
+asl/ref/mul.md:
+  14  @@@ atlas-example { hilite=:mul }
+  15: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+  16: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,1024,:mul
+  17  @@@
+
+  21  @@@ atlas-example { hilite=:mul }
+  22: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  23: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:mul
+  24  @@@
+
+asl/ref/named-rewrite.md:
+  14  @@@ atlas-example { hilite=:named-rewrite }
+  15: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,:dup,:dup,:sum,:swap,:count,:div
+  16: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,:dup,:dup,:sum,:swap,:count,:div,avg,:named-rewrite
+  17  @@@
+
+asl/ref/ndrop.md:
+  14  @@@ atlas-stacklang
+  15: /api/v1/graph?q=a,0,:ndrop
+  16  @@@
+
+  28  @@@ atlas-stacklang
+  29: /api/v1/graph?q=a,b,c,2,:ndrop
+  30  @@@
+
+  50  @@@ atlas-stacklang
+  51: /api/v1/graph?q=a,b,c,4,:ndrop
+  52  @@@
+
+  72  @@@ atlas-stacklang
+  73: /api/v1/graph?q=,:ndrop
+  74  @@@
+
+asl/ref/neg.md:
+  11  @@@ atlas-example { hilite=:neg }
+  12: 0: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=0,:neg
+  13: 64: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=64,:neg
+  14: -64: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=-64,:neg
+  15  @@@
+
+asl/ref/nip.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=a,b,:nip
+  13  @@@
+
+asl/ref/nlist.md:
+  17  @@@ atlas-stacklang
+  18: /api/v1/graph?q=a,0,:nlist
+  19  @@@
+
+  31  @@@ atlas-stacklang
+  32: /api/v1/graph?q=a,b,c,2,:nlist
+  33  @@@
+
+  53  @@@ atlas-stacklang
+  54: /api/v1/graph?q=a,b,c,4,:nlist
+  55  @@@
+
+asl/ref/node-avg.md:
+  12  @@@ atlas-stacklang { hilite=:node-avg }
+  13: /api/v1/graph?q=name,sps,:eq,nf.app,nccp,:eq,:and,:node-avg
+  14  @@@
+
+asl/ref/not.md:
+  10  @@@ atlas-stacklang { hilite=:not }
+  11: /api/v1/graph?q=nf.node,:has,:not
+  12  @@@
+
+asl/ref/offset.md:
+  19  @@@ atlas-example { hilite=:offset }
+  20: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by
+  21: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,1w,:offset
+  22: Combined: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,:dup,1w,:offset
+  23  @@@
+
+  25  @@@ atlas-example { hilite=:offset }
+  26: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by
+  27: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,PT1H,:offset
+  28: Combined: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,:dup,PT1H,:offset
+  29  @@@
+
+asl/ref/or.md:
+  17  @@@ atlas-stacklang { hilite=:or }
+  18: /api/v1/graph?q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:or
+  19  @@@
+
+  81  @@@ atlas-example { hilite=:or }
+  82: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt
+  83: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt,:or
+  84  @@@
+
+asl/ref/order.md:
+  15  @@@ atlas-example { hilite=:order }
+  16: Sorted: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,max,:sort,asc,:order
+  17: Default: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,desc,:order
+  18  @@@
+
+asl/ref/over.md:
+  14  @@@ atlas-stacklang
+  15: /api/v1/graph?q=a,b,:over
+  16  @@@
+
+asl/ref/palette.md:
+  25  @@@ atlas-example { hilite=:palette }
+  26: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  27: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,reds,:palette
+  28  @@@
+
+  30  @@@ atlas-example { hilite=:palette }
+  31: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+  32: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,reds,:palette
+  33  @@@
+
+asl/ref/pct.md:
+  12  @@@ atlas-stacklang
+  13: /api/v1/graph?q=name,sps,:eq,(,nf.cluster,),:by,:pct
+  14  @@@
+
+  16  @@@ atlas-example { hilite=:pct }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:pct
+  19: Stack to 100%: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack
+  20  @@@
+
+asl/ref/per-step.md:
+  11  @@@ atlas-example { hilite=:per-step }
+  12: 0: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=0,:per-step
+  13: 64: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=64,:per-step
+  14: -64: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=-64,:per-step
+  15  @@@
+
+asl/ref/percentiles-heatmap.md:
+  18  @@@ atlas-example { hilite=:percentiles-heatmap }
+  19: Default: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,requestLatency,:eq,:percentiles-heatmap
+  20  @@@
+
+asl/ref/percentiles.md:
+  20  @@@ atlas-example { hilite=:percentiles }
+  21: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq
+  22: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq,(,25,50,90,),:percentiles
+  23  @@@
+
+asl/ref/pick.md:
+  19  @@@ atlas-stacklang
+  20: /api/v1/graph?q=a,0,:pick
+  21  @@@
+
+  33  @@@ atlas-stacklang
+  34: /api/v1/graph?q=a,b,0,:pick
+  35  @@@
+
+  51  @@@ atlas-stacklang
+  52: /api/v1/graph?q=a,b,1,:pick
+  53  @@@
+
+asl/ref/pow.md:
+  13  @@@ atlas-example { hilite=:pow }
+  14: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq
+  15: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,42,:pow
+  16  @@@
+
+  18  @@@ atlas-example { hilite=:pow }
+  19: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  20: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:pow
+  21  @@@
+
+asl/ref/random.md:
+  12  @@@ atlas-example { hilite=:random }
+  13: Random: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random
+  14  @@@
+
+asl/ref/re.md:
+  16  @@@ atlas-stacklang { hilite=:re }
+  17: /api/v1/graph?q=name,ssCpu,:re
+  18  @@@
+
+asl/ref/reic.md:
+  16  @@@ atlas-stacklang { hilite=:reic }
+  17: /api/v1/graph?q=name,ssCPU,:reic
+  18  @@@
+
+asl/ref/roll.md:
+  20  @@@ atlas-stacklang
+  21: /api/v1/graph?q=a,0,:roll
+  22  @@@
+
+  34  @@@ atlas-stacklang
+  35: /api/v1/graph?q=a,b,0,:roll
+  36  @@@
+
+  52  @@@ atlas-stacklang
+  53: /api/v1/graph?q=a,b,1,:roll
+  54  @@@
+
+asl/ref/rolling-count.md:
+  41  @@@ atlas-example { hilite=:rolling-count }
+  42: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt
+  43: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt,5,:rolling-count
+  44  @@@
+
+asl/ref/rolling-max.md:
+  41  @@@ atlas-example { hilite=:rolling-max }
+  42: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt
+  43: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt,5,:rolling-max
+  44  @@@
+
+asl/ref/rolling-mean.md:
+  34  @@@ atlas-example { hilite=:rolling-mean }
+  35: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+  36: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,5,3,:rolling-mean
+  37  @@@
+
+asl/ref/rolling-min.md:
+  41  @@@ atlas-example { hilite=:rolling-min }
+  42: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+  43: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,5,:rolling-min
+  44  @@@
+
+asl/ref/rolling-sum.md:
+  30  @@@ atlas-example { hilite=:rolling-sum }
+  31: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+  32: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,5,:rolling-sum
+  33  @@@
+
+asl/ref/rot.md:
+  15  @@@ atlas-stacklang
+  16: /api/v1/graph?q=a,b,c,d,:rot
+  17  @@@
+
+asl/ref/s.md:
+  23  @@@ atlas-example { hilite=:s }
+  24: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+  25: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,^nccp-(.*)$,$1,:s
+  26  @@@
+
+  28  @@@ atlas-example { hilite=:s }
+  29: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+  30: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,^nccp-(?<stack>.*)$,$stack,:s
+  31  @@@
+
+  33  @@@ atlas-example { hilite=:s }
+  34: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+  35: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,nccp-,_,:s
+  36  @@@
+
+  38  @@@ atlas-example { hilite=:s }
+  39: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+  40: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,([a-z]),_$1,:s
+  41  @@@
+
+asl/ref/sample-count.md:
+  14  @@@ atlas-example { hilite=:sample-count }
+  15: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq
+  16: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq,0,500,:sample-count
+  17  @@@
+
+asl/ref/sdes-fast.md:
+  10  @@@ atlas-example { hilite=:sdes-fast }
+  11: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  12: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-fast
+  13  @@@
+
+asl/ref/sdes-simple.md:
+   9  @@@ atlas-example { hilite=:sdes-simple }
+  10: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  11: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-simple
+  12  @@@
+
+asl/ref/sdes-slow.md:
+  10  @@@ atlas-example { hilite=:sdes-slow }
+  11: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  12: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-slow
+  13  @@@
+
+asl/ref/sdes-slower.md:
+  10  @@@ atlas-example { hilite=:sdes-slower }
+  11: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+  12: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-slower
+  13  @@@
+
+asl/ref/sdes.md:
+  51  @@@ atlas-example { hilite=:sdes }
+  52: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:per-step
+  53: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,5,0.1,0.5,:sdes
+  54  @@@
+
+asl/ref/set.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=k,v,:set
+  13  @@@
+
+asl/ref/sort.md:
+  17  @@@ atlas-example { hilite=:sort }
+  18: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+  19: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,max,:sort
+  20  @@@
+
+asl/ref/sqrt.md:
+  10  @@@ atlas-example { hilite=:sqrt }
+  11: 0: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=0,:sqrt
+  12: 64: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=64,:sqrt
+  13: -64: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=-64,:sqrt
+  14  @@@
+
+asl/ref/srandom.md:
+  15  @@@ atlas-example { hilite=:srandom}
+  16: Seeded Random: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,:srandom
+  17  @@@
+
+asl/ref/sset.md:
+  11  @@@ atlas-stacklang
+  12: /api/v1/graph?q=a,b,:sset
+  13  @@@
+
+asl/ref/stack.md:
+  14  @@@ atlas-example { hilite=:stack }
+  15: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by
+  16: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,:stack
+  17  @@@
+
+asl/ref/starts.md:
+  11  @@@ atlas-stacklang { hilite=:starts }
+  12: /api/v1/graph?q=name,ssCpu,:starts
+  13  @@@
+
+asl/ref/stat-avg-mf.md:
+  12  @@@ atlas-example { hilite=:stat-avg-mf }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:stat-avg-mf
+  15  @@@
+
+asl/ref/stat-avg.md:
+  12  @@@ atlas-example { hilite=:stat-avg }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-avg,5e3,:gt,:stat-avg,20e3,:lt,:and,:filter
+  15  @@@
+
+asl/ref/stat-count.md:
+  12  @@@ atlas-example { hilite=:stat-count }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-count,50,:gt,:filter
+  15  @@@
+
+asl/ref/stat-last.md:
+  12  @@@ atlas-example { hilite=:stat-last }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-last,5e3,:gt,:stat-last,20e3,:lt,:and,:filter
+  15  @@@
+
+asl/ref/stat-max-mf.md:
+  12  @@@ atlas-example { hilite=:stat-max-mf }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:stat-max-mf
+  15  @@@
+
+asl/ref/stat-max.md:
+  12  @@@ atlas-example { hilite=:stat-max }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-max,5e3,:gt,:stat-max,20e3,:lt,:and,:filter
+  15  @@@
+
+asl/ref/stat-min-mf.md:
+  12  @@@ atlas-example { hilite=:stat-min-mf }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:stat-min-mf
+  15  @@@
+
+asl/ref/stat-min.md:
+  12  @@@ atlas-example { hilite=:stat-min }
+  13: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  14: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-min,5e3,:gt,:stat-min,20e3,:lt,:and,:filter
+  15  @@@
+
+asl/ref/stat-total.md:
+  13  @@@ atlas-example { hilite=:stat-total }
+  14: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  15: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-total,1e6,:gt,:stat-total,4e6,:lt,:and,:filter
+  16  @@@
+
+asl/ref/stat.md:
+  13  @@@ atlas-graph { show-expr=false }
+  14: /api/v1/graph?h=125&no_legend_stats=1&s=e-6m&e=2012-01-01T00:06&tz=UTC&l=1.5&u=4.5&q=minuteOfDay,:time,e-2m,ge-6m,:time-span,2,:mul,:add,e-2m,ge,:time-span,1.5,:mul,:sub,1,e-1m,ge,:time-span,1,:sub,:div,1,:fadd,:fadd,m,:sset,m,:get,input,:legend,m,:get,avg,:stat,avg,:legend,3,:lw,60,:alpha,m,:get,max,:stat,max,:legend,3,:lw,60,:alpha,m,:get,min,:stat,min,:legend,3,:lw,60,:alpha,m,:get,last,:stat,last,:legend,3,:lw,60,:alpha
+  15  @@@
+
+  27  @@@ atlas-example { hilite=:stat }
+  28: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  29: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,avg,:stat
+  30  @@@
+
+asl/ref/stddev.md:
+  15  @@@ atlas-example { hilite=:stddev }
+  16: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by
+  17: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by,:stddev
+  18  @@@
+
+asl/ref/sub.md:
+  20  @@@ atlas-example { hilite=:sub }
+  21: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+  22: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3,:sub
+  23  @@@
+
+  27  @@@ atlas-example { hilite=:sub }
+  28: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+  29: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:sub
+  30  @@@
+
+asl/ref/sum.md:
+  14  @@@ atlas-stacklang { hilite=:sum }
+  15: /api/v1/graph?q=name,ssCpuUser,:eq
+  16  @@@
+
+  20  @@@ atlas-stacklang { hilite=:sum }
+  21: /api/v1/graph?q=name,ssCpuUser,:eq,:sum
+  22  @@@
+
+  96  @@@ atlas-example { hilite=:sum }
+  97: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by
+  98: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:sum
+  99  @@@
+
+asl/ref/swap.md:
+  13  @@@ atlas-stacklang
+  14: /api/v1/graph?q=a,b,:swap
+  15  @@@
+
+asl/ref/time-span.md:
+  30  @@@ atlas-example { hilite=:time-span }
+  31: Relative: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=e-30m,ge,:time-span
+  32: Absolute: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=2014-02-20T13:00,s%2B30m,:time-span
+  33  @@@
+
+asl/ref/time.md:
+  28  @@@ atlas-example
+  29: Hour of Day: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=hourOfDay,:time
+  30: Enum: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=HOUR_OF_DAY,:time
+  31  @@@
+
+asl/ref/topk-others-avg.md:
+  16  @@@ atlas-example { hilite=:topk-others-avg }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-avg
+  19  @@@
+
+asl/ref/topk-others-max.md:
+  16  @@@ atlas-example { hilite=:topk-others-max }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-max
+  19  @@@
+
+asl/ref/topk-others-min.md:
+  16  @@@ atlas-example { hilite=:topk-others-min }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-min
+  19  @@@
+
+asl/ref/topk-others-sum.md:
+  16  @@@ atlas-example { hilite=:topk-others-sum }
+  17: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  18: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-sum
+  19  @@@
+
+asl/ref/topk.md:
+  15  @@@ atlas-example { hilite=:topk }
+  16: Before: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+  17: After: /api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk
+  18  @@@
+
+asl/ref/trend.md:
+  35  @@@ atlas-example { hilite=:trend }
+  36: 5 Minutes: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,PT5M,:trend
+  37: 20 Minutes: /api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,20m,:trend
+  38  @@@
+
+asl/ref/tuck.md:
+  14  @@@ atlas-stacklang
+  15: /api/v1/graph?q=a,b,:tuck
+  16  @@@
+
+asl/ref/vspan.md:
+  15  @@@ atlas-example { hilite=:vspan }
+  16: Before: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:dup,20e3,:gt
+  17: After: /api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:dup,20e3,:gt,:vspan
+  18  @@@
+
+images/live_data_size.sh:
+  5  
+  6: curl -o live_data_size.png "http://$host/api/v1/graph?q=name,jvm.gc.liveDataSize,:eq,:sum,\$name,:legend,2,:lw,name,jvm.gc.maxDataSize,:eq,:sum,\$name,:legend,2,:lw,class,MemoryPoolMXBean,:eq,id,.*Old.*,:re,:and,name,actualUsage,:eq,:and,:sum,\$id+\$name,:legend,:list,(,nf.node,$instanceId,:eq,:cq,),:each&l=0&s=e-6h&w=400&h=200&no_legend_stats=1"
+
+spectator/core/meters/dist-summary.md:
+  20      @@@ atlas-stacklang
+  21:     /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and
+  22      @@@
+
+  33  @@@ atlas-stacklang
+  34: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-avg,(,nf.asg,),:by
+  35  @@@
+
+  43  @@@ atlas-stacklang
+  44: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-max,(,nf.asg,),:by
+  45  @@@
+
+  53  @@@ atlas-stacklang
+  54: /api/v1/graph?q=nnf.cluster,foo,:eq,name,http.req.payload.size,:eq,:and,:dist-stddev
+  55  @@@
+
+spectator/core/meters/timer.md:
+  23      @@@ atlas-stacklang
+  24:     /api/v1/graph?q=nnf.cluster,foo,:eq,name,http.req.latency,:eq,:and
+  25      @@@
+
+  36  @@@ atlas-stacklang
+  37: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg,(,nf.asg,),:by
+  38  @@@
+
+  46  @@@ atlas-stacklang
+  47: /api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-max,(,nf.asg,),:by
+  48  @@@
+
+  56  @@@ atlas-stacklang
+  57: /api/v1/graph?q=nnf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-stddev
+  58  @@@

@@ -29,9 +29,9 @@ if [ -n "$1" ]; then
 else
     # Create a batch file for sbt
     BATCH_FILE=$(mktemp)
-    
+
     echo "project atlas-eval" >> "$BATCH_FILE"
-    
+
     echo "Running all Atlas graph styles in ultra-fast batch mode..."
     for style_file in "$STYLES_DIR"/*.args; do
         if [ -f "$style_file" ]; then
@@ -42,14 +42,14 @@ else
             echo "echo \"Completed: $style_name\"" >> "$BATCH_FILE"
         fi
     done
-    
+
     echo "exit" >> "$BATCH_FILE"
-    
+
     # Run sbt in batch mode
     sbt < "$BATCH_FILE"
-    
+
     # Clean up
     rm "$BATCH_FILE"
-    
+
     echo "All styles completed!"
 fi

@@ -29,12 +29,12 @@ if [ -n "$1" ]; then
 else
     # Create a batch file for sbt - much faster than individual builds
     BATCH_FILE=$(mktemp)
-    
+
     echo "project atlas-eval" >> "$BATCH_FILE"
-    
+
     echo "Running all Atlas graph styles in optimized batch mode..."
     echo "This will be much faster than individual builds!"
-    
+
     for style_file in "$STYLES_DIR"/*.args; do
         if [ -f "$style_file" ]; then
             style_name=$(basename "$style_file" .args)
@@ -42,15 +42,15 @@ else
             echo "runMain com.netflix.atlas.eval.tools.LocalGraphRunner $ARGS" >> "$BATCH_FILE"
         fi
     done
-    
+
     echo "exit" >> "$BATCH_FILE"
-    
+
     # Run sbt in batch mode - single build, multiple runs
     time sbt < "$BATCH_FILE"
-    
+
     # Clean up
     rm "$BATCH_FILE"
-    
+
     echo ""
     echo "All styles completed! Check target/manual/ for generated files."
 fi
