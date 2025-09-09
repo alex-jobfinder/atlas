@@ -14,4 +14,3 @@ def test_render_chart_from_json_tmp(tmp_path: Path) -> None:
     render_chart_from_json(str(sample), str(out), req, overlay_wave=True, style="line")
     assert out.exists(), "PNG was not created"
     assert out.stat().st_size > 0, "PNG file is empty"
-

@@ -367,7 +367,6 @@ __all__ = [
 ]
 
 
-
 ## EXAMPLE USAGE DONT DELETE
 """
 from atlas.atlas_graph_models import (

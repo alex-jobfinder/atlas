@@ -1,7 +1,7 @@
 package com.netflix.atlas.eval.tools
 
 import com.netflix.atlas.core.db.{Database, StaticDatabase}
-import com.netflix.atlas.core.model.{DataExpr, EvalContext, TimeSeries}
+import com.netflix.atlas.core.model.{DataExpr, TimeSeries}
 import com.netflix.atlas.eval.graph.Grapher
 import com.typesafe.config.{Config, ConfigFactory, ConfigValueFactory}
 import org.apache.pekko.http.scaladsl.model.Uri
@@ -99,7 +99,7 @@ object LocalGraphRunner {
     a.h.foreach(v => params += ("h" -> v.toString))
     a.palette.foreach(v => params += ("palette" -> v))
 
-    val query = Uri.Query(params.toList)
+    val query = Uri.Query(params: _*)
     Uri("http://local/api/v1/graph").withQuery(query)
   }
 
@@ -150,10 +150,10 @@ object LocalGraphRunner {
     val msg =
       s"""
          |Usage:
-         |  runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps
-         |    --q "name,sps,:eq,(,nf.cluster,),:by" --style line
-         |    --s e-1w --e 2012-01-01T00:00 --tz UTC
-         |    --w 700 --h 300 --theme light
+         |  runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps \\
+         |    --q "name,sps,:eq,(,nf.cluster,),:by" --style line \\
+         |    --s e-1w --e 2012-01-01T00:00 --tz UTC \\
+         |    --w 700 --h 300 --theme light \\
          |    --out target/manual/sps_line.png
          |
          |Optional:

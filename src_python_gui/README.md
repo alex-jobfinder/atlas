@@ -47,5 +47,3 @@ pytest -q
 ```
 
 The test will render a small PNG from a sample JSON and assert the file exists and is non-empty.
-
-
