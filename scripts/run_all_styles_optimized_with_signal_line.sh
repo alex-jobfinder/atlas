@@ -137,7 +137,7 @@
 # Run specific style:
 #   ./scripts/run_all_styles_optimized_with_signal_line.sh line
 #
-# Available styles: line, area, area_neg, stack, stack_neg, stack_pct, 
+# Available styles: line, area, area_neg, stack, stack_neg, stack_pct,
 #                   vspan, heatmap, combination, layering
 #
 # =============================================================================

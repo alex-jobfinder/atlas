@@ -29,12 +29,12 @@ if [ -n "$1" ]; then
 else
     # Create a batch file for sbt - much faster than individual builds
     BATCH_FILE=$(mktemp)
-    
+
     echo "project atlas-eval" >> "$BATCH_FILE"
-    
+
     echo "Running all Atlas visual alert scenarios in optimized batch mode..."
     echo "This will show alert thresholds visually on charts!"
-    
+
     for alert_file in "$VISUAL_ALERTS_DIR"/*.args; do
         if [ -f "$alert_file" ]; then
             alert_name=$(basename "$alert_file" .args)
@@ -42,15 +42,15 @@ else
             echo "runMain com.netflix.atlas.eval.tools.LocalAlertRunner $ARGS" >> "$BATCH_FILE"
         fi
     done
-    
+
     echo "exit" >> "$BATCH_FILE"
-    
+
     # Run sbt in batch mode - single build, multiple runs
     time sbt < "$BATCH_FILE"
-    
+
     # Clean up
     rm "$BATCH_FILE"
-    
+
     echo ""
     echo "All visual alerts completed! Check target/manual/ for generated files."
     echo "Visual alert charts: target/manual/visual_*_alert.png"

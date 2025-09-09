@@ -73,23 +73,23 @@ object LocalAlertRunner {
 
     val db = loadPresetDb(a.preset)
     val grapher = Grapher(ConfigFactory.load())
-    
+
     // Build alert expression with threshold
     val alertExpr = buildAlertExpression(a)
     val uri = buildUri(a, alertExpr)
 
     // Evaluate the alert expression
     val alertResults = evaluateAlert(grapher, uri, db, a)
-    
+
     // Generate outputs
     if (a.generateChart) {
       generateChart(grapher, db, a)
     }
-    
+
     if (a.generateReport) {
       generateAlertReport(alertResults, a)
     }
-    
+
     // Optionally emit V2 GraphDef JSON
     a.emitV2.foreach { path =>
       val res = grapher.evalAndRender(uri, db)
@@ -109,57 +109,57 @@ object LocalAlertRunner {
     val threshold = a.threshold.getOrElse(0.0)
     val operator = a.operator.toLowerCase match {
       case "gt" => ":gt"
-      case "lt" => ":lt" 
+      case "lt" => ":lt"
       case "ge" => ":ge"
       case "le" => ":le"
       case _ => ":gt"
     }
-    
+
     s"${a.alert},$threshold,$operator"
   }
 
   private def buildVisualAlertExpression(a: Args): String = {
     val threshold = a.threshold.getOrElse(0.0)
     val operator = a.operator.toLowerCase
-    
+
     // Create a visual expression that shows both the data and the alert threshold
     val baseExpr = a.alert
-    
+
     // Add threshold line and alert zones based on operator
     operator match {
-      case "gt" => 
+      case "gt" =>
         s"$baseExpr,:dup,$threshold,:const,:line,2,:lw,red,:color,Alert Threshold,:legend"
-      case "lt" => 
+      case "lt" =>
         s"$baseExpr,:dup,$threshold,:const,:line,2,:lw,red,:color,Alert Threshold,:legend"
-      case "ge" => 
+      case "ge" =>
         s"$baseExpr,:dup,$threshold,:const,:line,2,:lw,red,:color,Alert Threshold,:legend"
-      case "le" => 
+      case "le" =>
         s"$baseExpr,:dup,$threshold,:const,:line,2,:lw,red,:color,Alert Threshold,:legend"
-      case _ => 
+      case _ =>
         s"$baseExpr,:dup,$threshold,:const,:line,2,:lw,red,:color,Alert Threshold,:legend"
     }
   }
 
   private def evaluateAlert(
-    grapher: Grapher, 
-    uri: Uri, 
-    db: Database, 
+    grapher: Grapher,
+    uri: Uri,
+    db: Database,
     args: Args
   ): List[AlertResult] = {
     val res = grapher.evalAndRender(uri, db)
     val threshold = args.threshold.getOrElse(0.0)
     val operator = args.operator.toLowerCase
-    
+
     // Extract time series data and evaluate alert conditions
     val dataExprs = res.config.exprs.flatMap(_.expr.dataExprs).distinct
     val result: Map[DataExpr, List[TimeSeries]] = dataExprs.map { expr =>
       expr -> db.execute(res.config.evalContext, expr)
     }.toMap
-    
+
     val evalResults = res.config.exprs.flatMap { exprConfig =>
       val context = res.config.evalContext
       val tsList = exprConfig.expr.eval(context, result).data
-      
+
       tsList.map { ts =>
         val boundedData = ts.data.bounded(res.config.evalContext.start, res.config.evalContext.end)
         val latestValue = if (boundedData.data.nonEmpty) boundedData.data.last else Double.NaN
@@ -170,7 +170,7 @@ object LocalAlertRunner {
           case "le" => latestValue <= threshold
           case _ => latestValue > threshold
         }
-        
+
         AlertResult(
           timestamp = Instant.now(),
           expression = args.alert,
@@ -182,13 +182,13 @@ object LocalAlertRunner {
         )
       }
     }
-    
+
     evalResults.toList
   }
 
   private def generateChart(
-    grapher: Grapher, 
-    db: Database, 
+    grapher: Grapher,
+    db: Database,
     args: Args
   ): Unit = {
     // Choose expression based on whether to show visual alert
@@ -198,7 +198,7 @@ object LocalAlertRunner {
       buildAlertExpression(args)
     }
     val chartUri = buildUri(args, chartExpr)
-    
+
     val res = grapher.evalAndRender(chartUri, db)
     val out = new java.io.File(args.out)
     Option(out.getParentFile).foreach(_.mkdirs())
@@ -211,7 +211,7 @@ object LocalAlertRunner {
     val alertOutput = args.alertOutput.getOrElse(args.out.replaceAll("\\.(png|jpg|jpeg)$", ".json"))
     val reportFile = new java.io.File(alertOutput)
     Option(reportFile.getParentFile).foreach(_.mkdirs())
-    
+
     val writer = new PrintWriter(reportFile)
     try {
       writer.println("{")
@@ -223,7 +223,7 @@ object LocalAlertRunner {
       writer.println(s"""  "total_series": ${results.length},""")
       writer.println(s"""  "triggered_count": ${results.count(_.triggered)},""")
       writer.println("  \"results\": [")
-      
+
       results.zipWithIndex.foreach { case (result, index) =>
         writer.println("    {")
         writer.println(s"""      "timestamp": "${result.timestamp}",""")
@@ -234,22 +234,22 @@ object LocalAlertRunner {
         writer.println(s"""      "tags": ${formatTags(result.tags)}""")
         writer.println("    }" + (if (index < results.length - 1) "," else ""))
       }
-      
+
       writer.println("  ]")
       writer.println("}")
     } finally {
       writer.close()
     }
-    
+
     println(s"Wrote alert report: ${reportFile.getAbsolutePath}")
-    
+
     // Print summary to console
     val triggered = results.filter(_.triggered)
     println(s"\n=== ALERT SUMMARY ===")
     println(s"Total time series evaluated: ${results.length}")
     println(s"Alerts triggered: ${triggered.length}")
     println(s"Severity: ${args.severity}")
-    
+
     if (triggered.nonEmpty) {
       println(s"\n=== TRIGGERED ALERTS ===")
       triggered.foreach { alert =>

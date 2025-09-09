@@ -3,7 +3,7 @@
 getting-started.md:
   51  # graph all metrics with a name tag value of ssCpuUser, using an :avg aggregation
   52: curl -Lo graph.png 'http://localhost:7101/api/v1/graph?q=name,ssCpuUser,:eq,:avg'
-  53  
+  53
   54  # duplicate the ssCpuUser signal, check if it is greater than 22.8 and display the result as a vertical span with 30% alpha
   55: curl -Lo graph.png 'http://localhost:7101/api/v1/graph?q=name,ssCpuUser,:eq,:avg,:dup,22.8,:gt,:vspan,30,:alpha'
   56  ```
@@ -381,9 +381,9 @@ api/graph/examples.md:
   75  @@@</p></a></td>
 
 api/graph/graph.md:
-  23  
+  23
   24: `/api/v1/graph?q=<expr>[&OPTIONS]`
-  25  
+  25
 
   35  used by the user to select and manipulate data. The simplest API query you can make is
   36: `/api/v1/graph?q=42`. This will produce a graph from Atlas with a straight line having a
@@ -2127,7 +2127,7 @@ asl/ref/vspan.md:
   18  @@@
 
 images/live_data_size.sh:
-  5  
+  5
   6: curl -o live_data_size.png "http://$host/api/v1/graph?q=name,jvm.gc.liveDataSize,:eq,:sum,\$name,:legend,2,:lw,name,jvm.gc.maxDataSize,:eq,:sum,\$name,:legend,2,:lw,class,MemoryPoolMXBean,:eq,id,.*Old.*,:re,:and,name,actualUsage,:eq,:and,:sum,\$id+\$name,:legend,:list,(,nf.node,$instanceId,:eq,:cq,),:each&l=0&s=e-6h&w=400&h=200&no_legend_stats=1"
 
 spectator/core/meters/dist-summary.md:
