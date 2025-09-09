@@ -1,0 +1,141 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Project Repository Setup",
+        "description": "Initialize the Python project repository for the Atlas-style graph wrapper and testing suite.",
+        "details": "Create a new Python project directory. Set up a virtual environment. Add a README and .gitignore. Install required libraries (matplotlib, pillow, numpy). Prepare initial folder structure: /atlas_wrapper, /tests, /examples, /docs.",
+        "testStrategy": "Verify repository structure, virtual environment activation, and successful installation of dependencies.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Design Atlas-style Graph Wrapper: Approaches",
+        "description": "Identify and document three possible designs for generating Atlas-style graphs from local data without a server.",
+        "details": "Analyze the atlas directory for style guidance. For each design, summarize approach, dependencies (matplotlib, pillow, numpy), effort/complexity, fidelity to Atlas styles (themes, palettes, ticks, scales, multi-Y, heatmap), and pros/cons. Document findings in /docs/designs.md.",
+        "testStrategy": "Review documentation for completeness, clarity, and coverage of all required aspects for each design.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Wrapper API Specification",
+        "description": "Define how ASL expressions and query parameters map to the wrapper API, including enums/models to render config.",
+        "details": "Draft API specification in /docs/api_spec.md. Map ASL expressions and query params to Python enums/models. Specify render config structure and example mappings. Ensure coverage for themes, palettes, ticks, scales, multi-Y, heatmap.",
+        "testStrategy": "Peer review API spec for completeness and alignment with Atlas requirements.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Atlas-style Graph Wrapper (Core)",
+        "description": "Develop the core Python wrapper to generate Atlas-style graphs from local data, outputting static PNG images.",
+        "details": "Implement wrapper class in /atlas_wrapper/wrapper.py. Use matplotlib for rendering, pillow for image handling, numpy for data manipulation. Ensure output matches Atlas defaults for themes, palettes, ticks, scales, multi-Y, heatmap. Provide methods for line, bar, and heatmap charts.",
+        "testStrategy": "Unit test wrapper methods for correct PNG output and style fidelity. Compare outputs to Atlas reference images.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Render Config Models and Enums",
+        "description": "Implement Python models and enums for render configuration, supporting mapping from ASL expressions and query params.",
+        "details": "Define enums for chart types, themes, palettes, axis scales, tick formats, etc. Create dataclasses/models for render config. Ensure compatibility with wrapper API and Atlas styles.",
+        "testStrategy": "Unit test model instantiation, enum mapping, and config serialization. Validate against API spec.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Static Image Output Functionality",
+        "description": "Ensure the wrapper outputs static PNG images matching Atlas defaults where possible.",
+        "details": "Integrate image output using pillow and matplotlib's savefig. Validate PNG output for correct resolution, style, and format. Store outputs in /examples/output/ for reference.",
+        "testStrategy": "Automated tests to check PNG file creation, format, and style fidelity. Visual comparison to Atlas samples.",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Example Dataset Creation",
+        "description": "Create a small local example dataset (CSV/JSON) suitable for a simple line chart.",
+        "details": "Generate example CSV and JSON files in /examples/data/. Ensure dataset covers typical use cases for line charts (multiple series, time axis, etc.). Document dataset schema.",
+        "testStrategy": "Load dataset in Python and validate structure, completeness, and suitability for line chart rendering.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Unit Tests for Wrapper and Dataset",
+        "description": "Add unit tests to load the example dataset, build a render config, and render a PNG image.",
+        "details": "Implement tests in /tests/test_wrapper.py. Test dataset loading, render config creation via models/enums, and PNG rendering. Use pytest for test automation.",
+        "testStrategy": "Run tests to ensure dataset loads, config builds, and PNG renders without errors. Check for deterministic output.",
+        "priority": "high",
+        "dependencies": [
+          5,
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Golden Image and Metric-based Assertions",
+        "description": "Include golden-image or metric-based assertions to validate rendering deterministically.",
+        "details": "Store reference PNGs in /tests/golden/. Implement image comparison tests (pixel-wise or perceptual hash) to assert output matches golden images. Optionally, use metrics (e.g., histogram similarity) for validation.",
+        "testStrategy": "Run image comparison tests to ensure rendered images match golden references within tolerance.",
+        "priority": "high",
+        "dependencies": [
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Quickstart Example and Documentation",
+        "description": "Provide a quickstart example referencing the dataset and wrapper API, with usage instructions.",
+        "details": "Create /examples/quickstart.py demonstrating dataset loading, config creation, and PNG rendering. Update README with step-by-step instructions and API usage. Ensure documentation is clear and concise.",
+        "testStrategy": "Follow quickstart instructions from scratch to verify reproducibility and clarity for new users.",
+        "priority": "medium",
+        "dependencies": [
+          6,
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-09T19:48:53.205Z",
+      "updated": "2025-09-09T19:48:53.205Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
