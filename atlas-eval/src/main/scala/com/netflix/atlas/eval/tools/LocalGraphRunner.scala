@@ -99,7 +99,7 @@ object LocalGraphRunner {
     a.h.foreach(v => params += ("h" -> v.toString))
     a.palette.foreach(v => params += ("palette" -> v))
 
-    val query = Uri.Query(params: _*)
+    val query = Uri.Query(params.toSeq: _*)
     Uri("http://local/api/v1/graph").withQuery(query)
   }
 
