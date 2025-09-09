@@ -1,0 +1,59 @@
+
+# Tmp files created by vim
+*.swp
+
+# Compiled sources
+*.class
+
+# Anything in target dirs
+build
+gh-pages-build
+target
+
+# Ivy caches
+.bsp
+.gradle
+.ivy2
+.ivy2.cache
+.sbt
+
+# Intellij
+*.iml
+*.ipr
+*.iws
+
+# anything in .idea dirs
+.idea
+.idea_modules
+out
+*.pyc
+*.jar
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dev-debug.log
+# Dependency directories
+node_modules/
+# Environment variables
+.env
+# Editor directories and files
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+.DS_Store
+
+# Task files
+# tasks.json
+# tasks/
+
+.cursor/mcp.json
+.cursor/mcp.json
+.cursor/mcp.json
