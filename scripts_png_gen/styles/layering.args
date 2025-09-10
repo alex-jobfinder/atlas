@@ -1,1 +1,1 @@
---preset sps --q "t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack" --s e-2d --e 2015-03-10T13:13 --tz UTC --theme light --w 700 --h 300 --no-legend --out target/manual/sps_layering.png --emit-v2 target/manual/sps_layering.v2.json.gz
+--preset sps --q "t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack" --s e-2d --e 2015-03-10T13:13 --tz UTC --theme light --w 700 --h 300 --no-legend --out scripts_png_gen/output/sps_layering.png --emit-v2 scripts_png_gen/output/sps_layering.v2.json.gz

@@ -2,8 +2,8 @@
 # Atlas Visual Alert Runner - Shows alert rules visually on charts
 # Usage: ./run_visual_alerts.sh [alert_name]
 
-VISUAL_ALERTS_DIR="scripts/visual_alerts"
-OUTPUT_DIR="target/manual"
+VISUAL_ALERTS_DIR="scripts_png_gen/visual_alerts"
+OUTPUT_DIR="scripts_png_gen/output/visual_alerts"
 
 if [ ! -d "$VISUAL_ALERTS_DIR" ]; then
     echo "Visual alerts directory not found: $VISUAL_ALERTS_DIR"
@@ -52,7 +52,7 @@ else
     rm "$BATCH_FILE"
 
     echo ""
-    echo "All visual alerts completed! Check target/manual/ for generated files."
-    echo "Visual alert charts: target/manual/visual_*_alert.png"
-    echo "Alert reports: target/manual/visual_*_alert_report.json"
+    echo "All visual alerts completed! Check scripts_png_gen/output/ for generated files."
+    echo "Visual alert charts: scripts_png_gen/output/visual_*_alert.png"
+    echo "Alert reports: scripts_png_gen/output/visual_*_alert_report.json"
 fi

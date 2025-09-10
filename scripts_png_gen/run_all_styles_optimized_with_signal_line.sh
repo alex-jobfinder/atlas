@@ -101,8 +101,8 @@
 # ┌─────────────────────────────────────────────────────────────────────────┐
 # │  For each style, generates:                                            │
 # │                                                                         │
-# │  📊 PNG Chart:     target/manual/sps_[style]_with_alert.png            │
-# │  📄 V2 JSON:       target/manual/sps_[style]_with_alert.v2.json.gz     │
+# │  📊 PNG Chart:     scripts_png_gen/output/sps_[style]_with_alert.png            │
+# │  📄 V2 JSON:       scripts_png_gen/output/sps_[style]_with_alert.v2.json.gz     │
 # │                                                                         │
 # │  Example outputs:                                                       │
 # │  • sps_line_with_alert.png        (Line chart with alert zones)        │
@@ -132,18 +132,18 @@
 # =============================================================================
 #
 # Run all styles with alert visualizations:
-#   ./scripts/run_all_styles_optimized_with_signal_line.sh
+#   ./scripts_png_gen/run_all_styles_optimized_with_signal_line.sh
 #
 # Run specific style:
-#   ./scripts/run_all_styles_optimized_with_signal_line.sh line
+#   ./scripts_png_gen/run_all_styles_optimized_with_signal_line.sh line
 #
 # Available styles: line, area, area_neg, stack, stack_neg, stack_pct,
 #                   vspan, heatmap, combination, layering
 #
 # =============================================================================
 
-STYLES_DIR="scripts/styles_with_signal_line"
-OUTPUT_DIR="target/manual"
+STYLES_DIR="scripts_png_gen/styles_with_signal_line"
+OUTPUT_DIR="scripts_png_gen/output/styles_with_signal_line"
 
 if [ ! -d "$STYLES_DIR" ]; then
     echo "Styles directory not found: $STYLES_DIR"
@@ -192,6 +192,19 @@ else
     rm "$BATCH_FILE"
 
     echo ""
-    echo "All styles with alert visualizations completed! Check target/manual/ for generated files."
+    echo "All styles with alert visualizations completed! Check scripts_png_gen/output/ for generated files."
     echo "Files: *_with_alert.png - Charts showing input, threshold, and triggering state"
 fi
+# chmod +x scripts_png_gen/run_all_styles_optimized_with_signal_line.sh
+# ./scripts_png_gen/run_all_styles_optimized_with_signal_line.sh
+# ./scripts_png_gen/run_all_styles_optimized_with_signal_line.sh line
+
+# chmod +x scripts_png_gen/atlas_cli_helper.sh
+# chmod +x scripts_png_gen/meta-iam-url.sh
+# chmod +x scripts_png_gen/publish-test.sh
+# chmod +x scripts_png_gen/run_all_styles_optimized_with_signal_line.sh
+# chmod +x scripts_png_gen/run_all_styles_optimized.sh
+# chmod +x scripts_png_gen/run_visual_alerts.sh
+# chmod +x scripts_png_gen/write-aws-credentials.sh
+
+# source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 17.0.12-tem && sdk use java 17.0.12-tem && java -version && export JAVA_TOOL_OPTIONS="-Djava.awt.headless=true" && cd /home/alex/dbt_ads/atlas && sbt "atlas-chart/testOnly com.netflix.atlas.chart.DefaultGraphEngineSuite -- -z heatmap_basic" | cat

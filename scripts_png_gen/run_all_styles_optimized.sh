@@ -2,8 +2,8 @@
 # Atlas Graph Style Templates Runner - Optimized Batch Version
 # Usage: ./run_all_styles_optimized.sh [style_name]
 
-STYLES_DIR="scripts/styles"
-OUTPUT_DIR="target/manual"
+STYLES_DIR="scripts_png_gen/styles"
+OUTPUT_DIR="scripts_png_gen/output/styles"
 
 if [ ! -d "$STYLES_DIR" ]; then
     echo "Styles directory not found: $STYLES_DIR"
@@ -52,5 +52,5 @@ else
     rm "$BATCH_FILE"
 
     echo ""
-    echo "All styles completed! Check target/manual/ for generated files."
+    echo "All styles completed! Check scripts_png_gen/output/ for generated files."
 fi

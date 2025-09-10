@@ -158,7 +158,7 @@ object LocalGraphRunner {
          |
          |Optional:
          |  --emit-v2 target/manual/sps_line.v2.json.gz   # write GraphDef (V2) alongside PNG
-         |  --save-template scripts/sps_line.args         # save a reusable args file
+         |  --save-template scripts_png_gen/sps_line.args         # save a reusable args file
          |
          |Notes:
          |  - --style can be: line (default), area, stack. It is appended to the ASL.

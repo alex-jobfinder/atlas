@@ -360,7 +360,7 @@ object LocalAlertRunner {
          |
          |Optional:
          |  --emit-v2 target/manual/alert.v2.json.gz   # write GraphDef (V2) alongside PNG
-         |  --save-template scripts/alert.args         # save a reusable args file
+         |  --save-template scripts_png_gen/alert.args         # save a reusable args file
          |
          |Notes:
          |  - Alert expressions use Atlas Query Language (AQL)

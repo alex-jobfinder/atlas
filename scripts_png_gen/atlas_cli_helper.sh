@@ -1,6 +1,6 @@
 #!/bin/bash
 # Atlas CLI Helper Script - Complete Documentation and Examples
-# Usage: ./scripts/atlas_cli_helper.sh [command] [options]
+# Usage: ./scripts_png_gen/atlas_cli_helper.sh [command] [options]
 #
 # =============================================================================
 # ATLAS CLI HELPER SCRIPT
@@ -70,11 +70,11 @@ show_help() {
     echo "  show-template - Show template content"
     echo ""
     echo "EXAMPLES:"
-    echo "  ./scripts/atlas_cli_helper.sh help"
-    echo "  ./scripts/atlas_cli_helper.sh graph"
-    echo "  ./scripts/atlas_cli_helper.sh alert"
-    echo "  ./scripts/atlas_cli_helper.sh list-templates"
-    echo "  ./scripts/atlas_cli_helper.sh show-template line"
+    echo "  ./scripts_png_gen/atlas_cli_helper.sh help"
+    echo "  ./scripts_png_gen/atlas_cli_helper.sh graph"
+    echo "  ./scripts_png_gen/atlas_cli_helper.sh alert"
+    echo "  ./scripts_png_gen/atlas_cli_helper.sh list-templates"
+    echo "  ./scripts_png_gen/atlas_cli_helper.sh show-template line"
     echo ""
 }
 
@@ -114,19 +114,19 @@ show_graph_docs() {
     print_section "📊 Example Commands:"
 
     print_example "1. Basic Line Chart:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by' --style line --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/my_chart.png\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by' --style line --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/my_chart.png\""
     echo ""
 
     print_example "2. Area Chart with Alert Visualization:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,sps,:eq,(,nf.cluster,),:by,:area,input,:legend,:rot,50e3,:const,threshold,:legend,:rot' --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/my_area_with_alert.png\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,sps,:eq,(,nf.cluster,),:by,:area,input,:legend,:rot,50e3,:const,threshold,:legend,:rot' --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/my_area_with_alert.png\""
     echo ""
 
     print_example "3. Stack Chart:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by,:stack' --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/my_stack.png\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by,:stack' --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/my_stack.png\""
     echo ""
 
     print_example "4. Heatmap:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by,:heatmap' --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/my_heatmap.png\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner --preset sps --q 'name,sps,:eq,(,nf.cluster,),:by,:heatmap' --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/my_heatmap.png\""
     echo ""
 
     print_section "🔧 AQL Expression Examples:"
@@ -181,15 +181,15 @@ show_alert_docs() {
     print_section "📊 Example Commands:"
 
     print_example "1. Basic Alert Evaluation:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalAlertRunner --preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 1000 --operator lt --severity INFO --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/throughput_alert.png --alert-output target/manual/throughput_alert_report.json\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalAlertRunner --preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 1000 --operator lt --severity INFO --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/throughput_alert.png --alert-output scripts_png_gen/output/throughput_alert_report.json\""
     echo ""
 
     print_example "2. Alert with Visual Overlay:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalAlertRunner --preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 50000 --operator gt --severity WARN --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/cpu_alert.png --alert-output target/manual/cpu_alert_report.json --show-visual-alert\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalAlertRunner --preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 50000 --operator gt --severity WARN --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/cpu_alert.png --alert-output scripts_png_gen/output/cpu_alert_report.json --show-visual-alert\""
     echo ""
 
     print_example "3. High CPU Alert:"
-    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalAlertRunner --preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 80000 --operator gt --severity ERROR --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/high_cpu_alert.png --alert-output target/manual/high_cpu_alert_report.json\""
+    echo "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalAlertRunner --preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 80000 --operator gt --severity ERROR --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/high_cpu_alert.png --alert-output scripts_png_gen/output/high_cpu_alert_report.json\""
     echo ""
 
     print_section "🔧 Alert Expression Examples:"
@@ -204,42 +204,42 @@ show_alert_docs() {
 list_templates() {
     print_header "AVAILABLE TEMPLATES"
 
-    print_section "📁 Graph Style Templates (scripts/styles_with_signal_line/):"
-    if [ -d "scripts/styles_with_signal_line" ]; then
-        for template in scripts/styles_with_signal_line/*.args; do
+    print_section "📁 Graph Style Templates (scripts_png_gen/styles_with_signal_line/):"
+    if [ -d "scripts_png_gen/styles_with_signal_line" ]; then
+        for template in scripts_png_gen/styles_with_signal_line/*.args; do
             if [ -f "$template" ]; then
                 template_name=$(basename "$template" .args)
                 echo "• $template_name"
             fi
         done
     else
-        print_error "Templates directory not found: scripts/styles_with_signal_line/"
+        print_error "Templates directory not found: scripts_png_gen/styles_with_signal_line/"
     fi
     echo ""
 
-    print_section "📁 Alert Templates (scripts/alerts/):"
-    if [ -d "scripts/alerts" ]; then
-        for template in scripts/alerts/*.args; do
+    print_section "📁 Alert Templates (scripts_png_gen/alerts/):"
+    if [ -d "scripts_png_gen/alerts" ]; then
+        for template in scripts_png_gen/alerts/*.args; do
             if [ -f "$template" ]; then
                 template_name=$(basename "$template" .args)
                 echo "• $template_name"
             fi
         done
     else
-        print_error "Alert templates directory not found: scripts/alerts/"
+        print_error "Alert templates directory not found: scripts_png_gen/alerts/"
     fi
     echo ""
 
-    print_section "📁 Visual Alert Templates (scripts/visual_alerts/):"
-    if [ -d "scripts/visual_alerts" ]; then
-        for template in scripts/visual_alerts/*.args; do
+    print_section "📁 Visual Alert Templates (scripts_png_gen/visual_alerts/):"
+    if [ -d "scripts_png_gen/visual_alerts" ]; then
+        for template in scripts_png_gen/visual_alerts/*.args; do
             if [ -f "$template" ]; then
                 template_name=$(basename "$template" .args)
                 echo "• $template_name"
             fi
         done
     else
-        print_error "Visual alert templates directory not found: scripts/visual_alerts/"
+        print_error "Visual alert templates directory not found: scripts_png_gen/visual_alerts/"
     fi
     echo ""
 }
@@ -248,7 +248,7 @@ list_templates() {
 show_template() {
     if [ -z "$1" ]; then
         print_error "Please specify a template name"
-        echo "Usage: ./scripts/atlas_cli_helper.sh show-template <template_name>"
+        echo "Usage: ./scripts_png_gen/atlas_cli_helper.sh show-template <template_name>"
         echo ""
         echo "Available templates:"
         list_templates
@@ -259,12 +259,12 @@ show_template() {
     template_file=""
 
     # Search for template in different directories
-    if [ -f "scripts/styles_with_signal_line/${template_name}.args" ]; then
-        template_file="scripts/styles_with_signal_line/${template_name}.args"
-    elif [ -f "scripts/alerts/${template_name}.args" ]; then
-        template_file="scripts/alerts/${template_name}.args"
-    elif [ -f "scripts/visual_alerts/${template_name}.args" ]; then
-        template_file="scripts/visual_alerts/${template_name}.args"
+    if [ -f "scripts_png_gen/styles_with_signal_line/${template_name}.args" ]; then
+        template_file="scripts_png_gen/styles_with_signal_line/${template_name}.args"
+    elif [ -f "scripts_png_gen/alerts/${template_name}.args" ]; then
+        template_file="scripts_png_gen/alerts/${template_name}.args"
+    elif [ -f "scripts_png_gen/visual_alerts/${template_name}.args" ]; then
+        template_file="scripts_png_gen/visual_alerts/${template_name}.args"
     else
         print_error "Template not found: $template_name"
         echo ""
@@ -290,10 +290,10 @@ show_template() {
 run_graph() {
     if [ -z "$1" ]; then
         print_error "Please provide arguments for LocalGraphRunner"
-        echo "Usage: ./scripts/atlas_cli_helper.sh run-graph \"[OPTIONS]\""
+        echo "Usage: ./scripts_png_gen/atlas_cli_helper.sh run-graph \"[OPTIONS]\""
         echo ""
         echo "Example:"
-        echo "./scripts/atlas_cli_helper.sh run-graph \"--preset sps --q 'name,sps,:eq,(,nf.cluster,),:by' --style line --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/my_chart.png\""
+        echo "./scripts_png_gen/atlas_cli_helper.sh run-graph \"--preset sps --q 'name,sps,:eq,(,nf.cluster,),:by' --style line --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/my_chart.png\""
         return 1
     fi
 
@@ -311,10 +311,10 @@ run_graph() {
 run_alert() {
     if [ -z "$1" ]; then
         print_error "Please provide arguments for LocalAlertRunner"
-        echo "Usage: ./scripts/atlas_cli_helper.sh run-alert \"[OPTIONS]\""
+        echo "Usage: ./scripts_png_gen/atlas_cli_helper.sh run-alert \"[OPTIONS]\""
         echo ""
         echo "Example:"
-        echo "./scripts/atlas_cli_helper.sh run-alert \"--preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 1000 --operator lt --severity INFO --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/throughput_alert.png --alert-output target/manual/throughput_alert_report.json\""
+        echo "./scripts_png_gen/atlas_cli_helper.sh run-alert \"--preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 1000 --operator lt --severity INFO --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/throughput_alert.png --alert-output scripts_png_gen/output/throughput_alert_report.json\""
         return 1
     fi
 
@@ -359,24 +359,24 @@ case "$1" in
         ;;
 esac
 
-# chmod +x scripts/atlas_cli_helper.sh
+# chmod +x scripts_png_gen/atlas_cli_helper.sh
 # # Show help
-# ./scripts/atlas_cli_helper.sh help
+# ./scripts_png_gen/atlas_cli_helper.sh help
 
 # # Show graph documentation
-# ./scripts/atlas_cli_helper.sh graph
+# ./scripts_png_gen/atlas_cli_helper.sh graph
 
 # # Show alert documentation
-# ./scripts/atlas_cli_helper.sh alert
+# ./scripts_png_gen/atlas_cli_helper.sh alert
 
 # # List all templates
-# ./scripts/atlas_cli_helper.sh list-templates
+# ./scripts_png_gen/atlas_cli_helper.sh list-templates
 
 # # Show specific template content
-# ./scripts/atlas_cli_helper.sh show-template line
+# ./scripts_png_gen/atlas_cli_helper.sh show-template line
 
 # # Run graph directly
-# ./scripts/atlas_cli_helper.sh run-graph "--preset sps --q 'name,sps,:eq,(,nf.cluster,),:by' --style line --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/my_chart.png"
+# ./scripts_png_gen/atlas_cli_helper.sh run-graph "--preset sps --q 'name,sps,:eq,(,nf.cluster,),:by' --style line --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/my_chart.png"
 
 # # Run alert directly
-# ./scripts/atlas_cli_helper.sh run-alert "--preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 1000 --operator lt --severity INFO --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/throughput_alert.png --alert-output target/manual/throughput_alert_report.json"
+# ./scripts_png_gen/atlas_cli_helper.sh run-alert "--preset sps --alert 'name,sps,:eq,(,nf.cluster,),:by' --threshold 1000 --operator lt --severity INFO --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/throughput_alert.png --alert-output scripts_png_gen/output/throughput_alert_report.json"
