@@ -105,3 +105,4 @@ public enum VisionType {
     return new Color(br, bg, bb, ba);
   }
 }
+

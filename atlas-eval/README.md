@@ -51,14 +51,14 @@ Each `DataSource` for the input has a string id that will be added to correspond
 the correct input by the user.
 
 ### Data Rate Messages
-The library also emits data rate messages to help gain insights in the data rate per `DataSource`
+The library also emits data rate messages to help gain insights in the data rate per `DataSource` 
 per step. There are 3 type of data sizes in a data rate message:
  - Input size: number of data points coming in as raw input.
  - Intermediate size: number of aggregate data points that are used in the eval step.
  - Output size: number of data points for the final result.
 
-The "size" has the 2 fields:
- - `total`: total number of data points
+The "size" has the 2 fields: 
+ - `total`: total number of data points 
  - `details`: number of data points per data expression (empty for "outputSize")
 
 For example, given a query of "app,www,:eq,name,request,:eq,:and,:sum,(,cluster,),:by" with 4 nodes
