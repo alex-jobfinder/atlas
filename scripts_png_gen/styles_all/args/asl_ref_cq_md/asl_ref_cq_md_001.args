@@ -1,0 +1,1 @@
+--preset alerts --q "name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq,:cq" --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_cq_md/asl_ref_cq_md_001.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_cq_md/asl_ref_cq_md_001.v2.json.gz

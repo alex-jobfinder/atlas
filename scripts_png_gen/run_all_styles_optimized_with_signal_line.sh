@@ -101,8 +101,8 @@
 # ┌─────────────────────────────────────────────────────────────────────────┐
 # │  For each style, generates:                                            │
 # │                                                                         │
-# │  📊 PNG Chart:     scripts_png_gen/output/sps_[style]_with_alert.png            │
-# │  📄 V2 JSON:       scripts_png_gen/output/sps_[style]_with_alert.v2.json.gz     │
+# │  📊 PNG Chart:     target/manual/sps_[style]_with_alert.png            │
+# │  📄 V2 JSON:       target/manual/sps_[style]_with_alert.v2.json.gz     │
 # │                                                                         │
 # │  Example outputs:                                                       │
 # │  • sps_line_with_alert.png        (Line chart with alert zones)        │
@@ -142,7 +142,7 @@
 #
 # =============================================================================
 
-STYLES_DIR="scripts_png_gen/styles_with_signal_line"
+STYLES_DIR="scripts_png_gen/input_args/styles_with_signal_line"
 OUTPUT_DIR="scripts_png_gen/output/styles_with_signal_line"
 
 if [ ! -d "$STYLES_DIR" ]; then

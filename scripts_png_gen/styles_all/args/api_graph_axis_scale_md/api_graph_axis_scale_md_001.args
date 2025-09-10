@@ -1,0 +1,1 @@
+--preset sps --q "minuteOfHour,:time,1e3,:add,minuteOfHour,:time" --e 2012-01-01T00:00 --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_axis_scale_md/api_graph_axis_scale_md_001.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_axis_scale_md/api_graph_axis_scale_md_001.v2.json.gz

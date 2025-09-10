@@ -2,7 +2,7 @@
 # Atlas Visual Alert Runner - Shows alert rules visually on charts
 # Usage: ./run_visual_alerts.sh [alert_name]
 
-VISUAL_ALERTS_DIR="scripts_png_gen/visual_alerts"
+VISUAL_ALERTS_DIR="scripts_png_gen/input_args/visual_alerts"
 OUTPUT_DIR="scripts_png_gen/output/visual_alerts"
 
 if [ ! -d "$VISUAL_ALERTS_DIR" ]; then
