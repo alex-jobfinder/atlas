@@ -185,4 +185,3 @@ lazy val `atlas-webapi` = project
     Dependencies.pekkoHttpTestkit % "test",
     Dependencies.pekkoStreamTestkit % "test"
   ))
-

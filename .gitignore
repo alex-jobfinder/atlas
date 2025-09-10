@@ -22,7 +22,5 @@ target
 *.ipr
 *.iws
 
-# anything in .idea dirs
-.idea
-.idea_modules
-out
+.cursor/mcp.json
+.env
