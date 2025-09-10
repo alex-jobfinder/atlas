@@ -1,0 +1,38 @@
+{
+  "api_endpoint": "http://localhost:7101",
+  "auth_token": null,
+  "default_time_range": {
+    "start": "e-1h",
+    "end": "now",
+    "step": "60s"
+  },
+  "chart_settings": {
+    "width": 800,
+    "height": 400,
+    "theme": "light",
+    "colors": [
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#96CEB4",
+      "#FFEAA7"
+    ]
+  },
+  "node_settings": {
+    "default_width": 200,
+    "default_height": 150,
+    "show_debug_info": false
+  },
+  "atlas_integration": {
+    "supported_formats": ["v1", "v2"],
+    "query_timeout": 30,
+    "max_data_points": 10000,
+    "cache_enabled": true,
+    "cache_ttl": 300
+  },
+  "default_dataset": {
+    "enabled": true,
+    "path": "data/default_dataset.json",
+    "auto_load": true
+  }
+}
