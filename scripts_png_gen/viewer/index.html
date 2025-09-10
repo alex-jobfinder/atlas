@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atlas Local Viewer</title>
+  <link rel="stylesheet" href="https://unpkg.com/uplot@1.6.30/dist/uPlot.min.css" />
+  <style>
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    header { padding: 10px 12px; background: #111; color: #eee; display: flex; gap: 8px; align-items: center; }
+    header input[type="text"] { width: 640px; padding: 6px 8px; }
+    header button, header select { padding: 6px 8px; }
+    #chart { margin: 10px; }
+    #meta { margin: 10px; color: #666; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <span>Q:</span>
+    <input id="q" type="text" value="name,sps,:eq,(,nf.cluster,),:by" />
+    <label>Range:
+      <select id="range">
+        <option value="e-6h">Last 6h</option>
+        <option value="e-12h">Last 12h</option>
+        <option value="e-1d">Last 1d</option>
+        <option value="e-2d" selected>Last 2d</option>
+        <option value="e-1w">Last 1w</option>
+      </select>
+    </label>
+    <label>Theme:
+      <select id="theme">
+        <option value="light" selected>light</option>
+        <option value="dark">dark</option>
+      </select>
+    </label>
+    <label>Preset:
+      <select id="preset">
+        <option value="sps" selected>sps</option>
+        <option value="alerts">alerts</option>
+        <option value="demo">demo</option>
+        <option value="range">range</option>
+      </select>
+    </label>
+    <button id="run">Run</button>
+    <a id="png" href="#" target="_blank" style="color:#9cf">Download PNG</a>
+  </header>
+  <div id="meta"></div>
+  <div id="chart"></div>
+  <script src="https://unpkg.com/uplot@1.6.30/dist/uPlot.iife.min.js"></script>
+  <script>
+    const elQ = document.getElementById('q');
+    const elR = document.getElementById('range');
+    const elTheme = document.getElementById('theme');
+    const elPreset = document.getElementById('preset');
+    const elRun = document.getElementById('run');
+    const elMeta = document.getElementById('meta');
+    const elChart = document.getElementById('chart');
+    const elPng = document.getElementById('png');
+
+    let u = null;
+
+    function buildUrl(base, params) {
+      const q = new URLSearchParams(params);
+      return base + '?' + q.toString();
+    }
+
+    function fmtTs(ms) {
+      const d = new Date(ms);
+      return d.toISOString().replace('T', ' ').replace('Z','Z');
+    }
+
+    async function fetchGraphDef(params) {
+      const url = buildUrl('/local/graphdef', params);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      // V2 JSON is a JSON array; we need to parse manually
+      const text = await res.text();
+      return JSON.parse(text);
+    }
+
+    function decodeGraph(jsonArr) {
+      // Extract metadata and series data
+      const meta = jsonArr.find(x => x.type === 'graph-metadata');
+      const lines = jsonArr.filter(x => x.type === 'timeseries');
+      const start = meta.startTime;
+      const end = meta.endTime;
+      const step = meta.step;
+
+      // x values are timestamps from start..end-step
+      const x = [];
+      for (let t = start; t < end; t += step) x.push(t / 1000);
+
+      const series = [{
+        label: 'time',
+        values: x,
+      }];
+
+      for (const ln of lines) {
+        series.push({
+          label: ln.label,
+          color: '#' + ln.color.slice(2), // drop ARGB alpha
+          values: ln.data.values,
+        });
+      }
+
+      return { meta, series };
+    }
+
+    function render({ meta, series }) {
+      elMeta.textContent = `${fmtTs(meta.startTime)} → ${fmtTs(meta.endTime)} · step=${meta.step}ms · theme=${meta.theme}`;
+      const data = [];
+      const x = series[0].values;
+      data.push(x);
+      for (let i = 1; i < series.length; i++) data.push(series[i].values);
+
+      const height = 420;
+      const themeDark = elTheme.value === 'dark';
+
+      const opts = {
+        width: Math.min(window.innerWidth - 40, 1200),
+        height,
+        series: series.map((s, idx) => idx === 0 ? { label: 'time' } : {
+          label: s.label,
+          stroke: s.color,
+        }),
+        scales: {
+          x: { time: true },
+        },
+        axes: [
+          {},
+          { stroke: themeDark ? 'white' : 'black' }
+        ],
+      };
+
+      if (u) { u.destroy(); u = null; }
+      u = new uPlot(opts, data, elChart);
+
+      // Basic zoom: drag to select -> re-fetch with narrowed time range
+      let mouseDown = null;
+      elChart.onmousedown = (ev) => { mouseDown = ev.clientX; };
+      elChart.onmouseup = async (ev) => {
+        if (mouseDown == null) return;
+        const dx = Math.abs(ev.clientX - mouseDown);
+        mouseDown = null;
+        if (dx < 10) return; // small click
+        const min = u.posToVal(Math.min(ev.clientX, ev.clientX - dx), 'x');
+        const max = u.posToVal(Math.max(ev.clientX, ev.clientX + dx), 'x');
+        const s = 's=' + Math.floor(min) * 1000;
+        const e = 'e=' + Math.floor(max) * 1000;
+        await run({ overrideSE: [s, e] });
+      };
+    }
+
+    async function run({ overrideSE } = {}) {
+      const q = elQ.value;
+      const s = elR.value; // relative by default
+      const baseParams = {
+        v: 'v2',
+        q,
+        s,
+        theme: elTheme.value,
+        tz: 'UTC',
+        preset: elPreset.value,
+        w: 900,
+        h: 420,
+      };
+
+      const params = { ...baseParams };
+      if (overrideSE && overrideSE.length === 2) {
+        // Convert absolute ms to ISO for Atlas evaluator
+        delete params.s;
+        const [sAbs, eAbs] = overrideSE;
+        params.s = new Date(parseInt(sAbs.split('=')[1], 10)).toISOString();
+        params.e = new Date(parseInt(eAbs.split('=')[1], 10)).toISOString();
+      }
+
+      // Update PNG link
+      elPng.href = buildUrl('/local/png', params);
+
+      const arr = await fetchGraphDef(params);
+      const decoded = decodeGraph(arr);
+      render(decoded);
+    }
+
+    elRun.onclick = () => run();
+    window.addEventListener('load', () => run());
+  </script>
+</body>
+</html>
