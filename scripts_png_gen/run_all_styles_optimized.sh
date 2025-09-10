@@ -2,7 +2,7 @@
 # Atlas Graph Style Templates Runner - Optimized Batch Version
 # Usage: ./run_all_styles_optimized.sh [style_name]
 
-STYLES_DIR="scripts_png_gen/styles"
+STYLES_DIR="scripts_png_gen/input_args/styles"
 OUTPUT_DIR="scripts_png_gen/output/styles"
 
 if [ ! -d "$STYLES_DIR" ]; then

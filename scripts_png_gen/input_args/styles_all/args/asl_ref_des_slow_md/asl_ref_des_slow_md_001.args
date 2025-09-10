@@ -1,0 +1,1 @@
+--preset sps --q "name,sps,:eq,:sum,:des-slow" --s e-3h --e 2014-02-20T15:01 --tz US/Pacific --theme light --w 200 --h 125 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_des_slow_md/asl_ref_des_slow_md_001.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_des_slow_md/asl_ref_des_slow_md_001.v2.json.gz

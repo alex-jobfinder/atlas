@@ -1,0 +1,1 @@
+--preset sps --q "1,1,1,1,1,1,1" --e 2012-01-01T09:00 --tz UTC --no-legend --theme light --w 700 --h 300 --style stack --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_vision_md/api_graph_vision_md_009.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_vision_md/api_graph_vision_md_009.v2.json.gz
