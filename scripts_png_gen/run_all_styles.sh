@@ -142,7 +142,7 @@
 #
 # =============================================================================
 
-STYLES_DIR="scripts_png_gen/styles_all/args"
+STYLES_DIR="scripts_png_gen/input_args/styles_all/args"
 OUTPUT_DIR="scripts_png_gen/output/styles_all"
 
 if [ ! -d "$STYLES_DIR" ]; then
@@ -214,6 +214,7 @@ fi
 # chmod +x scripts_png_gen/run_all_styles.sh
 # chmod +x scripts_png_gen/run_all_styles_optimized.sh
 # chmod +x scripts_png_gen/run_visual_alerts.sh
+# chmod +x scripts_png_gen/run_all_styles.sh
 # chmod +x scripts_png_gen/write-aws-credentials.sh
 
 # source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 17.0.12-tem && sdk use java 17.0.12-tem && java -version && export JAVA_TOOL_OPTIONS="-Djava.awt.headless=true" && cd /home/alex/dbt_ads/atlas && sbt "atlas-chart/testOnly com.netflix.atlas.chart.DefaultGraphEngineSuite -- -z heatmap_basic" | cat

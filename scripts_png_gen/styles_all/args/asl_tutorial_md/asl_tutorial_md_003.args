@@ -1,0 +1,1 @@
+--preset sps --q "app,www,:eq,name,cpuUsage,:eq,:and" --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_tutorial_md/asl_tutorial_md_003.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_tutorial_md/asl_tutorial_md_003.v2.json.gz

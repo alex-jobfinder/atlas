@@ -1,0 +1,1 @@
+--preset sps --q "hourOfDay,:time,minuteOfHour,:time,NaN" --s e-5m --e 2012-01-01T09:00 --tz UTC --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_outputs_md/api_graph_outputs_md_005.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_outputs_md/api_graph_outputs_md_005.v2.json.gz

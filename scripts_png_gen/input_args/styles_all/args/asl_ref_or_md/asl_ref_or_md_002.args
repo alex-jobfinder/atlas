@@ -1,0 +1,1 @@
+--preset sps --q "minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt" --s e-3h --e 2012-01-01T07:00 --tz UTC --no-legend --theme light --w 200 --h 125 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_or_md/asl_ref_or_md_002.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_or_md/asl_ref_or_md_002.v2.json.gz

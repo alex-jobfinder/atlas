@@ -1,0 +1,1 @@
+--preset sps --q "name,ssCpuUser,:eq,:sum" --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_sum_md/asl_ref_sum_md_002.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_sum_md/asl_ref_sum_md_002.v2.json.gz

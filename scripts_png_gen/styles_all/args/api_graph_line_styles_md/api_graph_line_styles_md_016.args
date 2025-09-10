@@ -1,0 +1,1 @@
+--preset sps --q "name,sps,:eq,50e3,:gt,:vspan" --s e-1w --e 2012-01-01T00:00 --no-legend --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_line_styles_md/api_graph_line_styles_md_016.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/api_graph_line_styles_md/api_graph_line_styles_md_016.v2.json.gz

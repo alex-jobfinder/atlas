@@ -1,0 +1,1 @@
+--preset sps --q "e-30m,ge,:time-span" --s e-3h --e 2012-01-01T07:00 --tz UTC --theme light --w 200 --h 125 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_time_span_md/asl_ref_time_span_md_001.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_time_span_md/asl_ref_time_span_md_001.v2.json.gz
