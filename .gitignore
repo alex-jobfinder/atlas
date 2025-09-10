@@ -57,3 +57,25 @@ node_modules/
 .cursor/mcp.json
 .cursor/mcp.json
 .cursor/mcp.json
+
+# Large ONNX model files (too big for GitHub)
+*.onnx
+dearpygui_gui_examples/Image-Processing-Node-Editor/node/deep_learning_node/**/*.onnx
+dearpygui_gui_examples/Image-Processing-Node-Editor/node/deep_learning_node/monocular_depth_estimation/FSRE_Depth/fsre_depth_192x320/fsre_depth_full_192x320.onnx
+dearpygui_gui_examples/Image-Processing-Node-Editor/node/deep_learning_node/monocular_depth_estimation/FSRE_Depth/fsre_depth_384x640/fsre_depth_full_384x640.onnx
+dearpygui_gui_examples/Image-Processing-Node-Editor/node/deep_learning_node/monocular_depth_estimation/HR_Depth/saved_model_hr_depth_384x1280/hr_depth_k_m_depth_encoder_depth_384x1280.onnx
+
+# Other large model files
+*.pth
+*.pt
+*.h5
+*.pb
+*.tflite
+*.bin
+*.safetensors
+
+# Large data files
+*.zip
+*.tar.gz
+*.rar
+*.7z
