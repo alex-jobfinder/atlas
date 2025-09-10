@@ -1,0 +1,724 @@
+## api/graph/anonymization.md
+/api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+/api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+/api/v1/graph?e=2012-01-01T00:00&only_graph=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&only_graph=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+## api/graph/axis-bounds.md
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:neg,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=0&u=60e3&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=0&u=60e3&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=auto-data&&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&l=auto-data&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&u=auto-data&&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+/api/v1/graph?e=2012-01-01T09:00&s=e-1d&tz=UTC&u=auto-data&q=name,sps,:eq,nf.cluster,(,nccp-xbox,nccp-silverlight,),:in,:and,:sum,(,nf.cluster,),:by,:stack
+## api/graph/axis-scale.md
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=linear
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=linear
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log-linear
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=log-linear
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=pow2
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=pow2
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=sqrt
+/api/v1/graph?e=2012-01-01T00:00&q=minuteOfHour,:time,1e3,:add,minuteOfHour,:time&scale=sqrt
+## api/graph/basics.md
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&title=Starts+Per+Second&ylabel=sps
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&title=Starts+Per+Second&ylabel=sps
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,500e3&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,500e3&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg,:abs&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,:neg,:abs&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,1000,:div&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,1000,:div&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:dup,:div&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:dup,:div&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1000,:div&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1000,:div&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=0.001,name,sps,:eq,(,nf.cluster,),:by,:mul&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&q=0.001,name,sps,:eq,(,nf.cluster,),:by,:mul&s=e-2d
+## api/graph/color-palettes.md
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=armytage&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=armytage&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=dark24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=dark24&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=light24&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=epic&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=epic&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=blues&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=blues&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=greens&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=greens&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=oranges&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=oranges&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=purples&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=purples&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=reds&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=reds&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=(,1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027,)&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=(,1a9850,91cf60,d9ef8b,fee08b,fc8d59,d73027,)&stack=1&tz=UTC&q=1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=armytage&layout=iw&w=350&h=150&no_legend_stats=1
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=hash:armytage&layout=iw&w=350&h=150&no_legend_stats=1
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=40e3,20e3,name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=armytage&layout=iw&w=350&h=150&no_legend_stats=1
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=40e3,20e3,name,sps,:eq,(,nf.cluster,),:by&stack=1&palette=hash:armytage&layout=iw&w=350&h=150&no_legend_stats=1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=hash:armytage&q=name,sps,:eq,(,nf.cluster,),:by,:stack&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&palette=hash:armytage&q=name,sps,:eq,(,nf.cluster,),:by,:stack&tz=UTC
+## api/graph/examples.md
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:area&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by,:stack&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:dup,500e3,:gt,:vspan,40,:alpha,500e3&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:dup,12h,:offset,40,:alpha,:area,:swap,:area,:swap&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:dup,12h,:offset,8,:lw&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=1,1,1,1,1,1,1,1,1&stack=1&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,:stack&u=500e3&l=350e3&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq&o=1&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq,nf.cluster,nccp-(p|s),:re,:and,(,nf.cluster,),:by,:stack&axis_per_line=1&layout=image&zoom=0.20
+/api/v1/graph?e=2012-01-01T00:00&s=e-2d&q=name,sps,:eq&tz=UTC&tz=US/Pacific&layout=image&zoom=0.20
+## api/graph/graph.md
+/api/v1/graph?q=<expr>[&OPTIONS]`
+35  used by the user to select and manipulate data. The simplest API query you can make is
+/api/v1/graph?q=42`. This will produce a graph from Atlas with a straight line having a
+## api/graph/heatmap.md
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,requestLatency,:eq,:percentile-heatmap,&scale=log-linear
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_l=1.2&heatmap_u=1.3
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+  /api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=reds
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_palette=(,8cd1b9,46adbc,2a91b8,1978b3,335ca9,413e95,361566,)
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap,name,sps,:eq,
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,name,sps,:eq,(,nf.cluster,),:by,:heatmap
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_label=SPS%20Heatmap%20by%20Cluster
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap&heatmap_scale=log-linear
+## api/graph/layout.md
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=canvas&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=canvas&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=image&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=image&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=iw&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=iw&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=ih&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+/api/v1/graph?e=2012-01-01T09:00&h=175&layout=ih&q=name,sps,:eq,:sum,(,nf.cluster,),:by&s=e-1d&tz=UTC&w=400
+## api/graph/legends.md
+/api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add,time+value,:legend&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=hourOfDay,:time,100,:mul,minuteOfHour,:time,:add,time+value,:legend&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,cluster+$(nf.cluster)+sps,:legend&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,cluster+$(nf.cluster)+sps,:legend&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend_stats=1&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max&order=desc
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by&s=e-12h&sort=max&order=desc
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by,:dup,:max,120e3,:gt,30,:alpha,:vspan,trigger,:legend,:swap,max,:sort,desc,:order,$nf.cluster,:legend&s=e-12h
+/api/v1/graph?e=2012-01-01T00:00&q=120e3,threshold,:legend,name,sps,:eq,(,nf.cluster,),:by,:dup,:max,120e3,:gt,30,:alpha,:vspan,trigger,:legend,:swap,max,:sort,desc,:order,$nf.cluster,:legend&s=e-12h
+## api/graph/line-attributes.md
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,f00,:color&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,f00,:color&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,f00,:color&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,f00,:color&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40,:alpha&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40,:alpha&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40ff0000,:color&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,:area,40ff0000,:color&s=e-2d
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,3,:lw&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,6h,:offset,3,:lw&s=e-1w
+## api/graph/line-styles.md
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:line&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:line&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:area,40,:alpha&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:area,40,:alpha&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:area,40,:alpha&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:stack&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:stack&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:stack&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:neg,:stack&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,50e3,:gt,:vspan&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,50e3,:gt,:vspan&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,5003,:gt,:vspan,40,:alpha,50e3&s=e-1w
+/api/v1/graph?e=2012-01-01T00:00&no_legend=1&q=name,sps,:eq,:dup,50e3,:gt,:vspan,40,:alpha,50e3&s=e-1w
+/api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
+/api/v1/graph?e=2015-03-10T13:13&no_legend=1&q=t,name,sps,:eq,:sum,:set,t,:get,:stack,t,:get,1.1,:mul,6h,:offset,t,:get,4,:div,:stack&s=e-2d
+## api/graph/multi-y.md
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,42,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,42,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l=0&q=name,sps,:eq,42,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l=0&q=name,sps,:eq,42,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l.1=0&q=name,sps,:eq,42,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l.1=0&q=name,sps,:eq,42,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,nf.cluster,nccp-p,:re,:and,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,nf.cluster,nccp-p,:re,:and,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T00:00&axis_per_line=1&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?e=2012-01-01T00:00&l=01&q=name,sps,:eq,(,nf.cluster,),:by,minuteOfHour,:time,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l=01&q=name,sps,:eq,(,nf.cluster,),:by,minuteOfHour,:time,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l=01&palette.0=reds&palette.1=blues&q=name,sps,:eq,(,nf.cluster,),:by,:stack,minuteOfHour,:time,1,:axis
+/api/v1/graph?e=2012-01-01T00:00&l=01&palette.0=reds&palette.1=blues&q=name,sps,:eq,(,nf.cluster,),:by,:stack,minuteOfHour,:time,1,:axis
+## api/graph/outputs.md
+/api/v1/graph?e=2012-01-01T09:00&format=png&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-3m&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&format=png&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-3m&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&format=csv&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&format=txt&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&format=json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&format=std.json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+/api/v1/graph?e=2012-01-01T09:00&format=stats.json&q=hourOfDay,:time,minuteOfHour,:time,NaN&s=e-5m&tz=UTC
+## api/graph/theme.md
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=light&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=light&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&theme=dark&stack=1&tz=UTC&q=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+## api/graph/tick.md
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=decimal
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=decimal
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1e180,:mul&s=e-1w&tick_labels=decimal
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by,1e180,:mul&s=e-1w&tick_labels=decimal
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=binary
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=binary
+/api/v1/graph?e=2012-01-01T00:00&q=name,requestLatency,:eq,nf.node,wii-node,:eq,:and&tick_labels=duration
+/api/v1/graph?e=2012-01-01T00:00&q=name,requestLatency,:eq,nf.node,wii-node,:eq,:and&tick_labels=duration
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,(,nf.cluster,),:by&s=e-1w&tick_labels=off
+/api/v1/graph?e=2012-01-01T00:00&ylabel=bytes&q=hourOfDay,:time,6e10,:const,5,:sub,:add,disk bytes used,:legend
+## api/graph/time-shift.md
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset,:list,(,$nf.cluster+(offset=$atlas.offset),:legend,),:each
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq,nf.cluster,nccp-silverlight,:eq,:and,:sum,:dup,1w,:offset,:list,(,$nf.cluster+(offset=$atlas.offset),:legend,),:each
+## api/graph/time-zone.md
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&tz=UTC
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&tz=UTC
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&tz=US/Eastern&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2012-01-01T00:00&q=name,sps,:eq&s=e-2d&tz=US/Eastern&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2015-11-01T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2015-11-01T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2015-03-08T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2015-03-08T08:00&q=name,sps,:eq&s=e-12h&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2015-11-05T08:00&q=name,sps,:eq&s=e-1w&tz=US/Pacific&tz=UTC
+/api/v1/graph?e=2015-11-05T08:00&q=name,sps,:eq&s=e-1w&tz=US/Pacific&tz=UTC
+## api/graph/vision.md
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=normal
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=normal
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanopia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanopia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=protanomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranopia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranopia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=deuteranomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanopia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanopia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=tritanomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatopsia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatopsia
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatomaly
+/api/v1/graph?e=2012-01-01T09:00&no_legend=1&q=1,1,1,1,1,1,1&stack=1&tz=UTC&vision=achromatomaly
+## asl/alerting-expressions.md
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:gt,5,:rolling-count,4,:gt
+/api/v1/graph?s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&h=100&q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and,:sum,80,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,input,:legend,:rot,threshold,:legend,:rot
+## asl/des.md
+/api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-2d&q=:true,800,:fadd,input,:legend,:true,400,:fadd,30,0.1,1,:des,training+%3D+30,:legend,:true,90,0.1,1,:des,training+%3D+90,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+/api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-6h&w=750&h=150&q=nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:sum,:dup,10,0.1,0.5,:des,0.9,:mul,:2over,:lt,:rot,$$name,:legend,:rot,prediction,:legend,:rot,:vspan,60,:alpha,alert+triggered,:legend
+/api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-2d&q=:true,1200,:fadd,input,:legend,:true,10,1,1,:des,800,:fadd,alpha+%3D+1,:legend,:true,10,0.1,1,:des,400,:fadd,alpha+%3D+0.1,:legend,:true,10,0.01,1,:des,alpha+%3D+0.01,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+/api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-2d&q=:true,1200,:fadd,input,:legend,:true,10,0.01,1,:des,800,:fadd,beta+%3D+1,:legend,:true,10,0.01,0.1,:des,400,:fadd,beta+%3D+0.1,:legend,:true,10,0.01,0.01,:des,beta+%3D+0.01,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+/api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-6h&w=750&h=150&q=:true,input,:legend,:true,:des-fast,des-fast,:legend,:true,:des-slower,des-slower,:legend,:true,:des-slow,des-slow,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each
+/api/v1/graph?tz=UTC&e=2012-01-02T09:00&s=e-6h&w=750&h=150&q=:true,input,:legend,:true,:des-fast,des-fast,:legend,:true,:des-slower,des-slower,:legend,:true,:des-slow,des-slow,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+/api/v1/graph?tz=UTC&e=2012-01-01T09:00&s=e-6h&w=750&h=150&q=:true,:true,0.85,:mul,:des-fast,:2over,:lt,:vspan,40,:alpha,:rot,input,:legend,:rot,des-fast,:legend,:rot,triggered,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+/api/v1/graph?tz=UTC&e=2012-01-02T09:00&s=e-6h&w=750&h=150&q=:true,:true,0.85,:mul,:des-fast,:2over,:lt,:vspan,40,:alpha,:rot,input,:legend,:rot,des-fast,:legend,:rot,triggered,:legend,:list,(,nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:cq,),:each&l=0
+/api/v1/graph?e=2012-01-01T09:00&h=150&l=0&q=nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:sum,10,0.1,0.02,0.15,0.15,10,:des-epic-viz&s=e-6h&tz=UTC&w=750
+/api/v1/graph?e=2012-01-02T09:00&h=150&l=0&q=nf.cluster,alerttest,:eq,name,requestsPerSecond,:eq,:and,:sum,10,0.1,0.02,0.15,NaN,10,:des-epic-viz&s=e-6h&tz=UTC&w=750
+## asl/tutorial.md
+/api/v1/graph?q=node,i-01,:eq
+/api/v1/graph?q=node,i-01,:eq,name,cpuUsage,:eq,:and
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:sum
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:max
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:dup,:sum,:swap,:count,:div
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg
+/api/v1/graph?q=name,cpuUsage,:eq,:max,(,app,),:by
+/api/v1/graph?q=app,web,:eq,name,cpu,:eq,:and,:sum,:abs
+/api/v1/graph?q=app,web,:eq,name,cpu,:eq,:and,:sum,:neg,:abs
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg,average+cpu+usage,:legend
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg,(,app,),:by,$(app),:legend
+/api/v1/graph?q=app,www,:eq,name,cpuUsage,:eq,:and,:avg,(,app,),:by,:stack,$(app),:legend
+## asl/ref/-rot.md
+/api/v1/graph?q=a,b,c,d,:-rot
+## asl/ref/2over.md
+/api/v1/graph?q=a,b,:2over
+## asl/ref/abs.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=0,:abs
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=64,:abs
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=-64,:abs
+## asl/ref/add.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3,:add
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:add
+## asl/ref/alpha.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack,40,:alpha
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack,f00,:color
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,:stack,f00,:color,40,:alpha
+## asl/ref/and.md
+/api/v1/graph?q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:and
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,310,:lt,:and
+## asl/ref/area.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:area
+## asl/ref/as.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by,nf.cluster,c,:as,$c,:legend
+## asl/ref/avg.md
+/api/v1/graph?q=name,ssCpuUser,:eq,:avg
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:avg
+## asl/ref/axis.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,42
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,42,1,:axis
+## asl/ref/bottomk-others-avg.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-avg
+## asl/ref/bottomk-others-max.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-max
+## asl/ref/bottomk-others-min.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-min
+## asl/ref/bottomk-others-sum.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk-others-sum
+## asl/ref/bottomk.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:bottomk
+## asl/ref/by.md
+/api/v1/graph?q=name,ssCpu,:re,(,name,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,nf.node,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,nf.node,),:by,:count,(,nf.cluster,),:by
+## asl/ref/call.md
+/api/v1/graph?q=(,a,),:call
+## asl/ref/cg.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.app,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.app,),:by,(,nf.cluster,),:cg
+## asl/ref/clamp-max.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,60e3,:clamp-max
+## asl/ref/clamp-min.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,200e3,:clamp-min
+## asl/ref/clear.md
+/api/v1/graph?q=a,b,c,:clear
+## asl/ref/color.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,ff0000,:color
+## asl/ref/const.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,:const
+## asl/ref/contains.md
+/api/v1/graph?q=name,Cpu,:contains
+## asl/ref/count.md
+/api/v1/graph?q=name,ssCpuUser,:eq,:count
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:count
+## asl/ref/cq.md
+/api/v1/graph?q=name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq,:cq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,name,DiscoveryStatus_UP,:eq,:mul,nf.app,alerttest,:eq,:cq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,nf.app,alerttest,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,nf.app,alerttest,:eq,:cq
+## asl/ref/decode.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=1,one_21_25_26_3F,:legend,hex,:decode
+## asl/ref/delay.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,5,:delay
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:dup,5,:delay
+## asl/ref/depth.md
+/api/v1/graph?q=,:depth
+/api/v1/graph?q=a,:depth
+/api/v1/graph?q=a,b,:depth
+## asl/ref/derivative.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:derivative
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:integral
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:integral,:derivative
+## asl/ref/des-epic-signal.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,10,0.1,0.5,0.2,0.2,4,:des-epic-signal
+## asl/ref/des-epic-viz.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,10,0.1,0.5,0.2,0.2,4,:des-epic-viz
+## asl/ref/des-fast.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-fast
+## asl/ref/des-simple.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-simple
+## asl/ref/des-slow.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-slow
+## asl/ref/des-slower.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:des-slower
+## asl/ref/des.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,5,0.1,0.5,:des
+## asl/ref/dist-avg.md
+/api/v1/graph?q=statistic,totalTime,:eq,:sum,statistic,count,:eq,:sum,:div
+/api/v1/graph?q=statistic,totalTime,:eq,:sum,statistic,count,:eq,:sum,:div,nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:cq
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-avg,(,nf.asg,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq,:dist-avg
+## asl/ref/dist-max.md
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,statistic,max,:eq,:and,:max
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-max
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq,:dist-max
+## asl/ref/dist-stddev.md
+/api/v1/graph?q=statistic,count,:eq,:sum,statistic,totalOfSquares,:eq,:sum,:mul,statistic,totalTime,:eq,:sum,:dup,:mul,:sub,statistic,count,:eq,:sum,:dup,:mul,:div,:sqrt,nf.cluster,foo,:eq, name,http.req.latency,:eq,:and,:cq
+/api/v1/graph?q=nf.cluster,foo,:eq,name,http.req.latency,:eq,:and,:dist-stddev
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,playback.startLatency,:eq,:dist-stddev
+## asl/ref/div.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,42
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,42,:div
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:div
+## asl/ref/drop.md
+/api/v1/graph?q=a,b,c,:drop
+/api/v1/graph?q=:drop
+## asl/ref/dup.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup
+## asl/ref/each.md
+/api/v1/graph?q=(,a,b,),(,:dup,),:each
+## asl/ref/ends.md
+/api/v1/graph?q=name,ssCpuUser,:ends
+## asl/ref/eq.md
+/api/v1/graph?q=name,ssCpuUser,:eq
+## asl/ref/eureka-avg.md
+/api/v1/graph?q=name,sps,:eq,nf.app,nccp,:eq,:and,:eureka-avg
+## asl/ref/fadd.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3,:fadd
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fadd
+## asl/ref/fcall.md
+/api/v1/graph?q=duplicate,(,:dup,),:set,a,duplicate,:fcall
+## asl/ref/fdiv.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,1024,:fdiv
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fdiv
+## asl/ref/filter.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,0,:filter
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:dup,avg,:stat,5e3,:gt,:over,avg,:stat,20e3,:lt,:and,:filter
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-avg,5e3,:gt,:stat-avg,20e3,:lt,:and,:filter
+## asl/ref/fmul.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,1024,:fmul
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fmul
+## asl/ref/format.md
+/api/v1/graph?q=foo%s,(,bar,),:format
+## asl/ref/freeze.md
+/api/v1/graph?q=a,b,c,:freeze
+## asl/ref/fsub.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30000,:fsub
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:fsub
+## asl/ref/ge.md
+/api/v1/graph?q=name,ssCpuSystem,:ge
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:ge
+## asl/ref/get.md
+/api/v1/graph?q=k,v,:set,k,:get
+## asl/ref/gt.md
+/api/v1/graph?q=name,ssCpuSystem,:gt
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:gt
+## asl/ref/has.md
+/api/v1/graph?q=nf.node,:has
+## asl/ref/head.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,2,:head
+## asl/ref/heatmap.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,:heatmap
+## asl/ref/in.md
+/api/v1/graph?q=name,(,ssCpuUser,ssCpuSystem,),:in
+## asl/ref/integral.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=1,:integral
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:per-step
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:per-step,:integral
+## asl/ref/le.md
+/api/v1/graph?q=name,ssCpuSystem,:le
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:le
+## asl/ref/legend.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,$name,:legend
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,cluster+$nf.cluster,:legend
+## asl/ref/limit.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,3,:limit
+## asl/ref/line.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:line
+## asl/ref/list.md
+/api/v1/graph?q=a,b,:list
+/api/v1/graph?q=,:list
+## asl/ref/ls.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,line,:ls
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,area,:ls
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,stack,:ls
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,200e3,:gt,vspan,:ls
+## asl/ref/lt.md
+/api/v1/graph?q=name,ssCpuSystem,:lt
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfHour,:time,hourOfDay,:time,:lt
+## asl/ref/lw.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,name,),:by,2,:lw
+## asl/ref/map.md
+/api/v1/graph?q=(,a%s,b%s,),(,(,.netflix.com,),:format,),:map
+## asl/ref/max.md
+/api/v1/graph?q=name,ssCpuUser,:eq,:max
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by,:max
+## asl/ref/median.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq,:median
+## asl/ref/min.md
+/api/v1/graph?q=name,ssCpuUser,:eq,:min
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,(,nf.cluster,),:by,:min
+## asl/ref/mul.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,1024,:mul
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:mul
+## asl/ref/named-rewrite.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,:dup,:dup,:sum,:swap,:count,:div
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,ssCpuUser,:eq,:dup,:dup,:sum,:swap,:count,:div,avg,:named-rewrite
+## asl/ref/ndrop.md
+/api/v1/graph?q=a,0,:ndrop
+/api/v1/graph?q=a,b,c,2,:ndrop
+/api/v1/graph?q=a,b,c,4,:ndrop
+/api/v1/graph?q=,:ndrop
+## asl/ref/neg.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=0,:neg
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=64,:neg
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=-64,:neg
+## asl/ref/nip.md
+/api/v1/graph?q=a,b,:nip
+## asl/ref/nlist.md
+/api/v1/graph?q=a,0,:nlist
+/api/v1/graph?q=a,b,c,2,:nlist
+/api/v1/graph?q=a,b,c,4,:nlist
+## asl/ref/node-avg.md
+/api/v1/graph?q=name,sps,:eq,nf.app,nccp,:eq,:and,:node-avg
+## asl/ref/not.md
+/api/v1/graph?q=nf.node,:has,:not
+## asl/ref/offset.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,1w,:offset
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,:dup,1w,:offset
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,PT1H,:offset
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,name,),:by,:dup,PT1H,:offset
+## asl/ref/or.md
+/api/v1/graph?q=nf.app,alerttest,:eq,name,ssCpuUser,:eq,:or
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=minuteOfDay,:time,:dup,300,:gt,:swap,290,:lt,:or
+## asl/ref/order.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,max,:sort,asc,:order
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,desc,:order
+## asl/ref/over.md
+/api/v1/graph?q=a,b,:over
+## asl/ref/palette.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,reds,:palette
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,reds,:palette
+## asl/ref/pct.md
+/api/v1/graph?q=name,sps,:eq,(,nf.cluster,),:by,:pct
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:pct
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:pct,:stack
+## asl/ref/per-step.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=0,:per-step
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=64,:per-step
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=-64,:per-step
+## asl/ref/percentiles-heatmap.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,requestLatency,:eq,:percentiles-heatmap
+## asl/ref/percentiles.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq,(,25,50,90,),:percentiles
+## asl/ref/pick.md
+/api/v1/graph?q=a,0,:pick
+/api/v1/graph?q=a,b,0,:pick
+/api/v1/graph?q=a,b,1,:pick
+## asl/ref/pow.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,42,:pow
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:pow
+## asl/ref/random.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random
+## asl/ref/re.md
+/api/v1/graph?q=name,ssCpu,:re
+## asl/ref/reic.md
+/api/v1/graph?q=name,ssCPU,:reic
+## asl/ref/roll.md
+/api/v1/graph?q=a,0,:roll
+/api/v1/graph?q=a,b,0,:roll
+/api/v1/graph?q=a,b,1,:roll
+## asl/ref/rolling-count.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt,5,:rolling-count
+## asl/ref/rolling-max.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,0.4,:gt,5,:rolling-max
+## asl/ref/rolling-mean.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,5,3,:rolling-mean
+## asl/ref/rolling-min.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,5,:rolling-min
+## asl/ref/rolling-sum.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,:sum,5,:rolling-sum
+## asl/ref/rot.md
+/api/v1/graph?q=a,b,c,d,:rot
+## asl/ref/s.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,^nccp-(.*)$,$1,:s
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,^nccp-(?<stack>.*)$,$stack,:s
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,nccp-,_,:s
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,$nf.cluster,:legend,([a-z]),_$1,:s
+## asl/ref/sample-count.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestLatency,:eq,0,500,:sample-count
+## asl/ref/sdes-fast.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-fast
+## asl/ref/sdes-simple.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-simple
+## asl/ref/sdes-slow.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-slow
+## asl/ref/sdes-slower.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:sdes-slower
+## asl/ref/sdes.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,:per-step
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,requestsPerSecond,:eq,:sum,5,0.1,0.5,:sdes
+## asl/ref/set.md
+/api/v1/graph?q=k,v,:set
+## asl/ref/sort.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,(,nf.cluster,),:by,max,:sort
+## asl/ref/sqrt.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=0,:sqrt
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=64,:sqrt
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=-64,:sqrt
+## asl/ref/srandom.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=42,:srandom
+## asl/ref/sset.md
+/api/v1/graph?q=a,b,:sset
+## asl/ref/stack.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,(,nf.cluster,),:by,:stack
+## asl/ref/starts.md
+/api/v1/graph?q=name,ssCpu,:starts
+## asl/ref/stat-avg-mf.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:stat-avg-mf
+## asl/ref/stat-avg.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-avg,5e3,:gt,:stat-avg,20e3,:lt,:and,:filter
+## asl/ref/stat-count.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-count,50,:gt,:filter
+## asl/ref/stat-last.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-last,5e3,:gt,:stat-last,20e3,:lt,:and,:filter
+## asl/ref/stat-max-mf.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:stat-max-mf
+## asl/ref/stat-max.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-max,5e3,:gt,:stat-max,20e3,:lt,:and,:filter
+## asl/ref/stat-min-mf.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-12h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:sum,:stat-min-mf
+## asl/ref/stat-min.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-min,5e3,:gt,:stat-min,20e3,:lt,:and,:filter
+## asl/ref/stat-total.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,:stat-total,1e6,:gt,:stat-total,4e6,:lt,:and,:filter
+## asl/ref/stat.md
+/api/v1/graph?h=125&no_legend_stats=1&s=e-6m&e=2012-01-01T00:06&tz=UTC&l=1.5&u=4.5&q=minuteOfDay,:time,e-2m,ge-6m,:time-span,2,:mul,:add,e-2m,ge,:time-span,1.5,:mul,:sub,1,e-1m,ge,:time-span,1,:sub,:div,1,:fadd,:fadd,m,:sset,m,:get,input,:legend,m,:get,avg,:stat,avg,:legend,3,:lw,60,:alpha,m,:get,max,:stat,max,:legend,3,:lw,60,:alpha,m,:get,min,:stat,min,:legend,3,:lw,60,:alpha,m,:get,last,:stat,last,:legend,3,:lw,60,:alpha
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,avg,:stat
+## asl/ref/stddev.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=name,sps,:eq,(,nf.cluster,),:by,:stddev
+## asl/ref/sub.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,30e3,:sub
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,requestLatency,:eq,:sum,name,requestsPerSecond,:eq,:max,(,name,),:by,:sub
+## asl/ref/sum.md
+/api/v1/graph?q=name,ssCpuUser,:eq
+/api/v1/graph?q=name,ssCpuUser,:eq,:sum
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&tz=UTC&l=0&q=name,sps,:eq,:max,(,nf.cluster,),:by,:sum
+## asl/ref/swap.md
+/api/v1/graph?q=a,b,:swap
+## asl/ref/time-span.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=e-30m,ge,:time-span
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=2014-02-20T13:00,s%2B30m,:time-span
+## asl/ref/time.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=hourOfDay,:time
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=HOUR_OF_DAY,:time
+## asl/ref/topk-others-avg.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-avg
+## asl/ref/topk-others-max.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-max
+## asl/ref/topk-others-min.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-min
+## asl/ref/topk-others-sum.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk-others-sum
+## asl/ref/topk.md
+/api/v1/graph?w=200&h=125&no_legend=1&s=e-3h&e=2012-01-01T07:00&palette=hash:armytage&tz=UTC&l=0&q=name,sps,:eq,(,nf.cluster,),:by,max,2,:topk
+## asl/ref/trend.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,PT5M,:trend
+/api/v1/graph?w=200&h=125&s=e-3h&e=2012-01-01T07:00&tz=UTC&q=:random,20m,:trend
+## asl/ref/tuck.md
+/api/v1/graph?q=a,b,:tuck
+## asl/ref/vspan.md
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:dup,20e3,:gt
+/api/v1/graph?w=200&h=125&s=e-3h&e=2014-02-20T15:01&tz=US/Pacific&q=name,sps,:eq,:sum,:dup,20e3,:gt,:vspan
