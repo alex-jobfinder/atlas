@@ -1,0 +1,1 @@
+--preset sps --q "a,0,:nlist" --theme light --w 700 --h 300 --out /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_nlist_md/asl_ref_nlist_md_001.png --emit-v2 /home/alex/dbt_ads/atlas/scripts_png_gen/output/styles_all/asl_ref_nlist_md/asl_ref_nlist_md_001.v2.json.gz
