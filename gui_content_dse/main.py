@@ -11,6 +11,10 @@ with themed styling and responsive sizing.
 """
 
 import csv
+import argparse
+import gzip
+import json
+import time
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from datetime import datetime
@@ -44,8 +48,82 @@ except ModuleNotFoundError:
     )
     from gui_content_dse.gui.views.components.plot import set_time_ticks
 
- 
 
+def _load_graph(path: Path) -> Tuple[List[float], List[dict]]:
+    """Return timestamps and time series entries from a graph JSON file."""
+    if path.suffix.endswith(".gz"):
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        with path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+    meta = data[1]
+    start = meta["startTime"] / 1000.0
+    step = meta["step"] / 1000.0
+    series = [obj for obj in data if obj.get("type") == "timeseries"]
+    length = len(series[0]["data"]["values"]) if series else 0
+    ts = [start + i * step for i in range(length)]
+    return ts, series
+
+
+def _add_series(plot_id: int, timestamps: List[float], series: List[dict]) -> List[int]:
+    line_ids: List[int] = []
+    for s in series:
+        label = s.get("label") or s.get("query", "series")
+        color = s.get("color")
+        line_id = dpg.add_line_series([], [], label=label, parent=plot_id, color=color)
+        line_ids.append(line_id)
+    return line_ids
+
+
+def _configure_plot(
+    timestamps: List[float],
+    series: List[dict],
+    line_ids: List[int],
+    stream: bool,
+    delay: float,
+) -> None:
+    """Populate the plot either statically or via a render callback."""
+    if stream:
+        state = {"idx": 0, "last": time.perf_counter()}
+
+        def _render_callback(sender, app_data):  # pragma: no cover - interactive GUI callback
+            now = time.perf_counter()
+            if now - state["last"] < delay:
+                return
+            if state["idx"] >= len(timestamps):
+                dpg.set_render_callback(None)
+                return
+            t = timestamps[state["idx"]]
+            for line_id, s in zip(line_ids, series):
+                x, y = dpg.get_value(line_id)
+                x.append(t)
+                y.append(s["data"]["values"][state["idx"]])
+                dpg.set_value(line_id, [x, y])
+            state["idx"] += 1
+            state["last"] = now
+
+        dpg.set_render_callback(_render_callback)
+    else:
+        for line_id, s in zip(line_ids, series):
+            dpg.set_value(line_id, [timestamps, s["data"]["values"]])
+
+
+def render_atlas_graph(path: Path, stream: bool = False, delay: float = 0.05) -> None:
+    """Render an Atlas graph output using DearPyGui."""
+    timestamps, series = _load_graph(path)
+    dpg.create_context()
+    with dpg.window(label="Atlas Graph") as win:
+        with dpg.plot(label=path.name, height=400, width=800) as plot_id:
+            dpg.add_plot_legend()
+            line_ids = _add_series(plot_id, timestamps, series)
+    _configure_plot(timestamps, series, line_ids, stream, delay)
+    dpg.create_viewport(title="Atlas Viewer")
+    dpg.setup_dearpygui()
+    dpg.show_viewport()
+    dpg.set_primary_window(win, True)
+    dpg.start_dearpygui()
+    dpg.destroy_context()
 
 
 from gui_content_dse.gui.controllers.campaign_performance import CampaignPerformanceController
@@ -285,10 +363,36 @@ class ContentDSEApp:
             dpg.add_button(label="Close", callback=lambda: dpg.delete_item(dpg.last_item()))
 
 
-def main():
-    print("Starting Content DSE - Campaign Performance UI...")
-    app = ContentDSEApp()
-    app.run()
+def main(argv: Optional[List[str]] = None) -> None:
+    """Entry point for the Content DSE app or Atlas graph viewer."""
+    parser = argparse.ArgumentParser(
+        description="Content DSE UI with optional Atlas graph viewer"
+    )
+    parser.add_argument(
+        "graph",
+        type=Path,
+        nargs="?",
+        help="Path to .v2.json or .v2.json.gz file to visualize",
+    )
+    parser.add_argument(
+        "--stream",
+        action="store_true",
+        help="Stream data points to the plot",
+    )
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=0.05,
+        help="Delay between streamed points in seconds",
+    )
+    args = parser.parse_args(argv)
+
+    if args.graph:
+        render_atlas_graph(args.graph, stream=args.stream, delay=args.delay)
+    else:
+        print("Starting Content DSE - Campaign Performance UI...")
+        app = ContentDSEApp()
+        app.run()
 
 
 if __name__ == "__main__":
