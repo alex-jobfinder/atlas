@@ -1,7 +1,0 @@
-third_party/DearEIS/src/deareis/api/*
-docs/*
-gui/*
-# gui_examples/*
-
-PreambleFileParser/*
-src_python_gui/archive/*

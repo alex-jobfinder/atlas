@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 
 # https://github.com/aws/aws-sdk-java/blob/master/aws-java-sdk-core/src/main/java/com/amazonaws/auth/profile/ProfilesConfigFile.java
 
@@ -33,3 +33,4 @@ jq -r '
   @text "aws_secret_access_key=\(.SecretAccessKey)",
   @text "aws_session_token=\(.Token)"
 ' > $outputFile
+
