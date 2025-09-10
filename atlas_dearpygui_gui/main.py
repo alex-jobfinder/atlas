@@ -171,6 +171,52 @@ def load_atlas_config(config_path: str) -> Dict:
     return default_config
 
 
+def initialize_default_view(node_editor: AtlasNodeEditor, atlas_config: Dict) -> None:
+    """Create a default node setup with sample data and chart."""
+    default_cfg = atlas_config.get("default_dataset", {})
+    if not (default_cfg.get("enabled") and default_cfg.get("auto_load")):
+        return
+
+    dataset_node = node_editor.get_node_instance("DefaultDataset")
+    chart_node = node_editor.get_node_instance("LineChart")
+    if not dataset_node or not chart_node:
+        return
+
+    # Add default dataset node
+    node_editor._node_id += 1
+    dataset_tag = dataset_node.add_node(
+        node_editor._node_editor_tag,
+        node_editor._node_id,
+        pos=[20, 20],
+        atlas_config=atlas_config,
+    )
+    node_editor._node_list.append(dataset_tag)
+
+    # Add line chart node
+    node_editor._node_id += 1
+    chart_tag = chart_node.add_node(
+        node_editor._node_editor_tag,
+        node_editor._node_id,
+        pos=[350, 20],
+        atlas_config=atlas_config,
+    )
+    node_editor._node_list.append(chart_tag)
+
+    # Link dataset to chart
+    source_attr = f"{dataset_tag}:{dataset_node.TYPE_TIME_SERIES}:Output01"
+    dest_attr = f"{chart_tag}:{chart_node.TYPE_TIME_SERIES}:Input01"
+    dpg.add_node_link(source_attr, dest_attr, parent=node_editor._node_editor_tag)
+    node_editor._node_link_list.append([source_attr, dest_attr])
+    node_editor._node_connection_dict = node_editor._sort_node_graph(
+        node_editor._node_list, node_editor._node_link_list
+    )
+
+    # Pre-render once so chart appears on launch
+    node_data_dict: Dict = {}
+    node_result_dict: Dict = {}
+    update_node_info(node_editor, node_data_dict, node_result_dict, mode_async=False)
+
+
 def main():
     """Main application entry point."""
     args = get_args()
@@ -228,6 +274,9 @@ def main():
         use_debug_print=use_debug_print,
         node_dir=str(Path(__file__).parent / 'atlas_nodes'),
     )
+
+    # Initialize default dataset and chart if configured
+    initialize_default_view(node_editor, atlas_config)
 
     # Show viewport
     dpg.show_viewport()
