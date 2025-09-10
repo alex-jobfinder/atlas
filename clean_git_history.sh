@@ -36,11 +36,11 @@ read -p "Enter choice (1-3): " choice
 case $choice in
     1)
         echo "Using git filter-branch..."
-        
+
         # Create a backup branch first
         echo "Creating backup branch..."
         git branch backup-before-cleanup
-        
+
         # Remove each large file from history
         for file in "${LARGE_FILES[@]}"; do
             echo "Removing $file from history..."
@@ -48,18 +48,18 @@ case $choice in
                 "git rm --cached --ignore-unmatch '$file'" \
                 --prune-empty --tag-name-filter cat -- --all
         done
-        
+
         # Clean up refs
         git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
         git reflog expire --expire=now --all
         git gc --prune=now --aggressive
-        
+
         echo "History cleanup completed with git filter-branch"
         ;;
-        
+
     2)
         echo "Using BFG Repo-Cleaner..."
-        
+
         # Check if BFG is installed
         if ! command -v bfg &> /dev/null; then
             echo "BFG Repo-Cleaner not found. Installing..."
@@ -69,27 +69,27 @@ case $choice in
             echo "3. Then run this script again"
             exit 1
         fi
-        
+
         # Create a backup branch
         echo "Creating backup branch..."
         git branch backup-before-cleanup
-        
+
         # Use BFG to remove large files
         echo "Running BFG cleanup..."
         bfg --delete-files "*.onnx" .
-        
+
         # Clean up
         git reflog expire --expire=now --all
         git gc --prune=now --aggressive
-        
+
         echo "History cleanup completed with BFG"
         ;;
-        
+
     3)
         echo "Exiting without changes"
         exit 0
         ;;
-        
+
     *)
         echo "Invalid choice. Exiting."
         exit 1

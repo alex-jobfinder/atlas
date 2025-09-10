@@ -6,7 +6,7 @@
     "purpose": "Visual node-based image processing application for verification and comparison of image processing algorithms",
     "architecture_type": "Node-based Visual Programming System"
   },
-  
+
   "core_components": {
     "main_entry_point": {
       "file": "main.py",
@@ -26,7 +26,7 @@
         "Async/sync rendering modes for different use cases"
       ]
     },
-    
+
     "node_editor_core": {
       "file": "node_editor/node_editor.py",
       "class": "DpgNodeEditor",
@@ -52,7 +52,7 @@
         "_callback_file_import": "Loads node configuration from JSON"
       }
     },
-    
+
     "node_abstraction": {
       "file": "node/node_abc.py",
       "class": "DpgNodeABC",
@@ -66,14 +66,14 @@
       },
       "data_types": {
         "TYPE_INT": "Integer values",
-        "TYPE_FLOAT": "Float values", 
+        "TYPE_FLOAT": "Float values",
         "TYPE_IMAGE": "Image data (OpenCV format)",
         "TYPE_TIME_MS": "Processing time in milliseconds",
         "TYPE_TEXT": "Text data"
       }
     }
   },
-  
+
   "node_categories": {
     "input_nodes": {
       "directory": "node/input_node/",
@@ -92,7 +92,7 @@
         "Parameter input widgets (sliders, dropdowns)"
       ]
     },
-    
+
     "process_nodes": {
       "directory": "node/process_node/",
       "purpose": "Image processing operations",
@@ -110,13 +110,13 @@
         "Real-time preview updates"
       ]
     },
-    
+
     "deep_learning_nodes": {
       "directory": "node/deep_learning_node/",
       "purpose": "AI/ML model inference",
       "examples": [
         "Object Detection",
-        "Face Detection", 
+        "Face Detection",
         "Pose Estimation",
         "Semantic Segmentation",
         "Classification"
@@ -128,7 +128,7 @@
         "Result visualization overlays"
       ]
     },
-    
+
     "analysis_nodes": {
       "directory": "node/analysis_node/",
       "purpose": "Data analysis and metrics",
@@ -143,7 +143,7 @@
         "Performance metrics collection"
       ]
     },
-    
+
     "draw_nodes": {
       "directory": "node/draw_node/",
       "purpose": "Visualization and output",
@@ -161,7 +161,7 @@
       ]
     }
   },
-  
+
   "data_flow_architecture": {
     "execution_model": "Topological sort-based sequential execution",
     "data_containers": {
@@ -175,14 +175,14 @@
     },
     "update_cycle": {
       "1": "Get sorted node execution order",
-      "2": "Iterate through nodes in dependency order", 
+      "2": "Iterate through nodes in dependency order",
       "3": "Pass input data from connected nodes",
       "4": "Execute node processing logic",
       "5": "Store results in shared dictionaries",
       "6": "Update visual representations"
     }
   },
-  
+
   "configuration_system": {
     "settings_file": "node_editor/setting/setting.json",
     "configurable_parameters": {
@@ -197,7 +197,7 @@
       "version_handling": "Warns about version mismatches between saved and current code"
     }
   },
-  
+
   "ui_framework_integration": {
     "dearpygui_features_used": [
       "Node editor widget for visual programming interface",
@@ -214,51 +214,51 @@
       "Dynamic node loading system"
     ]
   },
-  
+
   "strengths_for_time_series_plotting": {
     "modular_architecture": {
       "description": "Each node is self-contained with clear input/output interfaces",
       "benefit": "Easy to create specialized nodes for time series data sources, processing, and visualization",
       "recommendation": "Create dedicated nodes for CSV/JSON data loading, time series processing (filtering, aggregation), and plotting (line charts, scatter plots, heatmaps)"
     },
-    
+
     "visual_programming_paradigm": {
       "description": "Drag-and-drop interface for building data processing pipelines",
       "benefit": "Non-technical users can create complex time series analysis workflows",
       "recommendation": "Design intuitive node categories: Data Sources (CSV, Database, API), Time Series Processing (resampling, filtering, feature extraction), Visualization (charts, dashboards), and Export (images, reports)"
     },
-    
+
     "real_time_capabilities": {
       "description": "Built-in support for live data updates and real-time processing",
       "benefit": "Perfect for monitoring applications and live data visualization",
       "recommendation": "Implement streaming data nodes with configurable update intervals, buffer management, and real-time chart updates"
     },
-    
+
     "extensible_node_system": {
       "description": "Easy to add new node types through inheritance from DpgNodeABC",
       "benefit": "Can rapidly prototype and add new time series analysis capabilities",
       "recommendation": "Create a rich library of time series nodes: statistical analysis (moving averages, volatility), technical indicators (RSI, MACD), anomaly detection, and interactive visualization controls"
     },
-    
+
     "configuration_persistence": {
       "description": "Built-in save/load functionality for entire workflows",
       "benefit": "Users can save and share complex time series analysis setups",
       "recommendation": "Extend the configuration system to include data source credentials, chart styling preferences, and analysis parameters"
     },
-    
+
     "performance_monitoring": {
       "description": "Built-in timing and performance measurement capabilities",
       "benefit": "Can monitor and optimize time series processing performance",
       "recommendation": "Add profiling nodes for data processing bottlenecks, memory usage monitoring, and query performance analysis"
     },
-    
+
     "multi_data_type_support": {
       "description": "Flexible type system supporting various data formats",
       "benefit": "Can handle different time series data formats and structures",
       "recommendation": "Extend type system with TIME_SERIES, DATAFRAME, and CHART types, plus conversion nodes between formats"
     }
   },
-  
+
   "recommended_implementation_strategy": {
     "phase_1_core_nodes": [
       "CSV Data Source Node (file selection, delimiter options, column mapping)",
@@ -266,21 +266,21 @@
       "Line Chart Node (multiple series, zoom, pan, legend)",
       "Basic Statistics Node (mean, std, min, max, percentiles)"
     ],
-    
+
     "phase_2_advanced_features": [
       "Database Connection Node (SQL queries, connection pooling)",
       "Real-time Data Stream Node (WebSocket, API polling)",
       "Interactive Chart Node (brush selection, crossfilter)",
       "Export Node (PNG, PDF, CSV output)"
     ],
-    
+
     "phase_3_specialized_analysis": [
       "Technical Analysis Node (moving averages, Bollinger bands)",
       "Anomaly Detection Node (statistical, ML-based)",
       "Correlation Analysis Node (cross-correlation, heatmaps)",
       "Dashboard Node (multiple charts, real-time updates)"
     ],
-    
+
     "technical_considerations": {
       "data_handling": "Use pandas DataFrames as primary data structure, implement efficient data passing between nodes",
       "memory_management": "Implement data streaming for large datasets, configurable buffer sizes",
