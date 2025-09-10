@@ -1,0 +1,291 @@
+{
+  "architecture_overview": {
+    "application_name": "Image-Processing-Node-Editor",
+    "framework": "DearPyGui",
+    "language": "Python",
+    "purpose": "Visual node-based image processing application for verification and comparison of image processing algorithms",
+    "architecture_type": "Node-based Visual Programming System"
+  },
+
+  "core_components": {
+    "main_entry_point": {
+      "file": "main.py",
+      "responsibilities": [
+        "Application initialization and configuration loading",
+        "Camera and serial device setup",
+        "DearPyGui context creation and viewport setup",
+        "Node editor instantiation",
+        "Main event loop management (async and sync modes)",
+        "Cleanup and termination handling"
+      ],
+      "key_features": [
+        "Command-line argument parsing for settings and debug options",
+        "Camera connection checking and video capture setup",
+        "Serial device connection management",
+        "Font registry setup with Japanese font support",
+        "Async/sync rendering modes for different use cases"
+      ]
+    },
+
+    "node_editor_core": {
+      "file": "node_editor/node_editor.py",
+      "class": "DpgNodeEditor",
+      "responsibilities": [
+        "Node creation, deletion, and management",
+        "Node connection and link management",
+        "Graph topology sorting and execution order",
+        "File import/export functionality",
+        "Menu system for node categories",
+        "Dynamic node loading from filesystem"
+      ],
+      "key_data_structures": {
+        "_node_instance_list": "Dictionary mapping node tags to node instances",
+        "_node_list": "List of active node IDs and names",
+        "_node_link_list": "List of connections between nodes",
+        "_node_connection_dict": "Sorted execution order based on dependencies"
+      },
+      "core_methods": {
+        "_callback_add_node": "Creates new node instances and adds to editor",
+        "_callback_link": "Handles node connections with type checking",
+        "_sort_node_graph": "Topological sorting for proper execution order",
+        "_callback_file_export": "Saves node configuration to JSON",
+        "_callback_file_import": "Loads node configuration from JSON"
+      }
+    },
+
+    "node_abstraction": {
+      "file": "node/node_abc.py",
+      "class": "DpgNodeABC",
+      "purpose": "Abstract base class defining the interface for all nodes",
+      "abstract_methods": {
+        "add_node": "Creates the visual representation of the node",
+        "update": "Processes data and updates node outputs",
+        "get_setting_dict": "Returns node configuration for saving",
+        "set_setting_dict": "Restores node configuration from saved data",
+        "close": "Cleanup when node is deleted"
+      },
+      "data_types": {
+        "TYPE_INT": "Integer values",
+        "TYPE_FLOAT": "Float values",
+        "TYPE_IMAGE": "Image data (OpenCV format)",
+        "TYPE_TIME_MS": "Processing time in milliseconds",
+        "TYPE_TEXT": "Text data"
+      }
+    }
+  },
+
+  "node_categories": {
+    "input_nodes": {
+      "directory": "node/input_node/",
+      "purpose": "Data source nodes",
+      "examples": [
+        "Image (static image loading)",
+        "Video (video file input with frame control)",
+        "WebCam (live camera feed)",
+        "RTSP (network camera streams)",
+        "Int/Float Value (parameter inputs)"
+      ],
+      "common_patterns": [
+        "File dialog integration for media selection",
+        "Device enumeration for cameras",
+        "Frame rate control and looping",
+        "Parameter input widgets (sliders, dropdowns)"
+      ]
+    },
+
+    "process_nodes": {
+      "directory": "node/process_node/",
+      "purpose": "Image processing operations",
+      "examples": [
+        "Blur (smoothing filters)",
+        "Brightness/Contrast (color adjustments)",
+        "Canny (edge detection)",
+        "Threshold (binary conversion)",
+        "Resize (image scaling)"
+      ],
+      "common_patterns": [
+        "Input/output image connections",
+        "Parameter controls (sliders, dropdowns)",
+        "Performance timing measurement",
+        "Real-time preview updates"
+      ]
+    },
+
+    "deep_learning_nodes": {
+      "directory": "node/deep_learning_node/",
+      "purpose": "AI/ML model inference",
+      "examples": [
+        "Object Detection",
+        "Face Detection",
+        "Pose Estimation",
+        "Semantic Segmentation",
+        "Classification"
+      ],
+      "common_patterns": [
+        "Model selection dropdowns",
+        "CPU/GPU device selection",
+        "Batch processing support",
+        "Result visualization overlays"
+      ]
+    },
+
+    "analysis_nodes": {
+      "directory": "node/analysis_node/",
+      "purpose": "Data analysis and metrics",
+      "examples": [
+        "FPS (performance measurement)",
+        "RGB Histogram (color analysis)",
+        "BRISQUE (image quality assessment)"
+      ],
+      "common_patterns": [
+        "Statistical calculations",
+        "Chart/graph generation",
+        "Performance metrics collection"
+      ]
+    },
+
+    "draw_nodes": {
+      "directory": "node/draw_node/",
+      "purpose": "Visualization and output",
+      "examples": [
+        "Result Image (large preview)",
+        "Draw Information (annotation overlay)",
+        "Image Concat (multi-image display)",
+        "PutText (text overlay)"
+      ],
+      "common_patterns": [
+        "Large preview windows",
+        "Annotation and overlay rendering",
+        "Multi-image composition",
+        "Text and graphics overlay"
+      ]
+    }
+  },
+
+  "data_flow_architecture": {
+    "execution_model": "Topological sort-based sequential execution",
+    "data_containers": {
+      "node_image_dict": "Stores processed image data for each node",
+      "node_result_dict": "Stores additional result data for each node"
+    },
+    "connection_system": {
+      "type_safety": "Only compatible data types can be connected",
+      "single_input": "Each input port accepts only one connection",
+      "multiple_outputs": "Output ports can connect to multiple inputs"
+    },
+    "update_cycle": {
+      "1": "Get sorted node execution order",
+      "2": "Iterate through nodes in dependency order",
+      "3": "Pass input data from connected nodes",
+      "4": "Execute node processing logic",
+      "5": "Store results in shared dictionaries",
+      "6": "Update visual representations"
+    }
+  },
+
+  "configuration_system": {
+    "settings_file": "node_editor/setting/setting.json",
+    "configurable_parameters": {
+      "display_dimensions": "Window and preview sizes",
+      "camera_settings": "Resolution and device selection",
+      "performance_options": "GPU usage, multiprocessing, timing",
+      "output_settings": "Video writer configuration"
+    },
+    "node_persistence": {
+      "export_format": "JSON with node positions, connections, and parameters",
+      "import_limitations": "Only works before adding nodes (current implementation)",
+      "version_handling": "Warns about version mismatches between saved and current code"
+    }
+  },
+
+  "ui_framework_integration": {
+    "dearpygui_features_used": [
+      "Node editor widget for visual programming interface",
+      "Texture registry for image display",
+      "File dialogs for media selection",
+      "Menu system for node categories",
+      "Modal windows for user interactions",
+      "Handler registry for keyboard/mouse events"
+    ],
+    "custom_extensions": [
+      "Japanese font support",
+      "Custom texture conversion utilities",
+      "Performance timing integration",
+      "Dynamic node loading system"
+    ]
+  },
+
+  "strengths_for_time_series_plotting": {
+    "modular_architecture": {
+      "description": "Each node is self-contained with clear input/output interfaces",
+      "benefit": "Easy to create specialized nodes for time series data sources, processing, and visualization",
+      "recommendation": "Create dedicated nodes for CSV/JSON data loading, time series processing (filtering, aggregation), and plotting (line charts, scatter plots, heatmaps)"
+    },
+
+    "visual_programming_paradigm": {
+      "description": "Drag-and-drop interface for building data processing pipelines",
+      "benefit": "Non-technical users can create complex time series analysis workflows",
+      "recommendation": "Design intuitive node categories: Data Sources (CSV, Database, API), Time Series Processing (resampling, filtering, feature extraction), Visualization (charts, dashboards), and Export (images, reports)"
+    },
+
+    "real_time_capabilities": {
+      "description": "Built-in support for live data updates and real-time processing",
+      "benefit": "Perfect for monitoring applications and live data visualization",
+      "recommendation": "Implement streaming data nodes with configurable update intervals, buffer management, and real-time chart updates"
+    },
+
+    "extensible_node_system": {
+      "description": "Easy to add new node types through inheritance from DpgNodeABC",
+      "benefit": "Can rapidly prototype and add new time series analysis capabilities",
+      "recommendation": "Create a rich library of time series nodes: statistical analysis (moving averages, volatility), technical indicators (RSI, MACD), anomaly detection, and interactive visualization controls"
+    },
+
+    "configuration_persistence": {
+      "description": "Built-in save/load functionality for entire workflows",
+      "benefit": "Users can save and share complex time series analysis setups",
+      "recommendation": "Extend the configuration system to include data source credentials, chart styling preferences, and analysis parameters"
+    },
+
+    "performance_monitoring": {
+      "description": "Built-in timing and performance measurement capabilities",
+      "benefit": "Can monitor and optimize time series processing performance",
+      "recommendation": "Add profiling nodes for data processing bottlenecks, memory usage monitoring, and query performance analysis"
+    },
+
+    "multi_data_type_support": {
+      "description": "Flexible type system supporting various data formats",
+      "benefit": "Can handle different time series data formats and structures",
+      "recommendation": "Extend type system with TIME_SERIES, DATAFRAME, and CHART types, plus conversion nodes between formats"
+    }
+  },
+
+  "recommended_implementation_strategy": {
+    "phase_1_core_nodes": [
+      "CSV Data Source Node (file selection, delimiter options, column mapping)",
+      "Time Series Filter Node (date range, sampling rate, interpolation)",
+      "Line Chart Node (multiple series, zoom, pan, legend)",
+      "Basic Statistics Node (mean, std, min, max, percentiles)"
+    ],
+
+    "phase_2_advanced_features": [
+      "Database Connection Node (SQL queries, connection pooling)",
+      "Real-time Data Stream Node (WebSocket, API polling)",
+      "Interactive Chart Node (brush selection, crossfilter)",
+      "Export Node (PNG, PDF, CSV output)"
+    ],
+
+    "phase_3_specialized_analysis": [
+      "Technical Analysis Node (moving averages, Bollinger bands)",
+      "Anomaly Detection Node (statistical, ML-based)",
+      "Correlation Analysis Node (cross-correlation, heatmaps)",
+      "Dashboard Node (multiple charts, real-time updates)"
+    ],
+
+    "technical_considerations": {
+      "data_handling": "Use pandas DataFrames as primary data structure, implement efficient data passing between nodes",
+      "memory_management": "Implement data streaming for large datasets, configurable buffer sizes",
+      "performance": "Use numba or cython for computationally intensive operations",
+      "ui_responsiveness": "Implement background processing with progress indicators for long-running operations"
+    }
+  }
+}

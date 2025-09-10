@@ -1,0 +1,505 @@
+{
+  "project_overview": {
+    "name": "Atlas-DearPyGui-Visualizer",
+    "purpose": "Interactive node-based GUI for Atlas time series data visualization and analysis",
+    "framework": "DearPyGui",
+    "language": "Python",
+    "architecture_reference": "Based on Image-Processing-Node-Editor architecture patterns",
+    "target_use_case": "Real-time monitoring dashboards, interactive data exploration, and custom chart generation for Atlas metrics"
+  },
+
+  "architecture_adaptation_from_image_processing": {
+    "core_patterns_adopted": {
+      "node_based_visual_programming": {
+        "description": "Adapt the visual node programming paradigm from image processing to time series data",
+        "benefit": "Users can visually construct complex data analysis pipelines without coding",
+        "implementation": "Replace image processing nodes with time series data processing nodes"
+      },
+      
+      "modular_node_system": {
+        "description": "Use the same DpgNodeABC inheritance pattern for time series nodes",
+        "benefit": "Consistent interface, easy to add new node types, maintainable codebase",
+        "implementation": "Create AtlasTimeSeriesNodeABC extending DpgNodeABC with time series specific methods"
+      },
+      
+      "topological_execution": {
+        "description": "Adapt the dependency-based execution order for data processing pipelines",
+        "benefit": "Ensures proper data flow and handles complex multi-step analysis",
+        "implementation": "Sort nodes by data dependencies before execution"
+      },
+      
+      "configuration_persistence": {
+        "description": "Use the same JSON-based save/load system for dashboard configurations",
+        "benefit": "Users can save and share complex analysis setups",
+        "implementation": "Extend the export/import system for Atlas-specific configurations"
+      }
+    },
+
+    "key_differences": {
+      "data_types": {
+        "image_processing": ["TYPE_IMAGE", "TYPE_INT", "TYPE_FLOAT", "TYPE_TIME_MS", "TYPE_TEXT"],
+        "atlas_visualization": ["TYPE_TIME_SERIES", "TYPE_DATAFRAME", "TYPE_CHART", "TYPE_QUERY", "TYPE_METADATA"]
+      },
+      
+      "execution_model": {
+        "image_processing": "Real-time frame-by-frame processing with OpenCV",
+        "atlas_visualization": "Batch processing with configurable refresh intervals, caching, and streaming updates"
+      },
+      
+      "ui_components": {
+        "image_processing": "Image previews, camera feeds, file dialogs",
+        "atlas_visualization": "Interactive charts, time range selectors, metric browsers, alert panels"
+      }
+    }
+  },
+
+  "atlas_data_model_integration": {
+    "core_data_structures": {
+      "time_series": {
+        "source": "atlas-core/src/main/scala/com/netflix/atlas/core/model/TimeSeries.scala",
+        "python_equivalent": "pandas.Series with DatetimeIndex",
+        "key_properties": ["tags", "label", "data", "step_size", "time_range"],
+        "node_representation": "TYPE_TIME_SERIES with metadata (tags, query, groupByKeys)"
+      },
+      
+      "graph_definition": {
+        "source": "atlas-chart/src/main/scala/com/netflix/atlas/chart/model/GraphDef.scala",
+        "python_equivalent": "Custom GraphDef class with plots, time range, styling",
+        "key_properties": ["plots", "startTime", "endTime", "step", "width", "height", "theme"],
+        "node_representation": "TYPE_CHART with rendering configuration"
+      },
+      
+      "line_definition": {
+        "source": "atlas-chart/src/main/scala/com/netflix/atlas/chart/model/DataDef.scala",
+        "python_equivalent": "LineDef with TimeSeries data and styling",
+        "key_properties": ["data", "query", "color", "lineStyle", "lineWidth"],
+        "node_representation": "Individual chart elements with styling metadata"
+      }
+    },
+
+    "data_flow_adaptation": {
+      "input_sources": {
+        "atlas_api": "Direct connection to Atlas API endpoints",
+        "json_files": "Import GraphDef JSON files (V1 and V2 formats)",
+        "csv_data": "Load time series data from CSV files",
+        "synthetic_data": "Generate test data using Atlas patterns"
+      },
+      
+      "processing_pipeline": {
+        "query_execution": "Atlas Query Language (AQL) processing",
+        "data_transformation": "Filtering, aggregation, mathematical operations",
+        "time_range_handling": "Time window selection and normalization",
+        "multi_series_management": "Grouping, stacking, and correlation analysis"
+      },
+      
+      "output_generation": {
+        "interactive_charts": "Real-time DearPyGui plot widgets",
+        "static_exports": "PNG/PDF generation using Atlas rendering engine",
+        "data_exports": "CSV, JSON, and other format exports",
+        "dashboard_layouts": "Multi-chart dashboard configurations"
+      }
+    }
+  },
+
+  "recommended_node_categories": {
+    "data_source_nodes": {
+      "directory": "nodes/data_sources/",
+      "purpose": "Load time series data from various sources",
+      "nodes": [
+        {
+          "name": "Atlas API Node",
+          "description": "Connect to Atlas API and execute queries",
+          "inputs": ["query_string", "time_range", "api_endpoint"],
+          "outputs": ["time_series_list", "metadata"],
+          "configuration": ["api_credentials", "timeout", "retry_policy"]
+        },
+        {
+          "name": "JSON Import Node", 
+          "description": "Import Atlas GraphDef JSON files",
+          "inputs": ["file_path"],
+          "outputs": ["graph_definition", "time_series_data"],
+          "configuration": ["format_version", "validation_mode"]
+        },
+        {
+          "name": "CSV Data Node",
+          "description": "Load time series from CSV files",
+          "inputs": ["file_path", "column_mapping"],
+          "outputs": ["dataframe", "time_series"],
+          "configuration": ["delimiter", "date_format", "timezone"]
+        },
+        {
+          "name": "Synthetic Data Node",
+          "description": "Generate test data using Atlas patterns",
+          "inputs": ["data_type", "parameters"],
+          "outputs": ["time_series"],
+          "configuration": ["pattern_type", "noise_level", "anomalies"]
+        }
+      ]
+    },
+
+    "processing_nodes": {
+      "directory": "nodes/processing/",
+      "purpose": "Transform and analyze time series data",
+      "nodes": [
+        {
+          "name": "Query Builder Node",
+          "description": "Visual Atlas Query Language builder",
+          "inputs": ["base_query", "filters"],
+          "outputs": ["aql_query", "query_metadata"],
+          "configuration": ["query_templates", "validation_rules"]
+        },
+        {
+          "name": "Time Filter Node",
+          "description": "Filter data by time range and sampling",
+          "inputs": ["time_series", "time_range"],
+          "outputs": ["filtered_series"],
+          "configuration": ["start_time", "end_time", "step_size"]
+        },
+        {
+          "name": "Aggregation Node",
+          "description": "Mathematical operations on time series",
+          "inputs": ["time_series_list", "operation"],
+          "outputs": ["aggregated_series"],
+          "configuration": ["aggregation_type", "group_by_keys"]
+        },
+        {
+          "name": "Statistical Analysis Node",
+          "description": "Compute statistics and metrics",
+          "inputs": ["time_series"],
+          "outputs": ["statistics", "anomalies"],
+          "configuration": ["statistical_methods", "thresholds"]
+        }
+      ]
+    },
+
+    "visualization_nodes": {
+      "directory": "nodes/visualization/",
+      "purpose": "Create interactive charts and visualizations",
+      "nodes": [
+        {
+          "name": "Line Chart Node",
+          "description": "Interactive line chart with zoom/pan",
+          "inputs": ["time_series_list", "styling"],
+          "outputs": ["chart_widget"],
+          "configuration": ["colors", "line_styles", "legend_position"]
+        },
+        {
+          "name": "Area Chart Node",
+          "description": "Stacked or filled area charts",
+          "inputs": ["time_series_list", "stack_mode"],
+          "outputs": ["chart_widget"],
+          "configuration": ["stack_type", "transparency", "gradients"]
+        },
+        {
+          "name": "Heatmap Node",
+          "description": "Time-based heatmap visualization",
+          "inputs": ["time_series_matrix"],
+          "outputs": ["heatmap_widget"],
+          "configuration": ["color_scheme", "bin_size", "normalization"]
+        },
+        {
+          "name": "Alert Visualization Node",
+          "description": "Show alert thresholds and triggered states",
+          "inputs": ["time_series", "thresholds", "alert_rules"],
+          "outputs": ["chart_with_alerts"],
+          "configuration": ["threshold_colors", "alert_styles", "notification_settings"]
+        }
+      ]
+    },
+
+    "dashboard_nodes": {
+      "directory": "nodes/dashboard/",
+      "purpose": "Layout and organize multiple visualizations",
+      "nodes": [
+        {
+          "name": "Dashboard Layout Node",
+          "description": "Arrange multiple charts in grid layout",
+          "inputs": ["chart_widgets", "layout_config"],
+          "outputs": ["dashboard_widget"],
+          "configuration": ["grid_size", "spacing", "responsive_mode"]
+        },
+        {
+          "name": "Time Range Selector Node",
+          "description": "Interactive time range picker",
+          "inputs": ["available_time_range"],
+          "outputs": ["selected_range"],
+          "configuration": ["preset_ranges", "granularity", "timezone"]
+        },
+        {
+          "name": "Metric Browser Node",
+          "description": "Browse and select available metrics",
+          "inputs": ["metric_catalog"],
+          "outputs": ["selected_metrics"],
+          "configuration": ["search_filters", "grouping", "favorites"]
+        }
+      ]
+    },
+
+    "export_nodes": {
+      "directory": "nodes/export/",
+      "purpose": "Export charts and data in various formats",
+      "nodes": [
+        {
+          "name": "PNG Export Node",
+          "description": "Export charts as PNG images",
+          "inputs": ["chart_widget", "export_settings"],
+          "outputs": ["png_file"],
+          "configuration": ["resolution", "dpi", "background_color"]
+        },
+        {
+          "name": "PDF Export Node",
+          "description": "Export dashboards as PDF reports",
+          "inputs": ["dashboard_widget", "report_config"],
+          "outputs": ["pdf_file"],
+          "configuration": ["page_size", "margins", "header_footer"]
+        },
+        {
+          "name": "Data Export Node",
+          "description": "Export processed data",
+          "inputs": ["time_series_data", "format"],
+          "outputs": ["exported_file"],
+          "configuration": ["export_format", "compression", "metadata"]
+        }
+      ]
+    }
+  },
+
+  "implementation_strategy": {
+    "phase_1_foundation": {
+      "duration": "4-6 weeks",
+      "components": [
+        "Core node architecture adaptation from Image-Processing-Node-Editor",
+        "Basic Atlas data model integration (TimeSeries, GraphDef)",
+        "Essential data source nodes (JSON import, synthetic data)",
+        "Simple line chart visualization node",
+        "Basic configuration and persistence system"
+      ],
+      "deliverables": [
+        "Working node editor with Atlas-specific node types",
+        "Ability to load Atlas JSON files and display basic charts",
+        "Save/load dashboard configurations",
+        "Documentation and examples"
+      ]
+    },
+
+    "phase_2_core_features": {
+      "duration": "6-8 weeks", 
+      "components": [
+        "Atlas API integration with authentication",
+        "Advanced visualization nodes (area, heatmap, alerts)",
+        "Time range selection and filtering",
+        "Query builder interface",
+        "Statistical analysis nodes",
+        "Export functionality (PNG, PDF, CSV)"
+      ],
+      "deliverables": [
+        "Full Atlas API connectivity",
+        "Interactive chart widgets with zoom/pan",
+        "Visual query builder",
+        "Export capabilities for all formats",
+        "Performance optimizations"
+      ]
+    },
+
+    "phase_3_advanced_features": {
+      "duration": "4-6 weeks",
+      "components": [
+        "Dashboard layout system",
+        "Real-time streaming updates",
+        "Alert and notification system",
+        "Custom theme and styling",
+        "Plugin architecture for custom nodes",
+        "Performance monitoring and profiling"
+      ],
+      "deliverables": [
+        "Complete dashboard system",
+        "Real-time data streaming",
+        "Alert management system",
+        "Extensible plugin framework",
+        "Production-ready performance"
+      ]
+    }
+  },
+
+  "technical_architecture": {
+    "core_framework_adaptation": {
+      "base_classes": {
+        "AtlasNodeABC": {
+          "extends": "DpgNodeABC from Image-Processing-Node-Editor",
+          "additional_methods": [
+            "validate_time_series_data()",
+            "apply_atlas_styling()",
+            "handle_time_range_updates()",
+            "process_query_results()"
+          ],
+          "data_types": [
+            "TYPE_TIME_SERIES",
+            "TYPE_DATAFRAME", 
+            "TYPE_CHART",
+            "TYPE_QUERY",
+            "TYPE_METADATA"
+          ]
+        },
+        
+        "AtlasNodeEditor": {
+          "extends": "DpgNodeEditor from Image-Processing-Node-Editor",
+          "additional_features": [
+            "Atlas API connection management",
+            "Time range synchronization across nodes",
+            "Chart theme management",
+            "Real-time update scheduling"
+          ]
+        }
+      }
+    },
+
+    "data_processing_pipeline": {
+      "execution_flow": [
+        "1. Load data sources (API, files, synthetic)",
+        "2. Apply time range filters and sampling",
+        "3. Execute Atlas queries and aggregations", 
+        "4. Transform data for visualization",
+        "5. Render interactive charts",
+        "6. Update dashboard layouts",
+        "7. Handle user interactions (zoom, pan, select)",
+        "8. Export results on demand"
+      ],
+      
+      "caching_strategy": {
+        "query_results": "Cache Atlas API responses with TTL",
+        "chart_rendering": "Cache rendered chart widgets",
+        "dashboard_layouts": "Persist layout configurations",
+        "user_preferences": "Save theme and styling choices"
+      }
+    },
+
+    "performance_considerations": {
+      "data_handling": {
+        "streaming": "Implement data streaming for large time series",
+        "lazy_loading": "Load chart data on demand",
+        "pagination": "Handle large datasets with pagination",
+        "compression": "Use efficient data compression for storage"
+      },
+      
+      "rendering_optimization": {
+        "chart_updates": "Incremental chart updates instead of full redraws",
+        "level_of_detail": "Simplify charts at different zoom levels",
+        "background_processing": "Move heavy computations to background threads",
+        "memory_management": "Implement proper cleanup and garbage collection"
+      }
+    }
+  },
+
+  "integration_with_existing_atlas": {
+    "api_compatibility": {
+      "endpoints": [
+        "Atlas Graph API (/api/v1/graph)",
+        "Atlas Data API (/api/v1/data)", 
+        "Atlas Metadata API (/api/v1/metadata)"
+      ],
+      "authentication": "Support Atlas authentication mechanisms",
+      "query_language": "Full Atlas Query Language (AQL) support",
+      "data_formats": "Support V1 and V2 GraphDef JSON formats"
+    },
+
+    "rendering_engine_integration": {
+      "atlas_chart_engine": "Integrate with existing Atlas chart rendering",
+      "theme_system": "Support Atlas light/dark themes",
+      "styling_options": "Compatible with Atlas chart styling",
+      "export_formats": "Use Atlas PNG/PDF export capabilities"
+    },
+
+    "data_model_compatibility": {
+      "time_series_format": "Direct compatibility with Atlas TimeSeries model",
+      "tag_system": "Support Atlas tag-based querying and grouping",
+      "time_handling": "Compatible with Atlas time range and step size handling",
+      "metadata_preservation": "Maintain Atlas metadata throughout processing"
+    }
+  },
+
+  "user_experience_design": {
+    "workflow_patterns": {
+      "quick_dashboard": [
+        "1. Drag Atlas API node onto canvas",
+        "2. Configure query and time range",
+        "3. Connect to Line Chart node",
+        "4. Add Dashboard Layout node",
+        "5. Export or save configuration"
+      ],
+      
+      "advanced_analysis": [
+        "1. Load multiple data sources",
+        "2. Apply filters and transformations",
+        "3. Create multiple chart types",
+        "4. Add statistical analysis nodes",
+        "5. Configure alert thresholds",
+        "6. Arrange in dashboard layout"
+      ],
+      
+      "real_time_monitoring": [
+        "1. Set up streaming data sources",
+        "2. Configure auto-refresh intervals",
+        "3. Add alert visualization nodes",
+        "4. Create notification rules",
+        "5. Deploy as monitoring dashboard"
+      ]
+    },
+
+    "ui_components": {
+      "node_palette": "Categorized nodes for easy discovery",
+      "property_panels": "Context-sensitive configuration panels",
+      "chart_preview": "Live preview of chart configurations",
+      "time_range_picker": "Intuitive time range selection",
+      "query_builder": "Visual Atlas query construction",
+      "theme_selector": "Light/dark theme switching",
+      "export_dialog": "Comprehensive export options"
+    }
+  },
+
+  "deployment_and_distribution": {
+    "packaging": {
+      "executable": "PyInstaller for standalone executables",
+      "installer": "NSIS or similar for Windows installer",
+      "package_manager": "pip package for Python distribution",
+      "docker": "Docker container for easy deployment"
+    },
+
+    "configuration_management": {
+      "user_settings": "JSON-based user preferences",
+      "dashboard_templates": "Pre-built dashboard configurations",
+      "node_libraries": "Extensible node plugin system",
+      "theme_packages": "Custom theme and styling packages"
+    },
+
+    "documentation": {
+      "user_guide": "Comprehensive user documentation",
+      "node_reference": "Complete node library documentation", 
+      "api_integration": "Atlas API integration guide",
+      "examples": "Sample dashboards and workflows",
+      "video_tutorials": "Step-by-step video guides"
+    }
+  },
+
+  "success_metrics": {
+    "adoption_indicators": [
+      "Number of active users",
+      "Dashboard configurations created",
+      "Atlas API queries executed",
+      "Export operations performed"
+    ],
+    
+    "performance_targets": [
+      "Chart rendering < 100ms for typical datasets",
+      "Dashboard load time < 2 seconds",
+      "Memory usage < 500MB for standard workloads",
+      "Support for 100+ concurrent time series"
+    ],
+    
+    "usability_goals": [
+      "Non-technical users can create dashboards in < 10 minutes",
+      "Advanced users can build complex analysis pipelines",
+      "Seamless integration with existing Atlas workflows",
+      "High user satisfaction scores"
+    ]
+  }
+}

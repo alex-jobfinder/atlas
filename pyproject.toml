@@ -28,6 +28,7 @@ dependencies = [
     "requests>=2.31.0",
     "dearpygui~=1.11;python_version>='3.12'",
     "dearpygui>=1.11.1",
+    "pandas>=2.3.2",
 ]
 
 [project.urls]
