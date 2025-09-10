@@ -1,0 +1,1 @@
+--preset sps --q "name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,sps,:eq,(,nf.cluster,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot" --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/sps_vspan_with_alert.png --emit-v2 target/manual/sps_vspan_with_alert.v2.json.gz

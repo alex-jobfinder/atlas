@@ -1,0 +1,1 @@
+--preset sps --alert "name,sps,:eq,(,nf.cluster,),:by" --threshold 50000 --operator gt --severity CRITICAL --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out target/manual/visual_cpu_alert.png --alert-output target/manual/visual_cpu_alert_report.json --emit-v2 target/manual/visual_cpu_alert.v2.json.gz

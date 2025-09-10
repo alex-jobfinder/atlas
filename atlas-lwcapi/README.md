@@ -51,7 +51,7 @@ Filtered response of the main expression set.
 
 ## Streams
 
-Provides a list of streams attached to a particular LWC instance. It does _not_ list 
+Provides a list of streams attached to a particular LWC instance. It does _not_ list
 streams for an entire cluster. To find the expressions evaluated for a particular
 stream, append the stream ID to the URI path.
 

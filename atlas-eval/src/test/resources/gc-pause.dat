@@ -749,4 +749,3 @@
 {"outputFullFailures":0}
 
 {"type":"datapoint","timestamp":1492701240000,"id":"LGv-ToTjoymK-ir8OrY4ejvS4uQ","tags":{"statistic":"max","nf.asg":"atlas_mem6h-v004","name":"jvm.gc.pause","nf.node":"i-0015"},"value":0.0}
-

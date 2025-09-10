@@ -215,7 +215,7 @@ These are currently used to indicate the following:
 * **patch**, bug fixes and minor changes for stable releases. There should be backwards
   compatibility from one patch release to the next. In most cases these will also be forwards
   compatible, but we do not test or verify.
-  
+
 If you need stability and are using the Atlas libraries directly, then use one of the
 stable patch releases.
 
@@ -245,7 +245,7 @@ editable for several reasons:
 2. GitHub does not allow pull requests for the wiki
 3. A number of the tedious steps like including sample graphs and formatting expressions are
    easier to do with some scripting
-   
+
 The documentation is kept inline with the code as part of the [atlas-wiki] sub-project. To
 update the documentation, update the content in that sub-project and send in a PR just as you
 would for [contributing code](#contributing-code). Once the PR has been reviewed and merged, then
