@@ -257,4 +257,3 @@ $ make publish-wiki
 ```
 
 [GitHub wiki]: https://github.com/Netflix/atlas/wiki
-[atlas-wiki]: https://github.com/Netflix/atlas/tree/master/atlas-wiki/src/main
