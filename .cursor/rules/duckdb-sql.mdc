@@ -1,0 +1,28 @@
+---
+description:
+globs: *.sql
+alwaysApply: false
+---
+# SQL Rules
+This rule applies to all SQL files in the project.
+
+## File Pattern
+*.sql
+
+## Description
+When working with SQL files, we use DuckDB as our database engine. SQL files should be executed using the command `duckdb dbt_ads_project/dbt.duckdb -f {file}`.
+
+## Formatting
+- Use 4 spaces for indentation
+- Use SQLFluff for formatting with DuckDB dialect
+- Format on save
+
+## Commands
+- Context: run uv run python scripts/get_duckdb_xml_schema_cached.py to get the schema of the database (with 24h cache)
+- Run SQL file: duckdb dbt_ads_project/dbt.duckdb -f {file}
+
+## Best Practices
+- Use consistent naming conventions
+- Include comments for complex queries
+- Use proper indentation for readability
+- Follow DuckDB's SQL dialect specifications

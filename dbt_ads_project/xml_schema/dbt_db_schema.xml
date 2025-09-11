@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='utf-8'?>
+<database name="dbt">
+  <table name="campaign_performance">
+    <column name="id" type="INTEGER" nullable="YES" />
+    <column name="campaign_id" type="INTEGER" nullable="YES" />
+    <column name="hour_ts" type="TIMESTAMP" nullable="YES" />
+    <column name="impressions" type="INTEGER" nullable="YES" />
+    <column name="clicks" type="INTEGER" nullable="YES" />
+    <column name="video_start" type="INTEGER" nullable="YES" />
+    <column name="frequency" type="INTEGER" nullable="YES" />
+    <column name="reach" type="INTEGER" nullable="YES" />
+    <column name="audience_json" type="VARCHAR" nullable="YES" />
+    <column name="requests" type="INTEGER" nullable="YES" />
+    <column name="responses" type="INTEGER" nullable="YES" />
+    <column name="eligible_impressions" type="INTEGER" nullable="YES" />
+    <column name="auctions_won" type="INTEGER" nullable="YES" />
+    <column name="viewable_impressions" type="INTEGER" nullable="YES" />
+    <column name="audible_impressions" type="INTEGER" nullable="YES" />
+    <column name="video_q25" type="INTEGER" nullable="YES" />
+    <column name="video_q50" type="INTEGER" nullable="YES" />
+    <column name="video_q75" type="INTEGER" nullable="YES" />
+    <column name="video_q100" type="INTEGER" nullable="YES" />
+    <column name="skips" type="INTEGER" nullable="YES" />
+    <column name="qr_scans" type="INTEGER" nullable="YES" />
+    <column name="interactive_engagements" type="INTEGER" nullable="YES" />
+    <column name="spend" type="INTEGER" nullable="YES" />
+    <column name="error_count" type="INTEGER" nullable="YES" />
+    <column name="timeout_count" type="INTEGER" nullable="YES" />
+    <column name="human_readable" type="VARCHAR" nullable="YES" />
+    <column name="hour_of_day" type="INTEGER" nullable="YES" />
+    <column name="minute_of_hour" type="INTEGER" nullable="YES" />
+    <column name="second_of_minute" type="INTEGER" nullable="YES" />
+    <column name="day_of_week" type="INTEGER" nullable="YES" />
+    <column name="is_business_hour" type="INTEGER" nullable="YES" />
+    <column name="daily_day_date" type="DATE" nullable="YES" />
+    <column name="weekly_start_day_date" type="DATE" nullable="YES" />
+    <column name="monthly_start_day_date" type="DATE" nullable="YES" />
+  </table>
+  <table name="mart_hourly_campaign_performance">
+    <column name="id" type="INTEGER" nullable="YES" />
+    <column name="campaign_id" type="INTEGER" nullable="YES" />
+    <column name="hour_ts" type="TIMESTAMP" nullable="YES" />
+    <column name="date_day" type="DATE" nullable="YES" />
+    <column name="date_week" type="DATE" nullable="YES" />
+    <column name="date_month" type="DATE" nullable="YES" />
+    <column name="hour_of_day" type="INTEGER" nullable="YES" />
+    <column name="day_of_week" type="INTEGER" nullable="YES" />
+    <column name="is_business_hour" type="INTEGER" nullable="YES" />
+    <column name="impressions" type="INTEGER" nullable="YES" />
+    <column name="clicks" type="INTEGER" nullable="YES" />
+    <column name="spend" type="INTEGER" nullable="YES" />
+    <column name="video_start" type="INTEGER" nullable="YES" />
+    <column name="video_q25" type="INTEGER" nullable="YES" />
+    <column name="video_q50" type="INTEGER" nullable="YES" />
+    <column name="video_q75" type="INTEGER" nullable="YES" />
+    <column name="video_q100" type="INTEGER" nullable="YES" />
+    <column name="frequency" type="INTEGER" nullable="YES" />
+    <column name="reach" type="INTEGER" nullable="YES" />
+    <column name="skips" type="INTEGER" nullable="YES" />
+    <column name="qr_scans" type="INTEGER" nullable="YES" />
+    <column name="interactive_engagements" type="INTEGER" nullable="YES" />
+    <column name="requests" type="INTEGER" nullable="YES" />
+    <column name="responses" type="INTEGER" nullable="YES" />
+    <column name="eligible_impressions" type="INTEGER" nullable="YES" />
+    <column name="auctions_won" type="INTEGER" nullable="YES" />
+    <column name="viewable_impressions" type="INTEGER" nullable="YES" />
+    <column name="audible_impressions" type="INTEGER" nullable="YES" />
+    <column name="error_count" type="INTEGER" nullable="YES" />
+    <column name="timeout_count" type="INTEGER" nullable="YES" />
+    <column name="calculated_ctr" type="FLOAT" nullable="YES" />
+    <column name="win_rate" type="FLOAT" nullable="YES" />
+    <column name="viewability_rate" type="FLOAT" nullable="YES" />
+    <column name="audible_rate" type="FLOAT" nullable="YES" />
+    <column name="cpm" type="FLOAT" nullable="YES" />
+    <column name="cpc" type="FLOAT" nullable="YES" />
+    <column name="cpv" type="FLOAT" nullable="YES" />
+    <column name="video_completion_rate" type="FLOAT" nullable="YES" />
+    <column name="video_skip_rate" type="FLOAT" nullable="YES" />
+    <column name="video_start_rate" type="FLOAT" nullable="YES" />
+    <column name="supply_funnel_efficiency" type="FLOAT" nullable="YES" />
+    <column name="fill_rate" type="FLOAT" nullable="YES" />
+    <column name="response_rate" type="FLOAT" nullable="YES" />
+    <column name="error_rate" type="FLOAT" nullable="YES" />
+    <column name="timeout_rate" type="FLOAT" nullable="YES" />
+    <column name="qr_scan_rate" type="FLOAT" nullable="YES" />
+    <column name="interactive_rate" type="FLOAT" nullable="YES" />
+    <column name="effective_cpm" type="FLOAT" nullable="YES" />
+    <column name="avg_watch_time_seconds" type="DOUBLE" nullable="YES" />
+    <column name="high_ctr_flag" type="INTEGER" nullable="YES" />
+    <column name="high_viewability_flag" type="INTEGER" nullable="YES" />
+    <column name="human_readable" type="VARCHAR" nullable="YES" />
+    <column name="audience_json" type="VARCHAR" nullable="YES" />
+  </table>
+  <table name="time_spine_daily">
+    <column name="date_day" type="DATE" nullable="YES" />
+  </table>
+  <table name="time_spine_hourly">
+    <column name="date_hour" type="TIMESTAMP" nullable="YES" />
+  </table>
+  <table name="time_spine_weekly">
+    <column name="date_week" type="DATE" nullable="YES" />
+  </table>
+  <table name="stg_hourly_campaign_performance">
+    <column name="id" type="INTEGER" nullable="YES" />
+    <column name="campaign_id" type="INTEGER" nullable="YES" />
+    <column name="hour_ts" type="TIMESTAMP" nullable="YES" />
+    <column name="impressions" type="INTEGER" nullable="YES" />
+    <column name="clicks" type="INTEGER" nullable="YES" />
+    <column name="video_start" type="INTEGER" nullable="YES" />
+    <column name="frequency" type="INTEGER" nullable="YES" />
+    <column name="reach" type="INTEGER" nullable="YES" />
+    <column name="audience_json" type="VARCHAR" nullable="YES" />
+    <column name="requests" type="INTEGER" nullable="YES" />
+    <column name="responses" type="INTEGER" nullable="YES" />
+    <column name="eligible_impressions" type="INTEGER" nullable="YES" />
+    <column name="auctions_won" type="INTEGER" nullable="YES" />
+    <column name="viewable_impressions" type="INTEGER" nullable="YES" />
+    <column name="audible_impressions" type="INTEGER" nullable="YES" />
+    <column name="video_q25" type="INTEGER" nullable="YES" />
+    <column name="video_q50" type="INTEGER" nullable="YES" />
+    <column name="video_q75" type="INTEGER" nullable="YES" />
+    <column name="video_q100" type="INTEGER" nullable="YES" />
+    <column name="skips" type="INTEGER" nullable="YES" />
+    <column name="qr_scans" type="INTEGER" nullable="YES" />
+    <column name="interactive_engagements" type="INTEGER" nullable="YES" />
+    <column name="spend" type="INTEGER" nullable="YES" />
+    <column name="error_count" type="INTEGER" nullable="YES" />
+    <column name="timeout_count" type="INTEGER" nullable="YES" />
+    <column name="human_readable" type="VARCHAR" nullable="YES" />
+    <column name="hour_of_day" type="INTEGER" nullable="YES" />
+    <column name="minute_of_hour" type="INTEGER" nullable="YES" />
+    <column name="second_of_minute" type="INTEGER" nullable="YES" />
+    <column name="day_of_week" type="INTEGER" nullable="YES" />
+    <column name="is_business_hour" type="INTEGER" nullable="YES" />
+    <column name="daily_day_date" type="DATE" nullable="YES" />
+    <column name="weekly_start_day_date" type="DATE" nullable="YES" />
+    <column name="monthly_start_day_date" type="DATE" nullable="YES" />
+  </table>
+</database>

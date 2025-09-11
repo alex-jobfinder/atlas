@@ -1,0 +1,8 @@
+default:
+  outputs:
+    dev:
+      type: duckdb
+      path: dbt.duckdb
+      schema: main
+      threads: 1
+  target: dev

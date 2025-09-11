@@ -1,0 +1,421 @@
+version: 2
+
+models:
+  - name: mart_hourly_campaign_performance
+    description: |
+      Mart model for hourly campaign performance with enriched business metrics.
+      This model builds upon staging data and adds derived metrics, performance flags,
+      and business logic for analysis and reporting.
+
+    config:
+      materialized: table
+      strict_mode: false
+
+    columns:
+      # Primary keys and identifiers
+      - name: id
+        description: Surrogate primary key per row
+        tests: [not_null, unique]
+        meta:
+          semantic:
+            entity:
+              name: performance_record
+              type: primary
+
+      - name: campaign_id
+        description: Campaign identifier
+        tests: [not_null]
+        meta:
+          semantic:
+            entity:
+              name: campaign
+              type: foreign
+
+      # Time dimensions
+      - name: hour_ts
+        description: Hour timestamp for the metrics
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: time
+              granularity: hour
+              is_metric_time: true
+
+      - name: date_day
+        description: Date truncated to day level
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: time
+              granularity: day
+
+      - name: date_week
+        description: Date truncated to week level
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: time
+              granularity: week
+
+      - name: date_month
+        description: Date truncated to month level
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: time
+              granularity: month
+
+      - name: hour_of_day
+        description: Hour component (0-23)
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: categorical
+              is_partition: true
+
+      - name: day_of_week
+        description: Day of week (0-6)
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: categorical
+              is_partition: true
+
+      - name: is_business_hour
+        description: Flag if inside business hours
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: categorical
+              is_partition: true
+
+      # Core performance metrics
+      - name: impressions
+        description: Total impressions
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: clicks
+        description: Total clicks
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: spend
+        description: Spend amount (integer units)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: video_start
+        description: Count of video starts
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: video_q25
+        description: Video at 25%
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: video_q50
+        description: Video at 50%
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: video_q75
+        description: Video at 75%
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: video_q100
+        description: Video at 100%
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      # Engagement metrics
+      - name: frequency
+        description: Average frequency per reached user
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg}
+
+      - name: reach
+        description: Estimated unique reach
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: skips
+        description: Skip events
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: qr_scans
+        description: QR scan events
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: interactive_engagements
+        description: Interactive engagement events
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      # Quality and efficiency metrics
+      - name: requests
+        description: Total ad requests
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: responses
+        description: Total ad responses
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: eligible_impressions
+        description: Eligible impressions
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: auctions_won
+        description: Auctions won
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: viewable_impressions
+        description: Viewable impressions
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: audible_impressions
+        description: Audible impressions
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      # Error tracking
+      - name: error_count
+        description: Error count
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      - name: timeout_count
+        description: Timeout error count
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: sum}
+
+      # Derived business metrics
+      - name: calculated_ctr
+        description: Calculated click-through rate (clicks/impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: win_rate
+        description: Auction win rate (auctions_won/eligible_impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: viewability_rate
+        description: Viewability rate (viewable_impressions/impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: audible_rate
+        description: Audible rate (audible_impressions/impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: cpm
+        description: Cost per thousand impressions
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg}
+
+      - name: cpc
+        description: Cost per click
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg}
+
+      - name: cpv
+        description: Cost per video view
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg}
+
+      # Video completion and engagement rates
+      - name: video_completion_rate
+        description: Video completion rate (video_q100/video_start)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: video_skip_rate
+        description: Video skip rate (skips/video_start)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: video_start_rate
+        description: Video start rate (video_start/impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      # Supply funnel efficiency
+      - name: supply_funnel_efficiency
+        description: Supply funnel efficiency (eligible_impressions/requests)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: fill_rate
+        description: Fill rate (auctions_won/eligible_impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      # Response and error rates
+      - name: response_rate
+        description: Response rate (responses/requests)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: error_rate
+        description: Error rate (error_count/requests)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: timeout_rate
+        description: Timeout rate (timeout_count/requests)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      # Engagement rates
+      - name: qr_scan_rate
+        description: QR scan rate (qr_scans/impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      - name: interactive_rate
+        description: Interactive engagement rate (interactive_engagements/impressions)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg, scale: "0-1"}
+
+      # Effective CPM
+      - name: effective_cpm
+        description: Effective CPM in cents
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg}
+
+      # Average watch time
+      - name: avg_watch_time_seconds
+        description: Average watch time in seconds (estimated from quartiles)
+        tests: [not_null]
+        meta:
+          semantic:
+            measure: {agg: avg}
+
+      # Performance flags
+      - name: high_ctr_flag
+        description: Flag for high CTR (>= 2%)
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: categorical
+              note: "Performance indicator flag"
+
+      - name: high_viewability_flag
+        description: Flag for high viewability (>= 70%)
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension:
+              kind: categorical
+              note: "Performance indicator flag"
+
+      # Metadata
+      - name: human_readable
+        description: Human-readable timestamp string
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension: {kind: categorical}
+
+      - name: audience_json
+        description: JSON blob of audience breakdowns
+        meta:
+          semantic:
+            note: "Source for derived audience_* categorical dimensions in semantic_models"

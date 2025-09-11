@@ -1,0 +1,40 @@
+# Python Rules
+This rule applies to all Python files in the project.
+
+## File Pattern
+*.py
+
+## Description
+When working with Python files, we use uv as our package manager and runtime. Python files should be executed using the command `uv run {file}`.
+
+## Package Management
+- Use `uv` for all dependency management
+- Add packages with `uv add {package}`
+- Install dependencies with `uv sync`
+- Run commands with `uv run {command}`
+
+## Pre-commit Hooks
+The project uses pre-commit hooks to ensure code quality:
+- **check-added-large-files**: Prevents large files from being committed
+- **trailing-whitespace**: Removes trailing whitespace
+- **end-of-file-fixer**: Ensures files end with newline
+- **check-yaml**: Validates YAML syntax
+- **debug-statements**: Prevents debug statements in production code
+- **pretty-format-json**: Formats JSON files consistently
+- **ruff**: Linting and formatting for Python files in `src_python_gui/` and `tests_python_gui/`
+- **black**: Code formatting for Python files in `src_python_gui/` and `tests_python_gui/`
+- **codespell**: Spell checking for Python files in `src_python_gui/` and `tests_python_gui/`
+
+## Formatting
+- Use 4 spaces for indentation
+- Follow PEP 8 style guide
+- Use Ruff for code formatting and linting
+- Format on save
+- JSON files must be properly formatted (use `pretty-format-json` hook)
+
+## Best Practices
+- Use type hints where appropriate
+- Include docstrings for functions and classes
+- Use `uv` for virtual environment and dependency management
+- Run `pre-commit install` to set up hooks locally
+- Ensure all pre-commit hooks pass before committing

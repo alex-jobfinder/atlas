@@ -1,0 +1,36 @@
+version: 2
+
+# Time spine configurations required by semantic layer
+models:
+  - name: time_spine_hourly
+    description: Hourly time spine required by dbt semantic layer
+    time_spine:
+      standard_granularity_column: date_hour
+    columns:
+      - name: date_hour
+        description: Hour column for time spine
+        tests:
+          - not_null
+        granularity: hour
+
+  - name: time_spine_daily
+    description: Daily time spine required by dbt semantic layer
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        description: Day column for time spine
+        tests:
+          - not_null
+        granularity: day
+
+  - name: time_spine_weekly
+    description: Weekly time spine required by dbt semantic layer
+    time_spine:
+      standard_granularity_column: date_week
+    columns:
+      - name: date_week
+        description: Week column for time spine
+        tests:
+          - not_null
+        granularity: week

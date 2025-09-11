@@ -416,3 +416,76 @@ chart-runner-py: ## Render bundled sample JSON via Python renderer
 	  PY_JSON_IN=atlas-chart/src/test/resources/graphengine/data/default_non_uniformly_drawn_spikes.json \
 	  PY_JSON_OUT=atlas-chart/target/manual/default_non_uniformly_drawn_spikes_py.png \
 	  THEME=light OVERLAY=false WIDTH=700 HEIGHT=200 STYLE=line
+
+
+# =============================================================================
+# DBT Commands
+# =============================================================================
+
+
+
+# DBT Seed - Load CSV data into database
+dbt-seed:
+	@echo "🌱 Running DBT Seed..."
+	cd dbt_ads_project && dbt seed --select campaign_performance
+
+# DBT Run - Execute all models
+dbt-run:
+	@echo "🚀 Running DBT Models..."
+	cd dbt_ads_project && dbt run
+
+# DBT Run Staging Only
+dbt-run-staging:
+	@echo "📊 Running DBT Staging Models..."
+	cd dbt_ads_project && dbt run --select staging
+
+# DBT Run Marts Only
+dbt-run-marts:
+	@echo "🏪 Running DBT Mart Models..."
+	cd dbt_ads_project && dbt run --select marts
+
+# DBT Test - Run all tests
+dbt-test:
+	@echo "🧪 Running DBT Tests..."
+	cd dbt_ads_project && dbt test
+
+# DBT Test Specific Model
+dbt-test-model:
+	@echo "🧪 Testing Specific Model..."
+	cd dbt_ads_project && dbt test --select stg_hourly_campaign_performance
+
+# DBT Full Pipeline - Seed, Run, Test
+dbt-pipeline: dbt-seed dbt-run dbt-test
+	@echo "✅ DBT Pipeline Complete!"
+
+# DBT Fresh Start - Clean and rebuild everything
+dbt-fresh: clean-dbt
+	@echo "🔄 Fresh DBT Start..."
+	cd dbt_ads_project && dbt seed --select campaign_performance
+	cd dbt_ads_project && dbt run
+	cd dbt_ads_project && dbt test
+
+# Clean DBT artifacts
+clean-dbt:
+	@echo "🧹 Cleaning DBT artifacts..."
+	cd dbt_ads_project && rm -rf target/ logs/ dbt.duckdb*
+
+# DBT Debug - Show project info
+dbt-debug:
+	@echo "🔍 DBT Debug Info..."
+	cd dbt_ads_project && dbt debug
+
+# DBT List - Show available models
+dbt-list:
+	@echo "📋 Available DBT Models:"
+	cd dbt_ads_project && dbt list
+
+# DBT Show - Show model details
+dbt-show:
+	@echo "📊 DBT Model Details:"
+	cd dbt_ads_project && dbt show --select stg_hourly_campaign_performance
+
+# Query DuckDB - Run analysis script
+query-db:
+	@echo "🔍 Running DuckDB Analysis..."
+	cd dbt_ads_project && python query_duckdb.py
