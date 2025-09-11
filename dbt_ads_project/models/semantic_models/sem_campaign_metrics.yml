@@ -1,0 +1,529 @@
+version: 2
+
+# =====================================================================
+# 📊 Campaign Performance Metrics
+# =====================================================================
+# Refactored metrics following dbt Semantic Layer best practices
+# Based on prod_dbt_semantics_cheatsheet.yml guidelines
+# =====================================================================
+
+metrics:
+  # =====================================================================
+  # 📈 CORE PERFORMANCE METRICS (Simple)
+  # =====================================================================
+
+  - name: total_impressions
+    description: "Total impressions across all campaigns"
+    label: "Total Impressions"
+    type: simple
+    type_params:
+      measure: impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: total_clicks
+    description: "Total clicks across all campaigns"
+    label: "Total Clicks"
+    type: simple
+    type_params:
+      measure: clicks
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: total_spend
+    description: "Total spend across all campaigns in cents"
+    label: "Total Spend (cents)"
+    type: simple
+    type_params:
+      measure: spend
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+        currency_unit: "cents"
+
+  - name: total_video_starts
+    description: "Total video starts across all campaigns"
+    label: "Total Video Starts"
+    type: simple
+    type_params:
+      measure: video_starts
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: total_video_completions
+    description: "Total video completions across all campaigns"
+    label: "Total Video Completions"
+    type: simple
+    type_params:
+      measure: video_completions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: total_reach
+    description: "Total unique reach across all campaigns"
+    label: "Total Reach"
+    type: simple
+    type_params:
+      measure: reach
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: total_viewable_impressions
+    description: "Total viewable impressions across all campaigns"
+    label: "Total Viewable Impressions"
+    type: simple
+    type_params:
+      measure: viewable_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: total_audible_impressions
+    description: "Total audible impressions across all campaigns"
+    label: "Total Audible Impressions"
+    type: simple
+    type_params:
+      measure: audible_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: total_auctions_won
+    description: "Total auctions won across all campaigns"
+    label: "Total Auctions Won"
+    type: simple
+    type_params:
+      measure: auctions_won
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_eligible_impressions
+    description: "Total eligible impressions across all campaigns"
+    label: "Total Eligible Impressions"
+    type: simple
+    type_params:
+      measure: eligible_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_requests
+    description: "Total ad requests across all campaigns"
+    label: "Total Requests"
+    type: simple
+    type_params:
+      measure: requests
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_responses
+    description: "Total ad responses across all campaigns"
+    label: "Total Responses"
+    type: simple
+    type_params:
+      measure: responses
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  # =====================================================================
+  # 📊 PERFORMANCE RATE METRICS (Simple - Averages)
+  # =====================================================================
+
+  - name: overall_ctr
+    description: "Overall click-through rate across all campaigns"
+    label: "Overall CTR"
+    type: simple
+    type_params:
+      measure: ctr
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: overall_viewability_rate
+    description: "Overall viewability rate across all campaigns"
+    label: "Overall Viewability Rate"
+    type: simple
+    type_params:
+      measure: viewability_rate
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: overall_video_completion_rate
+    description: "Overall video completion rate across all campaigns"
+    label: "Overall Video Completion Rate"
+    type: simple
+    type_params:
+      measure: video_completion_rate
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: overall_audible_rate
+    description: "Overall audible rate across all campaigns"
+    label: "Overall Audible Rate"
+    type: simple
+    type_params:
+      measure: audible_rate
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: overall_win_rate
+    description: "Overall auction win rate across all campaigns"
+    label: "Overall Win Rate"
+    type: simple
+    type_params:
+      measure: win_rate
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: overall_response_rate
+    description: "Overall response rate across all campaigns"
+    label: "Overall Response Rate"
+    type: simple
+    type_params:
+      measure: response_rate
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: overall_fill_rate
+    description: "Overall fill rate across all campaigns"
+    label: "Overall Fill Rate"
+    type: simple
+    type_params:
+      measure: fill_rate
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  # =====================================================================
+  # 💰 COST EFFICIENCY METRICS (Simple - Averages)
+  # =====================================================================
+
+  - name: overall_cpm
+    description: "Overall cost per thousand impressions"
+    label: "Overall CPM"
+    type: simple
+    type_params:
+      measure: cpm
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: overall_cpc
+    description: "Overall cost per click"
+    label: "Overall CPC"
+    type: simple
+    type_params:
+      measure: cpc
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: overall_cpv
+    description: "Overall cost per video view"
+    label: "Overall CPV"
+    type: simple
+    type_params:
+      measure: cpv
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: overall_effective_cpm
+    description: "Overall effective CPM in cents"
+    label: "Overall Effective CPM (cents)"
+    type: simple
+    type_params:
+      measure: effective_cpm
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  # =====================================================================
+  # 📈 RATIO METRICS (Properly defined with input_metrics)
+  # =====================================================================
+
+  - name: click_through_rate
+    description: "Click-through rate as a ratio of clicks to impressions"
+    label: "Click-Through Rate"
+    type: ratio
+    type_params:
+      numerator: total_clicks
+      denominator: total_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: video_completion_rate_ratio
+    description: "Video completion rate as a ratio of completions to starts"
+    label: "Video Completion Rate"
+    type: ratio
+    type_params:
+      numerator: total_video_completions
+      denominator: total_video_starts
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: viewability_rate_ratio
+    description: "Viewability rate as a ratio of viewable to total impressions"
+    label: "Viewability Rate"
+    type: ratio
+    type_params:
+      numerator: total_viewable_impressions
+      denominator: total_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: audible_rate_ratio
+    description: "Audible rate as a ratio of audible to total impressions"
+    label: "Audible Rate"
+    type: ratio
+    type_params:
+      numerator: total_audible_impressions
+      denominator: total_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: win_rate_ratio
+    description: "Win rate as a ratio of auctions won to eligible impressions"
+    label: "Win Rate"
+    type: ratio
+    type_params:
+      numerator: total_auctions_won
+      denominator: total_eligible_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: response_rate_ratio
+    description: "Response rate as a ratio of responses to requests"
+    label: "Response Rate"
+    type: ratio
+    type_params:
+      numerator: total_responses
+      denominator: total_requests
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: fill_rate_ratio
+    description: "Fill rate as a ratio of auctions won to eligible impressions"
+    label: "Fill Rate"
+    type: ratio
+    type_params:
+      numerator: total_auctions_won
+      denominator: total_eligible_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  # =====================================================================
+  # 💰 COST EFFICIENCY RATIO METRICS
+  # =====================================================================
+
+  - name: cpm_ratio
+    description: "CPM as a ratio of spend to impressions (scaled by 1000)"
+    label: "CPM"
+    type: ratio
+    type_params:
+      numerator: total_spend
+      denominator: total_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: cpc_ratio
+    description: "CPC as a ratio of spend to clicks"
+    label: "CPC"
+    type: ratio
+    type_params:
+      numerator: total_spend
+      denominator: total_clicks
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+        primary_kpi: true
+
+  - name: cpv_ratio
+    description: "CPV as a ratio of spend to video starts"
+    label: "CPV"
+    type: ratio
+    type_params:
+      numerator: total_spend
+      denominator: total_video_starts
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  # =====================================================================
+  # 📊 DERIVED METRICS
+  # =====================================================================
+
+  - name: effective_cpm_cents
+    description: "Effective CPM in cents"
+    label: "Effective CPM (cents)"
+    type: simple
+    type_params:
+      measure: effective_cpm
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+        business_metric: true
+
+  - name: avg_watch_time
+    description: "Average watch time in seconds"
+    label: "Average Watch Time (seconds)"
+    type: simple
+    type_params:
+      measure: avg_watch_time_seconds
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: high_performance_campaigns
+    description: "Count of campaigns with high CTR and viewability"
+    label: "High Performance Campaigns"
+    type: simple
+    type_params:
+      measure: high_performance_count
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  # =====================================================================
+  # 📈 ENGAGEMENT RATE METRICS
+  # =====================================================================
+
+  - name: qr_scan_rate
+    description: "QR scan rate as a ratio of QR scans to impressions"
+    label: "QR Scan Rate"
+    type: ratio
+    type_params:
+      numerator: total_qr_scans
+      denominator: total_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: interactive_rate
+    description: "Interactive engagement rate as a ratio of engagements to impressions"
+    label: "Interactive Rate"
+    type: ratio
+    type_params:
+      numerator: total_interactive_engagements
+      denominator: total_impressions
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  # =====================================================================
+  # 📊 ADDITIONAL SIMPLE METRICS
+  # =====================================================================
+
+  - name: total_qr_scans
+    description: "Total QR scan events across all campaigns"
+    label: "Total QR Scans"
+    type: simple
+    type_params:
+      measure: qr_scans
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_interactive_engagements
+    description: "Total interactive engagement events across all campaigns"
+    label: "Total Interactive Engagements"
+    type: simple
+    type_params:
+      measure: interactive_engagements
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_skips
+    description: "Total skip events across all campaigns"
+    label: "Total Skips"
+    type: simple
+    type_params:
+      measure: skips
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_frequency
+    description: "Total frequency across all campaigns"
+    label: "Total Frequency"
+    type: simple
+    type_params:
+      measure: frequency
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_error_count
+    description: "Total error count across all campaigns"
+    label: "Total Error Count"
+    type: simple
+    type_params:
+      measure: error_count
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"
+
+  - name: total_timeout_count
+    description: "Total timeout count across all campaigns"
+    label: "Total Timeout Count"
+    type: simple
+    type_params:
+      measure: timeout_count
+    config:
+      meta:
+        data_owner: "Advertising Analytics Team"

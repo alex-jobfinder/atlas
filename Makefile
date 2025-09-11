@@ -478,29 +478,6 @@ dbt-parse-semantics:
 	@echo "🔍 Parsing Semantic Models..."
 	cd $(DBT_PROJECT_DIR) && dbt parse
 
-# Run a semantic layer query (example metric)
-dbt-sl-query:
-	@echo "📊 Querying Semantic Layer..."
-	cd $(DBT_PROJECT_DIR) && dbt sl query --metrics revenue --group-by metric_time__day
-
-# List all available metrics
-dbt-sl-list-metrics:
-	@echo "📋 Listing Semantic Layer Metrics..."
-	cd $(DBT_PROJECT_DIR) && dbt sl list --resource-type metric
-
-# List dimensions for a given metric
-dbt-sl-list-dimensions:
-	@echo "📐 Listing Dimensions for Metric..."
-	cd $(DBT_PROJECT_DIR) && dbt sl list dimensions --metrics revenue
-
-# Inspect semantic graph (entities, joins, metrics)
-dbt-sl-inspect:
-	@echo "🔎 Inspecting Semantic Graph..."
-	cd $(DBT_PROJECT_DIR) && dbt sl list --help
-
-# Semantic pipeline: parse + sample query
-dbt-semantic-pipeline: dbt-parse-semantics dbt-sl-query
-	@echo "✅ Semantic Pipeline Complete!"
 
 # ---------------------------------------------------------------------
 # 3. Maintenance & Debugging
@@ -534,3 +511,90 @@ dbt-show:
 query-db:
 	@echo "🔍 Running DuckDB Analysis..."
 	cd $(DBT_PROJECT_DIR) && python query_duckdb.py
+
+
+# # Run a semantic layer query (example metric)
+# dbt-sl-query:
+# 	@echo "📊 Querying Semantic Layer..."
+# 	@metrics="$(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"; \
+# 	 groupby="$(if $(DBT_SL_GROUP_BY),$(DBT_SL_GROUP_BY),metric_time__day) $(DBT_SL_DIMS)"; \
+# 	 cd $(DBT_PROJECT_DIR) && ( \
+# 	   dbt sl query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || metricflow query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || mf query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	 )
+
+# # List all available metrics
+# dbt-sl-list-metrics:
+# 	@echo "📋 Listing Semantic Layer Metrics..."
+# 	@cd $(DBT_PROJECT_DIR) && ( \
+# 	  dbt sl list --resource-type metric \
+# 	  || { echo "❌ 'dbt sl' not available locally. Install dbt Cloud CLI or MetricFlow to list metrics."; exit 2; } \
+# 	)
+
+# # List dimensions for a given metric
+# dbt-sl-list-dimensions:
+# 	@echo "📐 Listing Dimensions for Metric..."
+# 	@metric="$(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"; \
+# 	 cd $(DBT_PROJECT_DIR) && ( \
+# 	   dbt sl list dimensions --metrics $$metric \
+# 	   || { echo "❌ 'dbt sl' not available locally. Install dbt Cloud CLI or MetricFlow to list dimensions."; exit 2; } \
+# 	 )
+
+# # Inspect semantic graph (entities, joins, metrics)
+# dbt-sl-inspect:
+# 	@echo "🔎 Inspecting Semantic Graph..."
+# 	@cd $(DBT_PROJECT_DIR) && ( \
+# 	  dbt sl list --help \
+# 	  || { echo "❌ 'dbt sl' not available locally. Install dbt Cloud CLI to inspect semantic graph."; exit 2; } \
+# 	)
+
+# # Semantic pipeline: parse + sample query
+# dbt-semantic-pipeline: dbt-parse-semantics dbt-sl-query
+# 	@echo "✅ Semantic Pipeline Complete!"
+
+# # Convenience: query common time grains
+# .PHONY: dbt-sl-hourly dbt-sl-daily dbt-sl-weekly dbt-sl-monthly
+# # Override at call time, e.g.:
+# #   make dbt-sl-daily DBT_SL_METRICS="total_impressions,total_clicks" DBT_SL_DIMS="campaign"
+# # Optional filter:
+# #   make dbt-sl-daily DBT_SL_WHERE="metric_time between '2024-01-01' and '2024-03-31'"
+# # DBT_SL_METRICS ?= total_impressions
+# # DBT_SL_DIMS ?=
+# # DBT_SL_WHERE ?=
+
+# dbt-sl-hourly:
+# 	@echo "📊 Querying (hourly): $(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"
+# 	@metrics="$(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"; groupby="metric_time__hour $(DBT_SL_DIMS)"; \
+# 	 cd $(DBT_PROJECT_DIR) && ( \
+# 	   dbt sl query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || metricflow query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || mf query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	 )
+
+# dbt-sl-daily:
+# 	@echo "📊 Querying (daily): $(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"
+# 	@metrics="$(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"; groupby="metric_time__day $(DBT_SL_DIMS)"; \
+# 	 cd $(DBT_PROJECT_DIR) && ( \
+# 	   dbt sl query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || metricflow query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || mf query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	 )
+
+# dbt-sl-weekly:
+# 	@echo "📊 Querying (weekly): $(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"
+# 	@metrics="$(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"; groupby="metric_time__week $(DBT_SL_DIMS)"; \
+# 	 cd $(DBT_PROJECT_DIR) && ( \
+# 	   dbt sl query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || metricflow query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || mf query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	 )
+
+# dbt-sl-monthly:
+# 	@echo "📊 Querying (monthly): $(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"
+# 	@metrics="$(if $(DBT_SL_METRICS),$(DBT_SL_METRICS),total_impressions)"; groupby="metric_time__month $(DBT_SL_DIMS)"; \
+# 	 cd $(DBT_PROJECT_DIR) && ( \
+# 	   dbt sl query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || metricflow query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	   || mf query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
+# 	 )

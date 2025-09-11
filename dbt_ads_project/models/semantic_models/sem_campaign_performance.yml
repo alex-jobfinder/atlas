@@ -1,0 +1,335 @@
+version: 2
+
+# =====================================================================
+# 📊 Campaign Performance Semantic Model
+# =====================================================================
+# Refactored semantic model following dbt Semantic Layer best practices
+# Based on prod_dbt_semantics_cheatsheet.yml guidelines
+# =====================================================================
+
+semantic_models:
+  - name: campaign_performance
+    label: "Campaign Performance Fact Table"
+    description: |
+      Hourly campaign performance fact table. The grain of the table is one row per campaign per hour.
+      Contains core advertising metrics including impressions, clicks, spend, video metrics, and engagement data.
+      This semantic model serves as the foundation for all campaign performance analytics and reporting.
+
+    model: ref('mart_hourly_campaign_performance')
+
+    defaults:
+      agg_time_dimension: hour_ts
+
+    config:
+      enabled: true
+      # meta:
+      #   data_owner: "Advertising Analytics Team"
+      #   maturity: "production"
+      #   contains_pii: false
+      #   business_domain: "advertising"
+      #   data_classification: "internal"
+
+    # =====================================================================
+    # 🫂 ENTITIES - Define relationships between semantic models
+    # =====================================================================
+    entities:
+      - name: performance_record
+        type: primary
+        expr: id
+        description: "Primary key for each performance record"
+        label: "Performance Record ID"
+
+      - name: campaign
+        type: foreign
+        expr: campaign_id
+        description: "Foreign key to campaign dimension"
+        label: "Campaign ID"
+
+    # =====================================================================
+    # 🔪 DIMENSIONS - Columns for slicing, dicing, grouping, and filtering
+    # =====================================================================
+    dimensions:
+      # Time dimensions
+      - name: hour_ts
+        type: time
+        expr: date_trunc('hour', hour_ts)
+        description: "Hour timestamp for the metrics"
+        label: "Hour Timestamp"
+        type_params:
+          time_granularity: hour
+
+      - name: date_day
+        type: time
+        expr: date_trunc('day', hour_ts)
+        description: "Date truncated to day level"
+        label: "Date (Day)"
+        type_params:
+          time_granularity: day
+
+      - name: date_week
+        type: time
+        expr: date_trunc('week', hour_ts)
+        description: "Date truncated to week level"
+        label: "Date (Week)"
+        type_params:
+          time_granularity: week
+
+      - name: date_month
+        type: time
+        expr: date_trunc('month', hour_ts)
+        description: "Date truncated to month level"
+        label: "Date (Month)"
+        type_params:
+          time_granularity: month
+
+      # Categorical dimensions
+      - name: hour_of_day
+        type: categorical
+        description: "Hour component (0-23)"
+        label: "Hour of Day"
+
+      - name: day_of_week
+        type: categorical
+        description: "Day of week (0-6)"
+        label: "Day of Week"
+
+      - name: is_business_hour
+        type: categorical
+        description: "Flag if inside business hours"
+        label: "Is Business Hour"
+
+      - name: high_ctr_flag
+        type: categorical
+        description: "Flag for high CTR (>= 2%)"
+        label: "High CTR Flag"
+
+      - name: high_viewability_flag
+        type: categorical
+        description: "Flag for high viewability (>= 70%)"
+        label: "High Viewability Flag"
+
+    # =====================================================================
+    # 📏 MEASURES - Quantitative values to aggregate
+    # =====================================================================
+    measures:
+      # Core performance measures
+      - name: impressions
+        description: "Total impressions served"
+        label: "Impressions"
+        agg: sum
+
+      - name: clicks
+        description: "Total clicks received"
+        label: "Clicks"
+        agg: sum
+
+      - name: spend
+        description: "Total spend amount in cents"
+        label: "Spend (cents)"
+        agg: sum
+
+      - name: video_starts
+        description: "Total video starts"
+        label: "Video Starts"
+        agg: sum
+        expr: video_start
+
+      - name: video_completions
+        description: "Total video completions (100% viewed)"
+        label: "Video Completions"
+        agg: sum
+        expr: video_q100
+
+      # Engagement measures
+      - name: reach
+        description: "Estimated unique reach"
+        label: "Reach"
+        agg: sum
+
+      - name: frequency
+        description: "Average frequency per reached user"
+        label: "Frequency"
+        agg: sum
+
+      - name: skips
+        description: "Total skip events"
+        label: "Skips"
+        agg: sum
+
+      - name: qr_scans
+        description: "Total QR scan events"
+        label: "QR Scans"
+        agg: sum
+
+      - name: interactive_engagements
+        description: "Total interactive engagement events"
+        label: "Interactive Engagements"
+        agg: sum
+
+      # Supply chain measures
+      - name: requests
+        description: "Total ad requests"
+        label: "Requests"
+        agg: sum
+
+      - name: responses
+        description: "Total ad responses"
+        label: "Responses"
+        agg: sum
+
+      - name: eligible_impressions
+        description: "Total eligible impressions"
+        label: "Eligible Impressions"
+        agg: sum
+
+      - name: auctions_won
+        description: "Total auctions won"
+        label: "Auctions Won"
+        agg: sum
+
+      - name: viewable_impressions
+        description: "Total viewable impressions"
+        label: "Viewable Impressions"
+        agg: sum
+
+      - name: audible_impressions
+        description: "Total audible impressions"
+        label: "Audible Impressions"
+        agg: sum
+
+      # Error tracking
+      - name: error_count
+        description: "Total error count"
+        label: "Error Count"
+        agg: sum
+
+      - name: timeout_count
+        description: "Total timeout count"
+        label: "Timeout Count"
+        agg: sum
+
+      # Performance rates (averages for proper aggregation)
+      - name: ctr
+        description: "Click-through rate"
+        label: "CTR"
+        agg: average
+        expr: calculated_ctr
+
+      - name: win_rate
+        description: "Auction win rate"
+        label: "Win Rate"
+        agg: average
+        expr: win_rate
+
+      - name: viewability_rate
+        description: "Viewability rate"
+        label: "Viewability Rate"
+        agg: average
+        expr: viewability_rate
+
+      - name: audible_rate
+        description: "Audible rate"
+        label: "Audible Rate"
+        agg: average
+        expr: audible_rate
+
+      - name: video_completion_rate
+        description: "Video completion rate"
+        label: "Video Completion Rate"
+        agg: average
+        expr: video_completion_rate
+
+      - name: video_skip_rate
+        description: "Video skip rate"
+        label: "Video Skip Rate"
+        agg: average
+        expr: video_skip_rate
+
+      - name: video_start_rate
+        description: "Video start rate"
+        label: "Video Start Rate"
+        agg: average
+        expr: video_start_rate
+
+      # Cost measures (averages for proper aggregation)
+      - name: cpm
+        description: "Cost per thousand impressions"
+        label: "CPM"
+        agg: average
+        expr: cpm
+
+      - name: cpc
+        description: "Cost per click"
+        label: "CPC"
+        agg: average
+        expr: cpc
+
+      - name: cpv
+        description: "Cost per video view"
+        label: "CPV"
+        agg: average
+        expr: cpv
+
+      - name: effective_cpm
+        description: "Effective CPM in cents"
+        label: "Effective CPM (cents)"
+        agg: average
+        expr: effective_cpm
+
+      # Efficiency measures (averages for proper aggregation)
+      - name: supply_funnel_efficiency
+        description: "Supply funnel efficiency"
+        label: "Supply Funnel Efficiency"
+        agg: average
+        expr: supply_funnel_efficiency
+
+      - name: fill_rate
+        description: "Fill rate"
+        label: "Fill Rate"
+        agg: average
+        expr: fill_rate
+
+      - name: response_rate
+        description: "Response rate"
+        label: "Response Rate"
+        agg: average
+        expr: response_rate
+
+      - name: error_rate
+        description: "Error rate"
+        label: "Error Rate"
+        agg: average
+        expr: error_rate
+
+      - name: timeout_rate
+        description: "Timeout rate"
+        label: "Timeout Rate"
+        agg: average
+        expr: timeout_rate
+
+      # Engagement rates (averages for proper aggregation)
+      - name: qr_scan_rate
+        description: "QR scan rate"
+        label: "QR Scan Rate"
+        agg: average
+        expr: qr_scan_rate
+
+      - name: interactive_rate
+        description: "Interactive engagement rate"
+        label: "Interactive Rate"
+        agg: average
+        expr: interactive_rate
+
+      # Watch time
+      - name: avg_watch_time_seconds
+        description: "Average watch time in seconds"
+        label: "Avg Watch Time (seconds)"
+        agg: average
+        expr: avg_watch_time_seconds
+
+      # Additional measures for metrics
+      - name: high_performance_count
+        description: "Count of high performance records (high CTR and viewability)"
+        label: "High Performance Count"
+        agg: sum
+        expr: case when high_ctr_flag = 1 and high_viewability_flag = 1 then 1 else 0 end
