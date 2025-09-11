@@ -29,6 +29,8 @@ dependencies = [
     "dearpygui~=1.11;python_version>='3.12'",
     "dearpygui>=1.11.1",
     "pandas>=2.3.2",
+    "pyarrow>=21.0.0",
+    "dbt-duckdb[md]>=1.9.6",
 ]
 
 [project.urls]

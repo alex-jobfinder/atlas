@@ -79,3 +79,6 @@ dearpygui_gui_examples/Image-Processing-Node-Editor/node/deep_learning_node/mono
 *.tar.gz
 *.rar
 *.7z
+
+#
+*.parquet

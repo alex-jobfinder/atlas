@@ -1,0 +1,4 @@
+commands:
+  - name: multi-country-total
+    help: Generate chart for multiple countries with optional total.
+    model: MultiCountryTotalInput

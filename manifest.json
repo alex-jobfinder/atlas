@@ -1,0 +1,11 @@
+{
+  "metrics": {
+    "minute_ad_events.impressions": {
+      "aggregation": "sum",
+      "dimensions": [
+        "country"
+      ],
+      "name": "impressions"
+    }
+  }
+}

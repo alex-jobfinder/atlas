@@ -15,6 +15,18 @@ For a minimal Python renderer that reads an Atlas test JSON and writes a PNG (no
 
 - docs/python-local-chart-runner.md
 
+## Atlas CLI Demo
+
+To regenerate sample data and manifest and fetch a chart using the CLI:
+
+```sh
+python scripts/generate_demo_data.py
+python scripts/mock_atlas_server.py &
+python atlas_cli.py visualize multi-country-total --metric impressions --countries US --countries CA --include-total --output demo.png
+```
+
+The image will be written to `demo.png`.
+
 ## License
 
 Copyright 2014-2025 Netflix, Inc.
