@@ -142,6 +142,27 @@
 #
 # =============================================================================
 
+# --- Java / SDKMAN bootstrap (ensure correct JDK and headless mode) ---
+if [ -z "${JAVA_TOOL_OPTIONS:-}" ]; then
+    export JAVA_TOOL_OPTIONS="-Djava.awt.headless=true"
+fi
+
+if [ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+    # shellcheck source=/dev/null
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    if command -v sdk >/dev/null 2>&1; then
+        # Try to use the desired JDK, install if not available (offline-safe fallback)
+        sdk use java 17.0.12-tem >/dev/null 2>&1 || (
+            sdk install java 17.0.12-tem >/dev/null 2>&1 && sdk use java 17.0.12-tem >/dev/null 2>&1
+        )
+    fi
+fi
+
+java -version || { echo "Java is not available. Install via SDKMAN (https://sdkman.io) and re-run."; exit 1; }
+
+# run with:
+# scripts_png_gen/run_all_styles_optimized_with_signal_line.sh
+
 STYLES_DIR="scripts_png_gen/input_args/styles_with_signal_line"
 OUTPUT_DIR="scripts_png_gen/output/styles_with_signal_line"
 
@@ -208,3 +229,5 @@ fi
 # chmod +x scripts_png_gen/write-aws-credentials.sh
 
 # source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 17.0.12-tem && sdk use java 17.0.12-tem && java -version && export JAVA_TOOL_OPTIONS="-Djava.awt.headless=true" && cd /home/alex/dbt_ads/atlas && sbt "atlas-chart/testOnly com.netflix.atlas.chart.DefaultGraphEngineSuite -- -z heatmap_basic" | cat
+
+# source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install java 17.0.12-tem && sdk use java 17.0.12-tem && java -version && export JAVA_TOOL_OPTIONS="-Djava.awt.headless=true" && scripts_png_gen/run_all_styles_optimized_with_signal_line.sh
