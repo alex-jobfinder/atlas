@@ -1,0 +1,362 @@
+# =====================================================================
+# 📘 dbt Semantic Layer – Setup & Semantics Reference (Cheat Sheet)
+# =====================================================================
+# Structured YAML cheatsheet for defining dbt Semantic Layer components.
+# Includes setup notes, parameter specs, enums, examples, and config/meta.
+# Copy/paste sections into semantic_models/*.yml or dbt_project.yml.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# 1. Development Setup
+# ---------------------------------------------------------------------
+setup:
+  options:
+    - cloud_cli: "Use dbt sl commands in Cloud CLI (most full-featured)."
+    - studio_ide: "Define semantic models + metrics interactively in dbt Studio."
+    - copilot: "dbt Copilot (Enterprise only) can auto-generate semantic models in Studio."
+
+  core_commands:
+    - { command: "dbt parse", description: "Generates semantic manifest (model graph)." }
+    - { command: "dbt sl query", description: "Executes queries against Semantic Layer." }
+    - { command: "dbt sl list dimensions --metrics [metric]", description: "Lists all dimensions for a metric." }
+    - { command: "dbt sl list --help", description: "Lists all Semantic Layer objects." }
+
+# ---------------------------------------------------------------------
+# 2. Semantic Models (Core Concepts)
+# ---------------------------------------------------------------------
+semantic_model_spec:
+  parameters:
+    - { name: name, type: string, required: true, description: "Unique semantic model name (no double underscores `__`)." }
+    - { name: description, type: string, required: false }
+    - { name: model, type: string, required: true, description: "Underlying dbt model (use ref())." }
+    - { name: defaults, type: dict, required: false, description: "Currently supports agg_time_dimension." }
+    - { name: entities, type: list, required: true }
+    - { name: dimensions, type: list, required: true }
+    - { name: measures, type: list, required: false }
+    - { name: primary_entity, type: string, required: false, description: "Required if no explicit primary entity column." }
+    - { name: label, type: string, required: false, description: "Display label for the semantic model." }
+    - { name: config, type: dict, required: false,
+        description: "Supports enabled, group, and meta (for metadata tagging)." }
+
+  config_keys:
+    - enabled: "true | false (allows disabling a model)."
+    - group: "Group name for organizing models."
+    - meta: "Arbitrary key-value metadata (owner, maturity, tags, pii, etc)."
+
+# ---------------------------------------------------------------------
+# 3. Parameter Specs
+# ---------------------------------------------------------------------
+
+entity_spec:
+  parameters:
+    - { name: name, type: string, required: true }
+    - { name: type, type: string, required: true, enum: [primary, foreign, unique, natural] }
+    - { name: description, type: string, required: false }
+    - { name: expr, type: string, required: false }
+    - { name: label, type: string, required: false }
+    - { name: config, type: dict, required: false, description: "Supports meta for tagging." }
+
+dimension_spec:
+  parameters:
+    - { name: name, type: string, required: true }
+    - { name: type, type: string, required: true, enum: [categorical, time] }
+    - { name: type_params, type: dict, required: false, description: "Supports time_granularity, validity_params, is_partition." }
+    - { name: description, type: string, required: false }
+    - { name: expr, type: string, required: false }
+    - { name: label, type: string, required: false }
+    - { name: is_partition, type: boolean, required: false }
+    - { name: config, type: dict, required: false, description: "Supports meta for tagging." }
+
+measure_spec:
+  parameters:
+    - { name: name, type: string, required: true }
+    - { name: description, type: string, required: false }
+    - { name: agg, type: string, required: true,
+        enum: [sum, max, min, average, median, count_distinct, percentile, sum_boolean] }
+    - { name: expr, type: string, required: false }
+    - { name: non_additive_dimension, type: object, required: false }
+    - { name: agg_params, type: dict, required: false }
+    - { name: agg_time_dimension, type: string, required: false }
+    - { name: label, type: string, required: false }
+    - { name: create_metric, type: boolean, required: false }
+    - { name: config, type: dict, required: false, description: "Supports meta for tagging." }
+
+metric_spec:
+  parameters:
+    - { name: name, type: string, required: true }
+    - { name: type, type: string, required: true, enum: [simple, ratio, derived] }
+    - { name: type_params, type: dict, required: true,
+        description: "For simple: measure; for ratio: numerator/denominator + input_metrics; for derived: expr + input_metrics." }
+    - { name: label, type: string, required: false }
+    - { name: description, type: string, required: false }
+    - { name: config, type: dict, required: false, description: "Supports meta for tagging." }
+
+examples:
+  metrics_with_dependencies:
+    metrics:
+      - name: revenue
+        type: simple
+        type_params:
+          measure: order_total
+      - name: revenue_per_user
+        type: ratio
+        type_params:
+          numerator: revenue
+          denominator: users
+          input_metrics: [revenue, users]
+
+# ---------------------------------------------------------------------
+# 4. Enums Reference
+# ---------------------------------------------------------------------
+enums:
+  EntityType: [primary, foreign, unique, natural]
+  DimensionType: [categorical, time]
+  MeasureAggregation: [sum, average, min, max, median, count_distinct, percentile, sum_boolean]
+  MetricType: [simple, ratio, derived]
+  TimeGranularity: [second, minute, hour, day, week, month, quarter, year]
+
+# ---------------------------------------------------------------------
+# 5. Examples
+# ---------------------------------------------------------------------
+examples:
+  basic_entities:
+    semantic_models:
+      - name: transactions
+        label: "Transactions Fact Table"
+        model: ref('stg_transactions')
+        entities:
+          - { name: transaction, type: primary, expr: id_transaction }
+          - { name: order, type: foreign, expr: id_order }
+          - { name: brand_target_key, type: foreign, expr: "date_key || '|' || brand_code" }
+
+  categorical_and_time_dimensions:
+    dimensions:
+      - { name: is_bulk, type: categorical, expr: "case when qty > 10 then true else false end" }
+      - { name: order_date, type: time, expr: ts, type_params: { time_granularity: day } }
+
+  measures_examples:
+    measures:
+      - { name: gross_sales, expr: sales_price, agg: sum }
+      - { name: distinct_customers, expr: customer_id, agg: count_distinct }
+      - { name: p99_sales, expr: sales_price, agg: percentile,
+          agg_params: { percentile: 0.99, use_discrete_percentile: false } }
+
+  non_additive_measures:
+    measures:
+      - name: mrr
+        expr: subscription_value
+        agg: sum
+        non_additive_dimension:
+          name: subscription_date
+          window_choice: max
+
+  partitioned_time_dimensions:
+    dimensions:
+      - { name: created_at, type: time, expr: ts_created, is_partition: true,
+          type_params: { time_granularity: day } }
+      - { name: deleted_at, type: time, expr: ts_deleted, is_partition: true,
+          type_params: { time_granularity: day } }
+
+  scd_type_ii_dimensions:
+    dimensions:
+      - name: tier_start
+        type: time
+        expr: start_date
+        type_params:
+          time_granularity: day
+          validity_params: { is_start: true }
+      - name: tier_end
+        type: time
+        expr: end_date
+        type_params:
+          time_granularity: day
+          validity_params: { is_end: true }
+      - { name: tier, type: categorical }
+
+  semantic_model_with_meta:
+    semantic_models:
+      - name: transaction
+        label: "Transaction Fact Table"
+        model: ref('fact_transactions')
+        description: "Transaction fact table at the transaction grain."
+        defaults:
+          agg_time_dimension: transaction_date
+        config:
+          enabled: true
+          group: finance
+          meta:
+            data_owner: "Finance team"
+            maturity: "production"
+            contains_pii: false
+
+        entities:
+          - name: transaction
+            type: primary
+            expr: transaction_id
+            config:
+              meta:
+                data_owner: "Finance team"
+
+        dimensions:
+          - name: transaction_date
+            type: time
+            type_params: { time_granularity: day }
+            config:
+              meta:
+                note: "Primary transaction date."
+          - name: transaction_location
+            type: categorical
+            expr: order_country
+
+        measures:
+          - name: transaction_total
+            agg: sum
+            expr: transaction_value
+            config:
+              meta:
+                used_in_reporting: true
+
+  project_level_meta:
+    dbt_project.yml:
+      semantic-models:
+        my_project_name:
+          +enabled: true
+          +group: finance
+          +meta:
+            owner: "@alice"
+            model_maturity: "in dev"
+
+# ---------------------------------------------------------------------
+# 6. Best Practices
+# ---------------------------------------------------------------------
+best_practices:
+  - "Define entities → dimensions → measures consistently."
+  - "Use singular entity names (e.g., customer not customers)."
+  - "Always document with description and label for clarity."
+  - "Use expr to map to SQL columns or create derived fields."
+  - "Keep marts clean; let Semantic Layer handle joins and metrics."
+  - "Leverage non_additive_dimension for semi-additive measures."
+  - "Use partitioned time dimensions for large datasets."
+  - "Use SCD Type II when tracking historical attribute changes."
+  - "Use config.meta to standardize ownership, maturity, and pii tagging."
+  - "Explicitly define input_metrics for ratio/derived metrics to ensure DAG dependencies are tracked."
+  - "Filters on dimensions do not establish dependencies; only measures and input_metrics do."
+
+
+# # =====================================================================
+# # 📘 DBT Project Makefile
+# # =====================================================================
+# # Provides commands for running dbt models, tests, semantic layer ops,
+# # and maintenance tasks. Organized by Core, Semantics, Maintenance, Utils.
+# # =====================================================================
+
+# # DBT Project Configuration
+# DBT_PROJECT_DIR := dbt_ads_project
+
+# # ---------------------------------------------------------------------
+# # 1. Core dbt Commands
+# # ---------------------------------------------------------------------
+
+# # Seed CSV data into the database
+# dbt-seed:
+# 	@echo "🌱 Running DBT Seed..."
+# 	cd $(DBT_PROJECT_DIR) && dbt seed --select campaign_performance
+
+# # Run all models
+# dbt-run:
+# 	@echo "🚀 Running DBT Models..."
+# 	cd $(DBT_PROJECT_DIR) && dbt run
+
+# # Run staging models only
+# dbt-run-staging:
+# 	@echo "📊 Running DBT Staging Models..."
+# 	cd $(DBT_PROJECT_DIR) && dbt run --select staging
+
+# # Run marts models only
+# dbt-run-marts:
+# 	@echo "🏪 Running DBT Mart Models..."
+# 	cd $(DBT_PROJECT_DIR) && dbt run --select marts
+
+# # Run all tests
+# dbt-test:
+# 	@echo "🧪 Running DBT Tests..."
+# 	cd $(DBT_PROJECT_DIR) && dbt test
+
+# # Run tests for a specific model
+# dbt-test-model:
+# 	@echo "🧪 Testing Specific Model..."
+# 	cd $(DBT_PROJECT_DIR) && dbt test --select stg_hourly_campaign_performance
+
+# # Full pipeline: seed, run, test
+# dbt-pipeline: dbt-seed dbt-run dbt-test
+# 	@echo "✅ DBT Pipeline Complete!"
+
+# # Fresh start: clean artifacts, then full pipeline
+# dbt-fresh: clean-dbt dbt-pipeline
+# 	@echo "🔄 Fresh DBT Start Complete!"
+
+# # ---------------------------------------------------------------------
+# # 2. Semantic Layer Commands
+# # ---------------------------------------------------------------------
+
+# # Parse project and regenerate semantic manifest
+# dbt-parse-semantics:
+# 	@echo "🔍 Parsing Semantic Models..."
+# 	cd $(DBT_PROJECT_DIR) && dbt parse
+
+# # Run a semantic layer query (example metric)
+# dbt-sl-query:
+# 	@echo "📊 Querying Semantic Layer..."
+# 	cd $(DBT_PROJECT_DIR) && dbt sl query --metrics revenue --group-by metric_time__day
+
+# # List all available metrics
+# dbt-sl-list-metrics:
+# 	@echo "📋 Listing Semantic Layer Metrics..."
+# 	cd $(DBT_PROJECT_DIR) && dbt sl list --resource-type metric
+
+# # List dimensions for a given metric
+# dbt-sl-list-dimensions:
+# 	@echo "📐 Listing Dimensions for Metric..."
+# 	cd $(DBT_PROJECT_DIR) && dbt sl list dimensions --metrics revenue
+
+# # Inspect semantic graph (entities, joins, metrics)
+# dbt-sl-inspect:
+# 	@echo "🔎 Inspecting Semantic Graph..."
+# 	cd $(DBT_PROJECT_DIR) && dbt sl list --help
+
+# # Semantic pipeline: parse + sample query
+# dbt-semantic-pipeline: dbt-parse-semantics dbt-sl-query
+# 	@echo "✅ Semantic Pipeline Complete!"
+
+# # ---------------------------------------------------------------------
+# # 3. Maintenance & Debugging
+# # ---------------------------------------------------------------------
+
+# # Clean dbt artifacts
+# clean-dbt:
+# 	@echo "🧹 Cleaning DBT artifacts..."
+# 	cd $(DBT_PROJECT_DIR) && rm -rf target/ logs/ dbt.duckdb*
+
+# # Debug dbt project setup
+# dbt-debug:
+# 	@echo "🔍 DBT Debug Info..."
+# 	cd $(DBT_PROJECT_DIR) && dbt debug
+
+# # List all dbt models
+# dbt-list:
+# 	@echo "📋 Available DBT Models:"
+# 	cd $(DBT_PROJECT_DIR) && dbt list
+
+# # Show details of a specific model
+# dbt-show:
+# 	@echo "📊 DBT Model Details:"
+# 	cd $(DBT_PROJECT_DIR) && dbt show --select stg_hourly_campaign_performance
+
+# # ---------------------------------------------------------------------
+# # 4. Utilities
+# # ---------------------------------------------------------------------
+
+# # Run custom DuckDB analysis
+# query-db:
+# 	@echo "🔍 Running DuckDB Analysis..."
+# 	cd $(DBT_PROJECT_DIR) && python query_duckdb.py

@@ -417,75 +417,120 @@ chart-runner-py: ## Render bundled sample JSON via Python renderer
 	  PY_JSON_OUT=atlas-chart/target/manual/default_non_uniformly_drawn_spikes_py.png \
 	  THEME=light OVERLAY=false WIDTH=700 HEIGHT=200 STYLE=line
 
+# =====================================================================
+# 📘 DBT Project Makefile
+# =====================================================================
+# Provides commands for running dbt models, tests, semantic layer ops,
+# and maintenance tasks. Organized by Core, Semantics, Maintenance, Utils.
+# =====================================================================
 
-# =============================================================================
-# DBT Commands
-# =============================================================================
+# DBT Project Configuration
+DBT_PROJECT_DIR := dbt_ads_project
 
+# ---------------------------------------------------------------------
+# 1. Core dbt Commands
+# ---------------------------------------------------------------------
 
-
-# DBT Seed - Load CSV data into database
+# Seed CSV data into the database
 dbt-seed:
 	@echo "🌱 Running DBT Seed..."
-	cd dbt_ads_project && dbt seed --select campaign_performance
+	cd $(DBT_PROJECT_DIR) && dbt seed --select campaign_performance
 
-# DBT Run - Execute all models
+# Run all models
 dbt-run:
 	@echo "🚀 Running DBT Models..."
-	cd dbt_ads_project && dbt run
+	cd $(DBT_PROJECT_DIR) && dbt run
 
-# DBT Run Staging Only
+# Run staging models only
 dbt-run-staging:
 	@echo "📊 Running DBT Staging Models..."
-	cd dbt_ads_project && dbt run --select staging
+	cd $(DBT_PROJECT_DIR) && dbt run --select staging
 
-# DBT Run Marts Only
+# Run marts models only
 dbt-run-marts:
 	@echo "🏪 Running DBT Mart Models..."
-	cd dbt_ads_project && dbt run --select marts
+	cd $(DBT_PROJECT_DIR) && dbt run --select marts
 
-# DBT Test - Run all tests
+# Run all tests
 dbt-test:
 	@echo "🧪 Running DBT Tests..."
-	cd dbt_ads_project && dbt test
+	cd $(DBT_PROJECT_DIR) && dbt test
 
-# DBT Test Specific Model
+# Run tests for a specific model
 dbt-test-model:
 	@echo "🧪 Testing Specific Model..."
-	cd dbt_ads_project && dbt test --select stg_hourly_campaign_performance
+	cd $(DBT_PROJECT_DIR) && dbt test --select stg_hourly_campaign_performance
 
-# DBT Full Pipeline - Seed, Run, Test
+# Full pipeline: seed, run, test
 dbt-pipeline: dbt-seed dbt-run dbt-test
 	@echo "✅ DBT Pipeline Complete!"
 
-# DBT Fresh Start - Clean and rebuild everything
-dbt-fresh: clean-dbt
-	@echo "🔄 Fresh DBT Start..."
-	cd dbt_ads_project && dbt seed --select campaign_performance
-	cd dbt_ads_project && dbt run
-	cd dbt_ads_project && dbt test
+# Fresh start: clean artifacts, then full pipeline
+dbt-fresh: clean-dbt dbt-pipeline
+	@echo "🔄 Fresh DBT Start Complete!"
 
-# Clean DBT artifacts
+# ---------------------------------------------------------------------
+# 2. Semantic Layer Commands
+# ---------------------------------------------------------------------
+
+# Parse project and regenerate semantic manifest
+dbt-parse-semantics:
+	@echo "🔍 Parsing Semantic Models..."
+	cd $(DBT_PROJECT_DIR) && dbt parse
+
+# Run a semantic layer query (example metric)
+dbt-sl-query:
+	@echo "📊 Querying Semantic Layer..."
+	cd $(DBT_PROJECT_DIR) && dbt sl query --metrics revenue --group-by metric_time__day
+
+# List all available metrics
+dbt-sl-list-metrics:
+	@echo "📋 Listing Semantic Layer Metrics..."
+	cd $(DBT_PROJECT_DIR) && dbt sl list --resource-type metric
+
+# List dimensions for a given metric
+dbt-sl-list-dimensions:
+	@echo "📐 Listing Dimensions for Metric..."
+	cd $(DBT_PROJECT_DIR) && dbt sl list dimensions --metrics revenue
+
+# Inspect semantic graph (entities, joins, metrics)
+dbt-sl-inspect:
+	@echo "🔎 Inspecting Semantic Graph..."
+	cd $(DBT_PROJECT_DIR) && dbt sl list --help
+
+# Semantic pipeline: parse + sample query
+dbt-semantic-pipeline: dbt-parse-semantics dbt-sl-query
+	@echo "✅ Semantic Pipeline Complete!"
+
+# ---------------------------------------------------------------------
+# 3. Maintenance & Debugging
+# ---------------------------------------------------------------------
+
+# Clean dbt artifacts
 clean-dbt:
 	@echo "🧹 Cleaning DBT artifacts..."
-	cd dbt_ads_project && rm -rf target/ logs/ dbt.duckdb*
+	cd $(DBT_PROJECT_DIR) && rm -rf target/ logs/ dbt.duckdb*
 
-# DBT Debug - Show project info
+# Debug dbt project setup
 dbt-debug:
 	@echo "🔍 DBT Debug Info..."
-	cd dbt_ads_project && dbt debug
+	cd $(DBT_PROJECT_DIR) && dbt debug
 
-# DBT List - Show available models
+# List all dbt models
 dbt-list:
 	@echo "📋 Available DBT Models:"
-	cd dbt_ads_project && dbt list
+	cd $(DBT_PROJECT_DIR) && dbt list
 
-# DBT Show - Show model details
+# Show details of a specific model
 dbt-show:
 	@echo "📊 DBT Model Details:"
-	cd dbt_ads_project && dbt show --select stg_hourly_campaign_performance
+	cd $(DBT_PROJECT_DIR) && dbt show --select stg_hourly_campaign_performance
 
-# Query DuckDB - Run analysis script
+# ---------------------------------------------------------------------
+# 4. Utilities
+# ---------------------------------------------------------------------
+
+# Run custom DuckDB analysis
 query-db:
 	@echo "🔍 Running DuckDB Analysis..."
-	cd dbt_ads_project && python query_duckdb.py
+	cd $(DBT_PROJECT_DIR) && python query_duckdb.py
