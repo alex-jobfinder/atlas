@@ -88,11 +88,7 @@ models:
       - name: id
         description: Surrogate primary key per row
         tests: [not_null, unique]
-        meta:
-          semantic:
-            entity:
-              name: performance_record
-              type: primary
+        # Note: not mapped to a semantic entity; just a surrogate key
 
       - name: campaign_id
         description: Campaign identifier
@@ -101,7 +97,7 @@ models:
           semantic:
             entity:
               name: campaign
-              type: foreign
+              type: primary   # ✅ campaign is the true business-grain entity
 
       - name: hour_ts
         description: Hour timestamp for the metrics
@@ -112,6 +108,7 @@ models:
               kind: time
               granularity: hour
               is_metric_time: true   # maps to global metric_time
+              is_primary_time: true   # 👈 add this
 
       - name: impressions
         description: Total impressions

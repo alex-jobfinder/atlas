@@ -85,33 +85,28 @@ seeds:
         monthly_start_day_date: DATE
 
     columns:
+      # Drop semantic entity on id, keep tests
       - name: id
-        description: Surrogate primary key per row
         tests: [not_null, unique]
-        meta:
-          semantic:
-            entity:
-              name: performance_record
-              type: primary
 
+      # Make campaign_id the primary entity
       - name: campaign_id
-        description: Campaign identifier
         tests: [not_null]
         meta:
           semantic:
             entity:
               name: campaign
-              type: foreign
+              type: primary
 
+      # Ensure hour_ts is metric_time
       - name: hour_ts
-        description: Hour timestamp for the metrics
         tests: [not_null]
         meta:
           semantic:
             dimension:
               kind: time
               granularity: hour
-              is_metric_time: true   # maps to global metric_time
+              is_metric_time: true
 
       - name: impressions
         description: Total impressions

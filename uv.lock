@@ -827,7 +827,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "dbt-duckdb", extras = ["md"], specifier = ">=1.9.6" },
-    { name = "dbt-metricflow", extras = ["dbt-duckdb"], specifier = ">=0.8.2" },
+    { name = "dbt-metricflow", extras = ["dbt-duckdb"], specifier = "==0.8.2" },
     { name = "dearpygui", specifier = ">=1.11.1" },
     { name = "dearpygui", marker = "python_full_version >= '3.12'", specifier = "~=1.11" },
     { name = "flask", specifier = ">=3.1.2" },

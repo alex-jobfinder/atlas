@@ -7,6 +7,35 @@ version: 2
 # Based on prod_dbt_semantics_cheatsheet.yml guidelines
 # =====================================================================
 
+
+# semantic_models:
+#   - name: campaign_performance
+#     label: "Campaign Performance Fact Table"
+#     description: |
+#       Hourly campaign performance fact table. The grain of the table is one row per campaign per hour.
+#       Contains core advertising metrics including impressions, clicks, spend, video metrics, and engagement data.
+#       This semantic model serves as the foundation for all campaign performance analytics and reporting.
+
+#     model: ref('mart_hourly_campaign_performance')
+
+#     defaults:
+#       agg_time_dimension: hour_ts
+#     # 👉 In the current dbt-metricflow version (dbt-metricflow==0.8.2),
+#     # the grain: property is not supported. The semantic model grain is inferred from the primary entity + time dimension, not explicitly declared.
+#     primary_entity: campaign
+#     grain:
+#       - campaign
+#       - hour_ts
+
+#     config:
+#       enabled: true
+#       # meta:
+#       #   data_owner: "Advertising Analytics Team"
+#       #   maturity: "production"
+#       #   contains_pii: false
+#       #   business_domain: "advertising"
+#       #   data_classification: "internal"
+
 semantic_models:
   - name: campaign_performance
     label: "Campaign Performance Fact Table"
@@ -22,28 +51,15 @@ semantic_models:
 
     config:
       enabled: true
-      # meta:
-      #   data_owner: "Advertising Analytics Team"
-      #   maturity: "production"
-      #   contains_pii: false
-      #   business_domain: "advertising"
-      #   data_classification: "internal"
-
     # =====================================================================
     # 🫂 ENTITIES - Define relationships between semantic models
     # =====================================================================
     entities:
-      - name: performance_record
-        type: primary
-        expr: id
-        description: "Primary key for each performance record"
-        label: "Performance Record ID"
-
       - name: campaign
-        type: foreign
+        type: primary
         expr: campaign_id
-        description: "Foreign key to campaign dimension"
-        label: "Campaign ID"
+        description: "Business grain entity for campaign-level facts"
+        label: "Campaign"
 
     # =====================================================================
     # 🔪 DIMENSIONS - Columns for slicing, dicing, grouping, and filtering

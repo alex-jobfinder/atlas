@@ -598,3 +598,102 @@ query-db:
 # 	   || metricflow query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
 # 	   || mf query --metrics $$metrics --group-by "$$groupby" $(if $(DBT_SL_WHERE),--where "$(DBT_SL_WHERE)") \
 # 	 )
+
+
+
+
+#  uv run mf query --metrics total_impressions --group-by campaign__date_day
+# ‼️ Warning: A new version of the MetricFlow CLI is available.
+# 💡 Please update to version 0.10.0, released 2025-09-11 22:15:46 by running:
+#         $ pip install --upgrade dbt-metricflow
+
+
+# uv run dbt parse
+# uv run mf list entities --metrics total_impressions
+# uv run mf list dimensions --metrics total_impressions
+
+# uv run mf query --metrics total_impressions --group-by metric_time__day
+# uv run mf query --metrics total_impressions --group-by campaign__date_day
+
+
+
+
+
+
+
+# uv tree | grep dbt
+# Resolved 98 packages in 1ms
+# ├── dbt-duckdb[md] v1.9.6
+# │   ├── dbt-adapters v1.16.7
+# │   │   ├── dbt-common v1.30.0
+# │   │   │   ├── dbt-protos v1.0.375
+# │   │   ├── dbt-protos v1.0.375 (*)
+# │   ├── dbt-common v1.30.0 (*)
+# │   ├── dbt-core v1.9.10
+# │   │   ├── dbt-adapters v1.16.7 (*)
+# │   │   ├── dbt-common v1.30.0 (*)
+# │   │   ├── dbt-extractor v0.6.0
+# │   │   ├── dbt-semantic-interfaces v0.7.5
+# ├── dbt-metricflow[dbt-duckdb] v0.8.2
+# │   ├── dbt-core v1.9.10 (*)
+# │   ├── dbt-semantic-interfaces v0.7.5 (*)
+# │   │   ├── dbt-semantic-interfaces v0.7.5 (*)
+# │   └── dbt-duckdb v1.9.6 (extra: dbt-duckdb) (*)
+# ❯ uv add --dry-run "dbt-metricflow==0.10.0"
+# error: unexpected argument '--dry-run' found
+
+#   tip: to pass '--dry-run' as a value, use '-- --dry-run'
+
+# Usage: uv add [OPTIONS] <PACKAGES|--requirements <REQUIREMENTS>>
+
+# For more information, try '--help'.
+# ❯ uv add "dbt-metricflow==0.10.0" --frozen
+# ❯ uv lock --check
+#   × No solution found when resolving dependencies:
+#   ╰─▶ Because metricflow==0.208.0 depends on dbt-semantic-interfaces==0.9.3.dev1 and
+#       there is no version of dbt-semantic-interfaces==0.9.3.dev1, we can conclude that
+#       metricflow==0.208.0 cannot be used.
+#       And because dbt-metricflow==0.10.0 depends on metricflow==0.208.0 and your project
+#       depends on dbt-metricflow[dbt-duckdb]==0.10.0, we can conclude that your project's
+#       requirements are unsatisfiable.
+
+#       hint: `dbt-semantic-interfaces` was requested with a pre-release marker (e.g.,
+#       dbt-semantic-interfaces==0.9.3.dev1), but pre-releases weren't enabled (try:
+#       `--prerelease=allow`)
+# ❯ uv add "dbt-metricflow==0.10.0" --prerelease=allow --frozen
+# ❯ uv lock --check
+#   × No solution found when resolving dependencies:
+#   ╰─▶ Because metricflow==0.208.0 depends on dbt-semantic-interfaces==0.9.3.dev1 and
+#       there is no version of dbt-semantic-interfaces==0.9.3.dev1, we can conclude that
+#       metricflow==0.208.0 cannot be used.
+#       And because dbt-metricflow==0.10.0 depends on metricflow==0.208.0 and your project
+#       depends on dbt-metricflow[dbt-duckdb]==0.10.0, we can conclude that your project's
+#       requirements are unsatisfiable.
+
+#       hint: `dbt-semantic-interfaces` was requested with a pre-release marker (e.g.,
+#       dbt-semantic-interfaces==0.9.3.dev1), but pre-releases weren't enabled (try:
+#       `--prerelease=allow`)
+# ❯ uv tree | grep dbt
+#   × No solution found when resolving dependencies:
+#   ╰─▶ Because metricflow==0.208.0 depends on dbt-semantic-interfaces==0.9.3.dev1 and
+#       there is no version of dbt-semantic-interfaces==0.9.3.dev1, we can conclude that
+#       metricflow==0.208.0 cannot be used.
+#       And because dbt-metricflow==0.10.0 depends on metricflow==0.208.0 and your project
+#       depends on dbt-metricflow[dbt-duckdb]==0.10.0, we can conclude that your project's
+#       requirements are unsatisfiable.
+
+#       hint: `dbt-semantic-interfaces` was requested with a pre-release marker (e.g.,
+#       dbt-semantic-interfaces==0.9.3.dev1), but pre-releases weren't enabled (try:
+#       `--prerelease=allow`)
+# ❯ uv add "dbt-metricflow[dbt-duckdb]==0.8.2"
+# uv sync
+# Resolved 98 packages in 1.05s
+#       Built py-atlas @ file:///home/alex/dbt_ads/atlas
+# Prepared 1 package in 868ms
+# Uninstalled 1 package in 0.83ms
+# Installed 1 package in 2ms
+#  ~ py-atlas==0.0.1 (from file:///home/alex/dbt_ads/atlas)
+# Resolved 98 packages in 1ms
+# Audited 98 packages in 1ms
+# ❯ uv lock --check
+# Resolved 98 packages in 1ms
