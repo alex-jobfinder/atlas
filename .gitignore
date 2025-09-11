@@ -10,7 +10,8 @@ build
 gh-pages-build
 target
 # But keep this one file tracked
-!dbt_ads_project/target/semantic_manifest.jso
+!dbt_ads_project/target/semantic_manifest.json
+# git add -f dbt_ads_project/target/semantic_manifest.json
 
 # Ivy caches
 .bsp
