@@ -1,0 +1,440 @@
+{
+  "metadata": {
+    "trace_version": "1.0",
+    "generated_at": "2025-01-27T12:00:00Z",
+    "command": "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner $(cat scripts_png_gen/input_args/styles_with_signal_line/line.args)\"",
+    "description": "Complete trace of PNG generation process for Atlas line chart with campaign impression data from ads.db SQLite database"
+  },
+  "execution_flow": {
+    "phase_1_command_parsing": {
+      "step": "1.1",
+      "description": "SBT command execution and argument parsing",
+      "details": {
+        "sbt_project": "atlas-eval",
+        "main_class": "com.netflix.atlas.eval.tools.LocalGraphRunner",
+        "args_source": "scripts_png_gen/input_args/styles_with_signal_line/line.args",
+        "args_content": "--preset sps --q \"name,impressions,:eq,(,campaign_id,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,impressions,:eq,(,campaign_id,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot\" --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/campaign_impressions_with_alert.png --emit-v2 scripts_png_gen/output/campaign_impressions_with_alert.v2.json.gz",
+        "parsed_arguments": {
+          "preset": "sps",
+          "query": "name,impressions,:eq,(,campaign_id,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,impressions,:eq,(,campaign_id,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot",
+          "start_time": "e-1w",
+          "end_time": "2012-01-01T00:00",
+          "timezone": "UTC",
+          "theme": "light",
+          "width": 700,
+          "height": 300,
+          "output_file": "scripts_png_gen/output/campaign_impressions_with_alert.png",
+          "emit_v2": "scripts_png_gen/output/campaign_impressions_with_alert.v2.json.gz"
+        }
+      }
+    },
+    "phase_2_database_initialization": {
+      "step": "2.1",
+      "description": "Load real campaign performance data from ads.db SQLite database",
+      "details": {
+        "database_type": "SQLite (ads.db)",
+        "table_name": "campaign_performance",
+        "sql_query": "SELECT hour_ts, hour_unix_epoch, impressions FROM campaign_performance WHERE campaign_id = 1 ORDER BY hour_unix_epoch ASC",
+        "time_range": "Last 14 days of data",
+        "data_structure": {
+          "hour_ts": "DateTime with timezone (e.g., '2025-01-15 14:00:00+00:00')",
+          "hour_unix_epoch": "Unix timestamp in seconds (e.g., 1737036000)",
+          "impressions": "Integer count of ad impressions"
+        },
+        "data_conversion_process": {
+          "step_1": "Execute SQL query against ads.db",
+          "step_2": "Convert results to Atlas TimeSeries format",
+          "step_3": "Create TimeSeries objects with proper tags and data arrays",
+          "step_4": "Format timestamps to match Atlas requirements (milliseconds since epoch)",
+          "step_5": "Create proper tag structure for Atlas queries"
+        }
+      }
+    },
+    "phase_3_uri_construction": {
+      "step": "3.1",
+      "description": "Build Atlas URI from parsed arguments",
+      "details": {
+        "uri_base": "http://local/api/v1/graph",
+        "query_parameters": {
+          "q": "name,impressions,:eq,(,campaign_id,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,impressions,:eq,(,campaign_id,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot",
+          "s": "e-1w",
+          "e": "2012-01-01T00:00",
+          "tz": "UTC",
+          "theme": "light",
+          "w": "700",
+          "h": "300"
+        },
+        "query_analysis": {
+          "primary_expression": "name,impressions,:eq,(,campaign_id,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot",
+          "secondary_expression": "name,impressions,:eq,(,campaign_id,),:by,input,:legend,:rot",
+          "threshold_line": "50e3,:const,threshold,:legend,:rot",
+          "stacklang_operations": [
+            "name,impressions,:eq - matches metrics with name=impressions",
+            "(,campaign_id,),:by - groups by campaign_id tag",
+            ":sum - aggregates impression values",
+            "50e3,:2over,:gt - compares against threshold 50000 impressions",
+            ":vspan - creates vertical span visualization for high impression periods",
+            ":alpha - sets transparency to 40%",
+            ":legend,:rot - configures legend rotation"
+          ],
+          "data_mapping": {
+            "metric_name": "impressions",
+            "grouping_tag": "campaign_id",
+            "threshold_value": 50000,
+            "visualization_type": "line chart with alert spans"
+          }
+        }
+      }
+    },
+    "phase_4_grapher_initialization": {
+      "step": "4.1",
+      "description": "Initialize Atlas Grapher with configuration",
+      "details": {
+        "grapher_class": "com.netflix.atlas.eval.graph.Grapher",
+        "config_source": "ConfigFactory.load()",
+        "settings": {
+          "theme": "light",
+          "default_width": 700,
+          "default_height": 300,
+          "palette": "default palette for light theme",
+          "interpreter": "StackLang interpreter for query processing"
+        }
+      }
+    },
+    "phase_5_query_parsing": {
+      "step": "5.1",
+      "description": "Parse StackLang query into executable expressions",
+      "details": {
+        "interpreter": "com.netflix.atlas.core.stacklang.Interpreter",
+        "vocabulary": "QueryVocabulary.allWords",
+        "parsed_expressions": [
+          {
+            "type": "StyleExpr",
+            "expression": "name,impressions,:eq,(,campaign_id,),:by,:sum,50e3,:2over,:gt",
+            "style": ":vspan",
+            "alpha": 40,
+            "legend": "triggered",
+            "rotation": true,
+            "description": "Vertical spans showing when campaign impressions exceed 50,000 threshold"
+          },
+          {
+            "type": "StyleExpr",
+            "expression": "name,impressions,:eq,(,campaign_id,),:by",
+            "style": ":line",
+            "legend": "input",
+            "rotation": true,
+            "description": "Line chart showing actual impression counts by campaign"
+          },
+          {
+            "type": "StyleExpr",
+            "expression": "50e3,:const",
+            "style": ":line",
+            "legend": "threshold",
+            "rotation": true,
+            "description": "Constant threshold line at 50,000 impressions"
+          }
+        ],
+        "data_expressions": [
+          "name,impressions,:eq,(,campaign_id,),:by,:sum",
+          "name,impressions,:eq,(,campaign_id,),:by"
+        ]
+      }
+    },
+    "phase_6_data_evaluation": {
+      "step": "6.1",
+      "description": "Execute data expressions against the database",
+      "details": {
+        "database_execution": {
+          "context": {
+            "start": "Parsed from e-1w relative to 2012-01-01T00:00",
+            "end": "2012-01-01T00:00",
+            "step": "Auto-calculated based on time range",
+            "timezone": "UTC"
+          },
+          "data_queries": [
+            {
+              "expression": "name,impressions,:eq,(,campaign_id,),:by,:sum",
+              "description": "Sum impression metrics grouped by campaign_id",
+              "result_type": "TimeSeries with campaign-specific aggregated impression values",
+              "data_source": "SQLite ads.db campaign_performance table"
+            },
+            {
+              "expression": "name,impressions,:eq,(,campaign_id,),:by",
+              "description": "Raw impression metrics grouped by campaign_id",
+              "result_type": "TimeSeries with individual campaign impression values",
+              "data_source": "SQLite ads.db campaign_performance table"
+            }
+          ],
+          "data_conversion_details": {
+            "sql_to_timeseries": {
+              "timestamp_conversion": "hour_unix_epoch (seconds) -> milliseconds for Atlas",
+              "value_extraction": "impressions column -> TimeSeries data array",
+              "tag_creation": "campaign_id -> tags map with name=impressions, campaign_id=<value>",
+              "step_size": "3600000ms (1 hour) based on hourly data granularity"
+            }
+          }
+        }
+      }
+    },
+    "phase_7_expression_evaluation": {
+      "step": "7.1",
+      "description": "Evaluate style expressions against retrieved data",
+      "details": {
+        "evaluation_process": [
+          {
+            "expression": "name,impressions,:eq,(,campaign_id,),:by,:sum,50e3,:2over,:gt",
+            "operation": "Compare aggregated campaign impressions against threshold 50000",
+            "result": "Boolean time series indicating high impression periods",
+            "visualization": "Vertical span (vspan) with 40% alpha transparency highlighting high impression hours"
+          },
+          {
+            "expression": "name,impressions,:eq,(,campaign_id,),:by",
+            "operation": "Display raw impression metrics by campaign",
+            "result": "Line chart showing individual campaign impression performance over time",
+            "visualization": "Line chart with legend rotation showing campaign_id=1 impressions"
+          },
+          {
+            "expression": "50e3,:const",
+            "operation": "Constant threshold line",
+            "result": "Horizontal line at 50000 impressions",
+            "visualization": "Constant line labeled as 'threshold' for reference"
+          }
+        ]
+      }
+    },
+    "phase_8_graph_definition_creation": {
+      "step": "8.1",
+      "description": "Create GraphDef object with all visual elements",
+      "details": {
+        "graph_definition": {
+          "title": "Not specified (default)",
+          "width": 700,
+          "height": 300,
+          "theme": "light",
+          "layout": "canvas",
+          "plots": [
+            {
+              "yaxis": 0,
+              "lines": [
+                {
+                  "type": "vertical_span",
+                  "data": "High impression periods (impressions > 50,000)",
+                  "color": "Auto-assigned from palette",
+                  "alpha": 0.4,
+                  "legend": "triggered",
+                  "style": "vspan",
+                  "description": "Highlighted regions when campaign impressions exceed threshold"
+                },
+                {
+                  "type": "line",
+                  "data": "Campaign impression metrics over time",
+                  "color": "Auto-assigned from palette",
+                  "legend": "input",
+                  "style": "line",
+                  "description": "Hourly impression counts from ads.db campaign_performance table"
+                },
+                {
+                  "type": "line",
+                  "data": "Constant threshold reference line",
+                  "color": "Auto-assigned from palette",
+                  "legend": "threshold",
+                  "style": "line",
+                  "description": "Reference line at 50,000 impressions"
+                }
+              ]
+            }
+          ],
+          "legend": {
+            "enabled": true,
+            "rotation": true,
+            "stats": true
+          }
+        }
+      }
+    },
+    "phase_9_chart_rendering": {
+      "step": "9.1",
+      "description": "Render GraphDef to PNG binary data",
+      "details": {
+        "rendering_engine": "com.netflix.atlas.chart.PngEngine",
+        "process": [
+          "Create BufferedImage with specified dimensions (700x300)",
+          "Initialize graphics context with light theme colors",
+          "Draw background and grid",
+          "Render vertical spans for high impression periods (impressions > 50,000)",
+          "Draw line charts for campaign impression metrics from ads.db",
+          "Draw constant threshold line at 50,000 impressions",
+          "Render legend with rotated labels showing campaign_id=1",
+          "Add axis labels and tick marks with impression counts",
+          "Convert to PNG format"
+        ],
+        "output_format": "PNG",
+        "color_space": "sRGB",
+        "compression": "Standard PNG compression"
+      }
+    },
+    "phase_10_file_output": {
+      "step": "10.1",
+      "description": "Write PNG data to output file",
+      "details": {
+        "output_file": "scripts_png_gen/output/sps_line_with_alert.png",
+        "file_operations": [
+          "Create parent directory if it doesn't exist",
+          "Open FileOutputStream",
+          "Write PNG binary data",
+          "Close file stream"
+        ],
+        "file_size": "Estimated ~15-25KB for 700x300 PNG",
+        "success_message": "Wrote: /home/alex/dbt_ads/atlas/scripts_png_gen/output/sps_line_with_alert.png"
+      }
+    },
+    "phase_11_v2_json_output": {
+      "step": "11.1",
+      "description": "Generate V2 GraphDef JSON output",
+      "details": {
+        "output_file": "scripts_png_gen/output/sps_line_with_alert.v2.json.gz",
+        "format": "GZIP-compressed JSON",
+        "content": {
+          "version": "2.0",
+          "graphDef": {
+            "title": "Atlas Chart",
+            "width": 700,
+            "height": 300,
+            "theme": "light",
+            "plots": "Array of plot definitions with line data",
+            "legend": "Legend configuration",
+            "axes": "Axis configurations"
+          },
+          "metadata": {
+            "generated_at": "Timestamp",
+            "query": "Original StackLang query",
+            "time_range": "Start and end times",
+            "data_sources": "Database and preset information"
+          }
+        },
+        "compression": "GZIP",
+        "success_message": "Wrote V2: /home/alex/dbt_ads/atlas/scripts_png_gen/output/sps_line_with_alert.v2.json.gz"
+      }
+    }
+  },
+  "technical_details": {
+    "stacklang_query_breakdown": {
+      "description": "Detailed analysis of the StackLang query",
+      "components": [
+        {
+          "part": "name,impressions,:eq",
+          "description": "Filter metrics where name tag equals 'impressions' (from ads.db campaign_performance table)"
+        },
+        {
+          "part": "(,campaign_id,),:by",
+          "description": "Group results by the campaign_id tag (campaign_id=1 from SQL WHERE clause)"
+        },
+        {
+          "part": ":sum",
+          "description": "Aggregate impression values using sum operation"
+        },
+        {
+          "part": "50e3,:2over,:gt",
+          "description": "Compare aggregated impressions with 50000 threshold using greater-than operation"
+        },
+        {
+          "part": ":vspan",
+          "description": "Create vertical span visualization for high impression periods"
+        },
+        {
+          "part": "40,:alpha",
+          "description": "Set transparency to 40% (0.4 alpha) for span visualization"
+        },
+        {
+          "part": "triggered,:legend",
+          "description": "Set legend label to 'triggered' for threshold breach visualization"
+        },
+        {
+          "part": ":rot",
+          "description": "Enable legend rotation for better readability"
+        }
+      ]
+    },
+    "data_flow": {
+      "step_1": "Execute SQL query against ads.db to retrieve campaign impression data",
+      "step_2": "Convert SQL results to Atlas TimeSeries format (tags, timestamps, values)",
+      "step_3": "Parse and validate StackLang expressions for impression metrics",
+      "step_4": "Execute Atlas data queries against converted TimeSeries data",
+      "step_5": "Apply mathematical operations (sum, threshold comparison)",
+      "step_6": "Generate visualization elements (vertical spans, line charts)",
+      "step_7": "Create chart layout with legend and axes for impression metrics",
+      "step_8": "Render campaign performance chart to PNG format",
+      "step_9": "Write PNG and V2 JSON files to disk"
+    },
+    "key_classes": {
+      "LocalGraphRunner": "Main entry point for local graph generation",
+      "Grapher": "Core graph evaluation and rendering engine",
+      "StaticDatabase": "In-memory database with synthetic data",
+      "StackLang": "Query language interpreter",
+      "GraphDef": "Chart definition object",
+      "PngEngine": "PNG rendering engine"
+    }
+  },
+  "performance_metrics": {
+    "estimated_timing": {
+      "database_loading": "~10-50ms",
+      "query_parsing": "~5-15ms",
+      "data_evaluation": "~20-100ms",
+      "chart_rendering": "~50-200ms",
+      "file_io": "~10-50ms",
+      "total_estimated": "~95-415ms"
+    },
+    "memory_usage": {
+      "database_data": "~1-5MB for synthetic data",
+      "chart_rendering": "~2-10MB for 700x300 image buffer",
+      "peak_memory": "~3-15MB total"
+    }
+  },
+  "dependencies": {
+    "core_modules": [
+      "atlas-core: Core data structures and database",
+      "atlas-eval: Evaluation engine and tools",
+      "atlas-chart: Chart rendering and visualization",
+      "atlas-json: JSON serialization"
+    ],
+    "external_libraries": [
+      "Apache Pekko: Actor system and HTTP",
+      "Jackson: JSON processing",
+      "Java AWT: Graphics rendering",
+      "Scala: Programming language runtime"
+    ]
+  },
+  "data_conversion_guide": {
+    "description": "Step-by-step guide to convert SQL database results to Atlas TimeSeries format",
+    "sql_to_atlas_mapping": {
+      "database_query": "SELECT hour_ts, hour_unix_epoch, impressions FROM campaign_performance WHERE campaign_id = 1 ORDER BY hour_unix_epoch ASC",
+      "atlas_timeseries_format": {
+        "tags": {
+          "name": "impressions",
+          "campaign_id": "1"
+        },
+        "label": "impressions,campaign_id=1",
+        "data": {
+          "startTime": "hour_unix_epoch * 1000 (convert to milliseconds)",
+          "step": "3600000 (1 hour in milliseconds)",
+          "values": "[impression_values_array]"
+        }
+      },
+      "conversion_code_example": {
+        "python": "def convert_sql_to_atlas(sql_results):\n    timeseries_data = []\n    for row in sql_results:\n        timestamp_ms = row['hour_unix_epoch'] * 1000\n        value = row['impressions']\n        timeseries_data.append((timestamp_ms, value))\n    \n    return {\n        'tags': {'name': 'impressions', 'campaign_id': '1'},\n        'label': 'impressions,campaign_id=1',\n        'data': {\n            'startTime': timeseries_data[0][0],\n            'step': 3600000,\n            'values': [v[1] for v in timeseries_data]\n        }\n    }"
+      }
+    }
+  },
+  "output_files": [
+    {
+      "path": "scripts_png_gen/output/campaign_impressions_with_alert.png",
+      "type": "PNG image",
+      "description": "Rendered chart showing campaign impression metrics with threshold alerts from ads.db"
+    },
+    {
+      "path": "scripts_png_gen/output/campaign_impressions_with_alert.v2.json.gz",
+      "type": "Compressed JSON",
+      "description": "V2 GraphDef JSON with chart metadata and campaign impression data"
+    }
+  ]
+}

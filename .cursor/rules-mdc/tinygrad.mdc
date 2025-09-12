@@ -1,0 +1,193 @@
+---
+description: This rule provides comprehensive best practices for developing with the tinygrad library, covering code structure, performance, security, testing, and common pitfalls. It aims to guide developers in writing efficient, maintainable, and robust tinygrad code.
+globs: **/*.py
+---
+# tinygrad Comprehensive Best Practices and Coding Standards
+
+This document outlines the recommended best practices for developing with the tinygrad library. Following these guidelines will help ensure code quality, maintainability, performance, and security.
+
+## 1. Code Organization and Structure
+
+*   **Project Structure:**
+    *   Organize your tinygrad projects into logical modules or packages.
+    *   Use clear and descriptive names for modules and subpackages.
+    *   Keep related files together within the same directory.
+    *   Example:
+
+
+        my_tinygrad_project/
+        ├── models/
+        │   ├── linear_model.py
+        │   ├── convolutional_model.py
+        │   └── __init__.py
+        ├── utils/
+        │   ├── data_loader.py
+        │   ├── optimizers.py
+        │   └── __init__.py
+        ├── tests/
+        │   ├── test_linear_model.py
+        │   ├── test_convolutional_model.py
+        │   └── __init__.py
+        ├── main.py
+        └── README.md
+
+*   **Module Design:**
+    *   Each module should have a single, well-defined purpose.
+    *   Minimize dependencies between modules to improve modularity and testability.
+    *   Use abstract classes or interfaces to define clear boundaries between modules.
+*   **File Structure:**
+    *   Each file should contain a single class, function, or a closely related group of functions.
+    *   Use descriptive file names that clearly indicate the contents of the file.
+    *   Include a docstring at the beginning of each file to describe its purpose.
+*   **Imports:**
+    *   Use explicit imports to make dependencies clear.
+    *   Avoid wildcard imports (`from module import *`).
+    *   Group imports by standard library, third-party libraries, and local modules.
+    *   Sort imports alphabetically within each group.
+
+## 2. Common Patterns and Anti-patterns
+
+*   **Lazy Evaluation:**
+    *   Utilize tinygrad's lazy evaluation to fuse operations and optimize performance.  Understand when to realize tensors (`.realize()` or `.numpy()`) to prevent excessive memory consumption and unnecessary computations.
+    *   Avoid eager evaluation unless necessary for debugging or specific performance reasons.
+    *   Example (Lazy Fusion):
+
+        python
+        import tinygrad.tensor as Tensor
+
+        a = Tensor.rand(1024, 1024)
+        b = Tensor.rand(1024, 1024)
+        c = (a + 1) * b  # Operations are fused lazily
+        result = c.sum()   # Computation happens only when result is realized
+        print(result.numpy())
+
+*   **Tensor Operations:**
+    *   Use tinygrad's tensor operations for numerical computations.
+    *   Avoid using NumPy operations directly on tinygrad tensors, as this can break the computation graph and prevent optimizations.
+    *   Utilize broadcasting to perform operations on tensors with different shapes.
+*   **Custom Kernels:**
+    *   When adding custom operations, ensure that the corresponding kernels are optimized for the target hardware (CPU, GPU, etc.).
+    *   Consider using techniques like tiling, loop unrolling, and vectorization to improve kernel performance.
+*   **Anti-patterns:**
+    *   **Code Golf:** While tinygrad aims for simplicity, avoid sacrificing readability for the sake of reducing line count.  Focus on clarity and maintainability.
+    *   **Unnecessary Realization:** Realizing tensors prematurely can lead to performance bottlenecks. Ensure that tensors are only realized when absolutely necessary.
+    *   **Ignoring Device Placement:** Be mindful of device placement (CPU vs. GPU) and ensure that tensors are on the appropriate device for optimal performance.  Use `Tensor.to(Device.DEFAULT)` or similar to move tensors.
+    *   **Global State:** Avoid relying on global state variables within tinygrad code, as this can lead to unexpected behavior and make the code difficult to test.
+
+## 3. Performance Considerations
+
+*   **Memory Management:**
+    *   Be aware of memory usage, especially when working with large tensors.
+    *   Release unused tensors to free up memory.
+    *   Use techniques like in-place operations to reduce memory footprint.
+*   **Kernel Optimization:**
+    *   Profile your code to identify performance bottlenecks.
+    *   Optimize custom kernels for the target hardware.
+    *   Experiment with different kernel implementations to find the most efficient one.
+*   **Data Transfer:**
+    *   Minimize data transfer between CPU and GPU, as this can be a significant performance bottleneck.
+    *   Keep tensors on the GPU as much as possible.
+*   **Parallelism:**
+    *   Leverage parallelism to speed up computations.
+    *   Use techniques like multi-threading or distributed computing to parallelize tasks.
+*   **Benchmarking:**
+    *   Benchmark your code to measure performance improvements.
+    *   Use realistic datasets and workloads to get accurate results.
+    *   Any claimed speedup must be benchmarked.
+
+## 4. Security Best Practices
+
+*   **Input Validation:**
+    *   Validate all inputs to prevent malicious data from compromising the system.
+    *   Sanitize inputs to remove potentially harmful characters or code.
+*   **Authentication and Authorization:**
+    *   Implement proper authentication and authorization mechanisms to protect sensitive data and resources.
+    *   Use strong passwords and encryption to secure user accounts.
+*   **Code Injection:**
+    *   Prevent code injection vulnerabilities by carefully handling user-provided code or data.
+    *   Avoid using `eval()` or `exec()` functions with untrusted input.
+*   **Denial of Service (DoS):**
+    *   Implement measures to prevent DoS attacks, such as rate limiting and input validation.
+    *   Monitor system resources and performance to detect and mitigate DoS attacks.
+*   **Dependency Management:**
+    *   Keep dependencies up to date to patch security vulnerabilities.
+    *   Use a dependency management tool to track and manage dependencies.
+
+## 5. Testing Approaches
+
+*   **Unit Testing:**
+    *   Write unit tests to verify the correctness of individual functions and classes.
+    *   Use a testing framework like `pytest` to automate the testing process.
+    *   Aim for high test coverage to ensure that all parts of the code are tested.
+    *   Example:
+
+        python
+        import pytest
+        from tinygrad.tensor import Tensor
+
+        def test_tensor_addition():
+            a = Tensor([1, 2, 3])
+            b = Tensor([4, 5, 6])
+            c = a + b
+            assert (c.numpy() == [5, 7, 9]).all()
+
+*   **Integration Testing:**
+    *   Write integration tests to verify the interaction between different modules or components.
+    *   Use mock objects or stubs to isolate the components being tested.
+*   **System Testing:**
+    *   Write system tests to verify the overall functionality of the system.
+    *   Use realistic datasets and workloads to simulate real-world usage.
+*   **Regression Testing:**
+    *   Create regression tests to prevent bugs from reappearing after they have been fixed.
+    *   Every bug fix should include a regression test.
+*   **Fuzzing:**
+        * Use fuzzers to find bugs by automatically generating random inputs.  tinygrad has some fuzzers already; improve them!
+*   **Process Replay Tests:**
+    *   Process replay compares your PR's generated kernels against master. If your PR is a refactor or speedup without any expected behavior change, It should include `[pr]` in the pull request title.
+
+## 6. Common Pitfalls and Gotchas
+
+*   **Shape Mismatches:**
+    *   Ensure that tensors have compatible shapes before performing operations.
+    *   Use the `reshape()` and `expand()` functions to adjust tensor shapes as needed.
+*   **Data Types:**
+    *   Be aware of the data types of tensors and ensure that they are appropriate for the operations being performed.
+    *   Use the `astype()` function to convert tensors to different data types.
+*   **Gradient Accumulation:**
+    *   When training neural networks, gradients accumulate across multiple batches.  Remember to zero the gradients before each training iteration using `optim.zero_grad()`.
+    *   Failing to zero the gradients can lead to incorrect weight updates and poor training performance.
+*   **Device Mismatches:**
+        * Ensure that all tensors involved in a computation reside on the same device (e.g., CPU or GPU). Moving tensors between devices can be costly and lead to errors.
+*   **Inplace Operations and Autograd:**
+    *   Be cautious when using inplace operations (e.g., `a += b`) on tensors that require gradients. Inplace operations can modify the tensor's data in place, potentially breaking the autograd graph.
+
+## 7. Tooling and Environment
+
+*   **Development Environment:**
+    *   Use a virtual environment to isolate project dependencies.
+    *   Use a code editor or IDE with support for Python and tinygrad.
+    *   Consider using a linter and formatter to enforce code style.
+*   **Debugging Tools:**
+    *   Use a debugger to step through code and inspect variables.
+    *   Use logging to track the execution of code and identify errors.
+    *   Use profiling tools to identify performance bottlenecks.
+*   **Version Control:**
+    *   Use Git for version control.
+    *   Follow a consistent branching strategy.
+    *   Write clear and concise commit messages.
+*   **Continuous Integration:**
+    *   Use a CI/CD system to automate the build, test, and deployment process.
+    *   Run tests automatically on every commit.
+*   **Pre-commit Hooks:**
+        * Use pre-commit hooks with `pre-commit install` to automatically run linters, mypy, and a subset of the tests on every commit. This helps maintain code quality and consistency.
+*   **Documentation Generation:**
+    *   Use a documentation generator like Sphinx to create documentation from docstrings.
+    *   Keep documentation up to date.
+
+## Additional Notes
+
+*   **Contribution Workflow:** The project uses a Fork-Pull development model. Fork the repository, create a new branch for each pull request, and submit the code.
+*   **Coding Style:** Follow Python PEP 8 coding style, unittest style suggested by pytest, and Autodoc generated style suggested by Sphinx.
+*   **Contributing:** Bug fixes (with a regression test) are highly valued.  Solve bounties. When adding features, consider the line tradeoff and include regression tests. Refactors that are clear wins are welcome. Tests/fuzzers are appreciated. Dead code removal from core tinygrad/ folder is helpful.
+*   **Documentation:** Refer to the documentation and examples in the `docs/` directory for detailed information on using tinygrad.
+*   **Community:** Engage with the tinygrad community on GitHub and Discord to ask questions, share ideas, and contribute to the project.

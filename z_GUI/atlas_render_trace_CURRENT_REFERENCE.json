@@ -1,0 +1,387 @@
+{
+  "metadata": {
+    "trace_version": "1.0",
+    "generated_at": "2025-01-27T12:00:00Z",
+    "command": "sbt \"project atlas-eval\" \"runMain com.netflix.atlas.eval.tools.LocalGraphRunner $(cat scripts_png_gen/input_args/styles_with_signal_line/line.args)\"",
+    "description": "Complete trace of PNG generation process for Atlas line chart with signal line"
+  },
+  "execution_flow": {
+    "phase_1_command_parsing": {
+      "step": "1.1",
+      "description": "SBT command execution and argument parsing",
+      "details": {
+        "sbt_project": "atlas-eval",
+        "main_class": "com.netflix.atlas.eval.tools.LocalGraphRunner",
+        "args_source": "scripts_png_gen/input_args/styles_with_signal_line/line.args",
+        "args_content": "--preset sps --q \"name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,sps,:eq,(,nf.cluster,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot\" --s e-1w --e 2012-01-01T00:00 --tz UTC --theme light --w 700 --h 300 --out scripts_png_gen/output/sps_line_with_alert.png --emit-v2 scripts_png_gen/output/sps_line_with_alert.v2.json.gz",
+        "parsed_arguments": {
+          "preset": "sps",
+          "query": "name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,sps,:eq,(,nf.cluster,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot",
+          "start_time": "e-1w",
+          "end_time": "2012-01-01T00:00",
+          "timezone": "UTC",
+          "theme": "light",
+          "width": 700,
+          "height": 300,
+          "output_file": "scripts_png_gen/output/sps_line_with_alert.png",
+          "emit_v2": "scripts_png_gen/output/sps_line_with_alert.v2.json.gz"
+        }
+      }
+    },
+    "phase_2_database_initialization": {
+      "step": "2.1",
+      "description": "Load preset database with synthetic data",
+      "details": {
+        "preset_name": "sps",
+        "database_type": "StaticDatabase",
+        "dataset": "small",
+        "data_source": "atlas-core/src/main/scala/com/netflix/atlas/core/db/StaticDatabase.scala",
+        "data_generation": "Synthetic time series data for SPS (Service Points per Second) metrics",
+        "time_range": "Generated data spanning the specified time range",
+        "cluster_data": "Multiple nf.cluster values with realistic SPS patterns"
+      }
+    },
+    "phase_3_uri_construction": {
+      "step": "3.1",
+      "description": "Build Atlas URI from parsed arguments",
+      "details": {
+        "uri_base": "http://local/api/v1/graph",
+        "query_parameters": {
+          "q": "name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot,name,sps,:eq,(,nf.cluster,),:by,input,:legend,:rot,50e3,:const,threshold,:legend,:rot",
+          "s": "e-1w",
+          "e": "2012-01-01T00:00",
+          "tz": "UTC",
+          "theme": "light",
+          "w": "700",
+          "h": "300"
+        },
+        "query_analysis": {
+          "primary_expression": "name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt,:vspan,40,:alpha,triggered,:legend,:rot",
+          "secondary_expression": "name,sps,:eq,(,nf.cluster,),:by,input,:legend,:rot",
+          "threshold_line": "50e3,:const,threshold,:legend,:rot",
+          "stacklang_operations": [
+            "name,sps,:eq - matches metrics with name=sps",
+            "(,nf.cluster,),:by - groups by nf.cluster tag",
+            ":sum - aggregates values",
+            "50e3,:2over,:gt - compares against threshold 50000",
+            ":vspan - creates vertical span visualization",
+            ":alpha - sets transparency",
+            ":legend,:rot - configures legend rotation"
+          ]
+        }
+      }
+    },
+    "phase_4_grapher_initialization": {
+      "step": "4.1",
+      "description": "Initialize Atlas Grapher with configuration",
+      "details": {
+        "grapher_class": "com.netflix.atlas.eval.graph.Grapher",
+        "config_source": "ConfigFactory.load()",
+        "settings": {
+          "theme": "light",
+          "default_width": 700,
+          "default_height": 300,
+          "palette": "default palette for light theme",
+          "interpreter": "StackLang interpreter for query processing"
+        }
+      }
+    },
+    "phase_5_query_parsing": {
+      "step": "5.1",
+      "description": "Parse StackLang query into executable expressions",
+      "details": {
+        "interpreter": "com.netflix.atlas.core.stacklang.Interpreter",
+        "vocabulary": "QueryVocabulary.allWords",
+        "parsed_expressions": [
+          {
+            "type": "StyleExpr",
+            "expression": "name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt",
+            "style": ":vspan",
+            "alpha": 40,
+            "legend": "triggered",
+            "rotation": true
+          },
+          {
+            "type": "StyleExpr",
+            "expression": "name,sps,:eq,(,nf.cluster,),:by",
+            "style": ":line",
+            "legend": "input",
+            "rotation": true
+          },
+          {
+            "type": "StyleExpr",
+            "expression": "50e3,:const",
+            "style": ":line",
+            "legend": "threshold",
+            "rotation": true
+          }
+        ],
+        "data_expressions": [
+          "name,sps,:eq,(,nf.cluster,),:by,:sum",
+          "name,sps,:eq,(,nf.cluster,),:by"
+        ]
+      }
+    },
+    "phase_6_data_evaluation": {
+      "step": "6.1",
+      "description": "Execute data expressions against the database",
+      "details": {
+        "database_execution": {
+          "context": {
+            "start": "Parsed from e-1w relative to 2012-01-01T00:00",
+            "end": "2012-01-01T00:00",
+            "step": "Auto-calculated based on time range",
+            "timezone": "UTC"
+          },
+          "data_queries": [
+            {
+              "expression": "name,sps,:eq,(,nf.cluster,),:by,:sum",
+              "description": "Sum SPS metrics grouped by cluster",
+              "result_type": "TimeSeries with cluster-specific aggregated values"
+            },
+            {
+              "expression": "name,sps,:eq,(,nf.cluster,),:by",
+              "description": "Raw SPS metrics grouped by cluster",
+              "result_type": "TimeSeries with individual cluster values"
+            }
+          ]
+        }
+      }
+    },
+    "phase_7_expression_evaluation": {
+      "step": "7.1",
+      "description": "Evaluate style expressions against retrieved data",
+      "details": {
+        "evaluation_process": [
+          {
+            "expression": "name,sps,:eq,(,nf.cluster,),:by,:sum,50e3,:2over,:gt",
+            "operation": "Compare aggregated SPS against threshold 50000",
+            "result": "Boolean time series indicating threshold breaches",
+            "visualization": "Vertical span (vspan) with 40% alpha transparency"
+          },
+          {
+            "expression": "name,sps,:eq,(,nf.cluster,),:by",
+            "operation": "Display raw SPS metrics by cluster",
+            "result": "Line chart showing individual cluster performance",
+            "visualization": "Line chart with legend rotation"
+          },
+          {
+            "expression": "50e3,:const",
+            "operation": "Constant threshold line",
+            "result": "Horizontal line at 50000",
+            "visualization": "Constant line labeled as 'threshold'"
+          }
+        ]
+      }
+    },
+    "phase_8_graph_definition_creation": {
+      "step": "8.1",
+      "description": "Create GraphDef object with all visual elements",
+      "details": {
+        "graph_definition": {
+          "title": "Not specified (default)",
+          "width": 700,
+          "height": 300,
+          "theme": "light",
+          "layout": "canvas",
+          "plots": [
+            {
+              "yaxis": 0,
+              "lines": [
+                {
+                  "type": "vertical_span",
+                  "data": "Threshold breach regions",
+                  "color": "Auto-assigned from palette",
+                  "alpha": 0.4,
+                  "legend": "triggered",
+                  "style": "vspan"
+                },
+                {
+                  "type": "line",
+                  "data": "SPS metrics by cluster",
+                  "color": "Auto-assigned from palette",
+                  "legend": "input",
+                  "style": "line"
+                },
+                {
+                  "type": "line",
+                  "data": "Constant threshold",
+                  "color": "Auto-assigned from palette",
+                  "legend": "threshold",
+                  "style": "line"
+                }
+              ]
+            }
+          ],
+          "legend": {
+            "enabled": true,
+            "rotation": true,
+            "stats": true
+          }
+        }
+      }
+    },
+    "phase_9_chart_rendering": {
+      "step": "9.1",
+      "description": "Render GraphDef to PNG binary data",
+      "details": {
+        "rendering_engine": "com.netflix.atlas.chart.PngEngine",
+        "process": [
+          "Create BufferedImage with specified dimensions (700x300)",
+          "Initialize graphics context with light theme colors",
+          "Draw background and grid",
+          "Render vertical spans for threshold breaches",
+          "Draw line charts for SPS metrics by cluster",
+          "Draw constant threshold line",
+          "Render legend with rotated labels",
+          "Add axis labels and tick marks",
+          "Convert to PNG format"
+        ],
+        "output_format": "PNG",
+        "color_space": "sRGB",
+        "compression": "Standard PNG compression"
+      }
+    },
+    "phase_10_file_output": {
+      "step": "10.1",
+      "description": "Write PNG data to output file",
+      "details": {
+        "output_file": "scripts_png_gen/output/sps_line_with_alert.png",
+        "file_operations": [
+          "Create parent directory if it doesn't exist",
+          "Open FileOutputStream",
+          "Write PNG binary data",
+          "Close file stream"
+        ],
+        "file_size": "Estimated ~15-25KB for 700x300 PNG",
+        "success_message": "Wrote: /home/alex/dbt_ads/atlas/scripts_png_gen/output/sps_line_with_alert.png"
+      }
+    },
+    "phase_11_v2_json_output": {
+      "step": "11.1",
+      "description": "Generate V2 GraphDef JSON output",
+      "details": {
+        "output_file": "scripts_png_gen/output/sps_line_with_alert.v2.json.gz",
+        "format": "GZIP-compressed JSON",
+        "content": {
+          "version": "2.0",
+          "graphDef": {
+            "title": "Atlas Chart",
+            "width": 700,
+            "height": 300,
+            "theme": "light",
+            "plots": "Array of plot definitions with line data",
+            "legend": "Legend configuration",
+            "axes": "Axis configurations"
+          },
+          "metadata": {
+            "generated_at": "Timestamp",
+            "query": "Original StackLang query",
+            "time_range": "Start and end times",
+            "data_sources": "Database and preset information"
+          }
+        },
+        "compression": "GZIP",
+        "success_message": "Wrote V2: /home/alex/dbt_ads/atlas/scripts_png_gen/output/sps_line_with_alert.v2.json.gz"
+      }
+    }
+  },
+  "technical_details": {
+    "stacklang_query_breakdown": {
+      "description": "Detailed analysis of the StackLang query",
+      "components": [
+        {
+          "part": "name,sps,:eq",
+          "description": "Filter metrics where name tag equals 'sps'"
+        },
+        {
+          "part": "(,nf.cluster,),:by",
+          "description": "Group results by the nf.cluster tag"
+        },
+        {
+          "part": ":sum",
+          "description": "Aggregate values using sum operation"
+        },
+        {
+          "part": "50e3,:2over,:gt",
+          "description": "Compare result with 50000 using greater-than operation"
+        },
+        {
+          "part": ":vspan",
+          "description": "Create vertical span visualization for true values"
+        },
+        {
+          "part": "40,:alpha",
+          "description": "Set transparency to 40% (0.4 alpha)"
+        },
+        {
+          "part": "triggered,:legend",
+          "description": "Set legend label to 'triggered'"
+        },
+        {
+          "part": ":rot",
+          "description": "Enable legend rotation"
+        }
+      ]
+    },
+    "data_flow": {
+      "step_1": "Load synthetic SPS data from StaticDatabase",
+      "step_2": "Parse and validate StackLang expressions",
+      "step_3": "Execute data queries against database",
+      "step_4": "Apply mathematical and comparison operations",
+      "step_5": "Generate visualization elements (spans, lines)",
+      "step_6": "Create chart layout with legend and axes",
+      "step_7": "Render to PNG format",
+      "step_8": "Write files to disk"
+    },
+    "key_classes": {
+      "LocalGraphRunner": "Main entry point for local graph generation",
+      "Grapher": "Core graph evaluation and rendering engine",
+      "StaticDatabase": "In-memory database with synthetic data",
+      "StackLang": "Query language interpreter",
+      "GraphDef": "Chart definition object",
+      "PngEngine": "PNG rendering engine"
+    }
+  },
+  "performance_metrics": {
+    "estimated_timing": {
+      "database_loading": "~10-50ms",
+      "query_parsing": "~5-15ms",
+      "data_evaluation": "~20-100ms",
+      "chart_rendering": "~50-200ms",
+      "file_io": "~10-50ms",
+      "total_estimated": "~95-415ms"
+    },
+    "memory_usage": {
+      "database_data": "~1-5MB for synthetic data",
+      "chart_rendering": "~2-10MB for 700x300 image buffer",
+      "peak_memory": "~3-15MB total"
+    }
+  },
+  "dependencies": {
+    "core_modules": [
+      "atlas-core: Core data structures and database",
+      "atlas-eval: Evaluation engine and tools",
+      "atlas-chart: Chart rendering and visualization",
+      "atlas-json: JSON serialization"
+    ],
+    "external_libraries": [
+      "Apache Pekko: Actor system and HTTP",
+      "Jackson: JSON processing",
+      "Java AWT: Graphics rendering",
+      "Scala: Programming language runtime"
+    ]
+  },
+  "output_files": [
+    {
+      "path": "scripts_png_gen/output/sps_line_with_alert.png",
+      "type": "PNG image",
+      "description": "Rendered chart showing SPS metrics with threshold alerts"
+    },
+    {
+      "path": "scripts_png_gen/output/sps_line_with_alert.v2.json.gz",
+      "type": "Compressed JSON",
+      "description": "V2 GraphDef JSON with chart metadata and data"
+    }
+  ]
+}

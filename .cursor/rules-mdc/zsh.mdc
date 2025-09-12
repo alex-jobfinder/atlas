@@ -1,0 +1,240 @@
+---
+description: This rule provides comprehensive best practices for writing clean, maintainable, performant, and secure Zsh scripts. It covers code organization, common patterns, performance considerations, security measures, testing strategies, and tooling.
+globs: **/*.zsh,**/*.sh
+---
+# Zsh Scripting Best Practices and Conventions
+
+This document outlines best practices for writing clear, maintainable, performant, and secure Zsh scripts. It aims to provide a consistent framework for Zsh scripting, covering various aspects of script development.
+
+## 1. Code Organization and Structure
+
+### 1.1. Project Directory Structure
+
+For projects involving multiple scripts and related files, a well-defined directory structure is essential for maintainability. Consider the following structure:
+
+
+my-project/
+├── README.md          # Project overview and key information
+├── .gitignore         # Specifies intentionally untracked files to ignore
+├── Makefile           # Automates build process (optional)
+├── bin/               # Executable scripts (build, deploy, test)
+│   ├── build-project.zsh
+│   ├── deploy-project.zsh
+│   └── test-project.zsh
+├── config/            # Configuration scripts and settings
+│   ├── setup-environment.zsh
+│   └── configure-database.zsh
+├── lib/               # Library scripts with reusable functions
+│   ├── utility-functions.zsh
+│   └── string-manipulations.zsh
+├── tests/             # Test scripts for project components
+│   ├── test-build-project.zsh
+│   ├── test-deploy-project.zsh
+│   └── function_deploy-TEST.zsh
+├── docs/              # Documentation files
+│   ├── CONTRIBUTING.md  # Guidelines for contributing
+│   ├── CHANGELOG.md     # Change log
+│   └── LICENSE          # License file
+
+
+### 1.2. Script Structure
+
+A Zsh script should generally follow this structure:
+
+1.  **Shebang:**  Specifies the interpreter.
+2.  **Comment Block:**  Metadata about the script.
+3.  **Constants:**  Global constants.
+4.  **Functions:**  Reusable code blocks.
+5.  **Program Body:**  Main script logic.
+
+Example:
+
+zsh
+#!/usr/bin/env zsh
+
+# ---------------------------------------------------------------------------
+# script_name - Brief description of the script
+# Author: Your Name <your.email@example.com>
+# Date: YYYY-MM-DD
+# Version: 1.0
+# Description: Detailed description of the script's purpose.
+# Usage: script_name [options] arguments
+# ---------------------------------------------------------------------------
+
+# Constants
+readonly LOG_FILE="/tmp/script_name.log"
+
+# Functions
+function log_message() {
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
+}
+
+# Program Body
+log_message "Script started"
+
+# Your script logic here
+
+log_message "Script finished"
+
+exit 0
+
+
+### 1.3. Naming Conventions
+
+*   **Filenames:** Use lowercase with underscores (`lower_snake_case`). Avoid spaces.
+*   **Variables:** Use lowercase with underscores for regular variables. Use uppercase for environment variables and constants.
+*   **Functions:** Use lowercase with underscores.
+
+### 1.4. Code Style
+
+*   **Indentation:** Use 2 or 4 spaces for indentation. Be consistent.
+*   **Line Length:** Keep lines reasonably short (e.g., 80-120 characters) for readability.
+*   **Comments:**  Add comments to explain complex logic or non-obvious code.
+
+## 2. Common Patterns and Anti-patterns
+
+### 2.1. Common Patterns
+
+*   **Option Parsing:** Use `getopts` for parsing command-line options.
+*   **Error Handling:** Implement robust error handling using `set -e` and conditional checks.
+*   **Logging:** Use a consistent logging mechanism for debugging and auditing.
+*   **Temporary Files:** Create temporary files using `mktemp` and clean them up using `trap`.
+*   **Input Validation:** Validate user input to prevent errors and security vulnerabilities.
+
+### 2.2. Anti-patterns
+
+*   **Naked Variables:** Avoid using variables without quotes (e.g., `$var`). Always double-quote variables to prevent word splitting and globbing.
+*   **Ignoring Exit Codes:** Not checking the exit codes of commands can lead to unexpected behavior. Use `set -e` or explicitly check exit codes.
+*   **Overuse of Global Variables:** Minimize the use of global variables to avoid naming conflicts and improve code modularity.
+*   **Hardcoding Values:** Avoid hardcoding values directly in the code. Use constants or configuration files instead.
+*   **String Concatenation:**  Avoid string concatenation using `$var1$var2`. Use `$var1"$var2"` or `"${var1}${var2}"` instead.
+
+## 3. Performance Considerations
+
+### 3.1. Minimize External Commands
+
+Calling external commands (e.g., `grep`, `sed`, `awk`) can be slow. Use Zsh built-ins whenever possible.
+
+### 3.2. Use Arrays Instead of Strings
+
+Arrays are generally more efficient for storing and manipulating lists of data compared to strings.
+
+### 3.3. Avoid Loops When Possible
+
+Loops can be slow, especially when iterating over large datasets. Consider using alternative approaches like `mapfile` or `xargs`.
+
+### 3.4. Optimize String Manipulation
+
+Use Zsh's built-in string manipulation features instead of external commands like `sed` or `awk` for simple tasks.
+
+### 3.5. Profile Your Scripts
+
+Use tools like `time` or `zprof` to identify performance bottlenecks in your scripts.
+
+## 4. Security Best Practices
+
+### 4.1. Input Validation
+
+*   **Sanitize User Input:** Always sanitize user input to prevent command injection and other vulnerabilities.
+*   **Use Parameterized Queries:** If your script interacts with a database, use parameterized queries to prevent SQL injection.
+
+### 4.2. Privilege Management
+
+*   **Run with Least Privilege:** Run scripts with the minimum necessary privileges.
+*   **Avoid SUID Scripts:** Avoid creating SUID scripts, as they can be a security risk.
+
+### 4.3. File Handling
+
+*   **Check File Permissions:** Verify file permissions before reading or writing to files.
+*   **Avoid Using `eval`:**  Avoid using the `eval` command, as it can execute arbitrary code.
+*   **Use Safe File Operations:** Prefer using `read -r` to read lines from a file to prevent backslash interpretation.
+
+### 4.4. Secure Coding Practices
+
+*   **Quote Variables:** Always double-quote variables to prevent word splitting and globbing.
+*   **Use `set -u`:**  Use `set -u` to detect unset variables and prevent errors.
+*   **Avoid Shell Expansion:** Be careful with shell expansion, as it can lead to unexpected results.
+
+### 4.5. Dependency Management
+
+*   **Vet External Dependencies:** If your script relies on external commands or libraries, make sure they are from trusted sources.
+*   **Use Static Analysis Tools:** Use static analysis tools like Shellcheck to identify potential security vulnerabilities.
+
+## 5. Testing Approaches
+
+### 5.1. Unit Testing
+
+*   **Test Individual Functions:** Write unit tests for individual functions to ensure they behave as expected.
+*   **Use a Testing Framework:** Consider using a testing framework like [shUnit2](https://github.com/kward/shunit2) or [Bats](https://github.com/bats-core/bats-core).
+
+### 5.2. Integration Testing
+
+*   **Test Script Interactions:** Write integration tests to verify how different parts of your script interact with each other.
+*   **Mock External Dependencies:** Mock external dependencies to isolate your script during testing.
+
+### 5.3. End-to-End Testing
+
+*   **Test the Entire Workflow:** Write end-to-end tests to simulate the entire workflow of your script.
+*   **Use a Test Environment:** Run tests in a dedicated test environment to avoid affecting your production system.
+
+### 5.4. Test-Driven Development (TDD)
+
+*   **Write Tests First:** Write tests before writing the code to ensure that the code meets the requirements.
+*   **Follow the Red-Green-Refactor Cycle:** Follow the red-green-refactor cycle to write clean and maintainable code.
+
+## 6. Common Pitfalls and Gotchas
+
+### 6.1. Word Splitting and Globbing
+
+*   **Unquoted Variables:**  Unquoted variables can be split into multiple words and expanded as globs, leading to unexpected results. Always double-quote variables.
+
+### 6.2. Exit Codes
+
+*   **Ignoring Exit Codes:**  Ignoring the exit codes of commands can lead to errors going unnoticed. Use `set -e` or explicitly check exit codes.
+
+### 6.3. Variable Scope
+
+*   **Global Variables:** Global variables can be accessed from anywhere in the script, leading to naming conflicts and unexpected side effects. Minimize the use of global variables.
+
+### 6.4. Command Substitution
+
+*   **Nested Command Substitution:**  Nested command substitution can be difficult to read and debug. Use alternative approaches like pipes or temporary files.
+
+### 6.5. Regular Expressions
+
+*   **Incorrect Regular Expressions:**  Incorrect regular expressions can lead to unexpected matches or errors. Test your regular expressions carefully.
+
+### 6.6. Shell Expansion
+
+*   **Unintended Expansion:**  Shell expansion can lead to unintended file or directory access. Be careful with shell expansion, especially with user input.
+
+## 7. Tooling and Environment
+
+### 7.1. Shellcheck
+
+[Shellcheck](https://www.shellcheck.net/) is a static analysis tool that can identify potential errors and style issues in your scripts. Use Shellcheck to improve the quality of your code.
+
+### 7.2. Editor Configuration
+
+*   **Syntax Highlighting:** Configure your editor to use syntax highlighting for Zsh scripts.
+*   **Linting:** Configure your editor to use Shellcheck for linting.
+*   **Code Completion:** Configure your editor to use code completion for Zsh commands and variables.
+
+### 7.3. Debugging Tools
+
+*   **`set -x`:** Use `set -x` to trace the execution of your script.
+*   **`zdb`:** Use `zdb`, the Zsh debugger, for more advanced debugging.
+*   **`echo` Statements:** Insert `echo` statements to print variable values and debug your script.
+
+### 7.4. Environment Variables
+
+*   **`PATH`:**  The `PATH` environment variable specifies the directories where the shell searches for executable commands.
+*   **`EDITOR`:** The `EDITOR` environment variable specifies the default text editor to use.
+*   **`SHELL`:**  The `SHELL` environment variable specifies the default shell to use.
+
+### 7.5. Oh My Zsh and Plugins
+
+*   **Oh My Zsh:** A popular framework for managing Zsh configurations.  Simplifies plugin management and theme customization.
+*   **Plugins:**  Enhance your Zsh environment with plugins for features like auto-completion, syntax highlighting, and Git integration. Popular plugins include `git`, `zsh-autosuggestions`, and `zsh-syntax-highlighting`.
+
+By following these best practices, you can write Zsh scripts that are clear, maintainable, performant, and secure.

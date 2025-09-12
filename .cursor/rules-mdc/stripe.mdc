@@ -1,0 +1,196 @@
+---
+description: This rule provides comprehensive guidelines for integrating the Stripe library into your projects, covering security, performance, testing, and best practices to ensure robust and reliable payment processing.
+globs: **/*.js, **/*.jsx, **/*.ts, **/*.tsx, **/pages/api/**/*.js, **/pages/api/**/*.ts
+---
+# Stripe Integration Best Practices
+
+This document outlines best practices for integrating the Stripe library into your applications. Following these guidelines will help ensure secure, reliable, and efficient payment processing.
+
+## 1. Code Organization and Structure
+
+*   **Dedicated Stripe Module/Service:** Encapsulate all Stripe-related logic within a dedicated module or service. This improves code maintainability, testability, and reduces the risk of exposing sensitive information.
+
+    javascript
+    // Example: stripeService.js
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+    async function createCustomer(email, metadata) {
+      try {
+        const customer = await stripe.customers.create({ email, metadata });
+        return customer;
+      } catch (error) {
+        console.error('Error creating Stripe customer:', error);
+        throw error; // Re-throw for handling in calling function
+      }
+    }
+
+    module.exports = { createCustomer };
+
+
+*   **Configuration Management:** Store your Stripe API keys and other configuration settings in environment variables.  Never hardcode API keys directly in your source code.
+
+    bash
+    # .env.local (Next.js)
+    STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxxxxxx
+    STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxx
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxxxxxx
+
+
+*   **Asynchronous Operations:**  Utilize `async/await` or Promises for all Stripe API calls to avoid blocking the main thread and ensure a responsive application.
+
+*   **Consistent Error Handling:** Implement a consistent error-handling strategy across your Stripe integration. Use `try...catch` blocks to gracefully handle errors and provide informative error messages to users or log errors for debugging.
+
+*   **API Versioning**: Pin your Stripe API version to a specific version (e.g., `stripe.api_version = '2023-10-16'`). This ensures predictable behavior and avoids unexpected breaking changes when Stripe releases new API versions. Review Stripe's changelog regularly for updates and potential migration needs.
+
+## 2. Common Patterns and Anti-patterns
+
+*   **Pattern: Single `syncStripeDataToKV` Function:**  Implement a single, well-defined function (e.g., `syncStripeDataToKV(customerId)`) to synchronize Stripe data with your application's database or KV store. This prevents data inconsistencies and race conditions.
+
+*   **Pattern: Webhooks for Real-time Updates:** Use Stripe webhooks to receive real-time updates about events such as successful payments, failed transactions, and subscription changes.  Webhooks are crucial for keeping your application's data synchronized with Stripe's data.
+
+*   **Pattern:  Idempotency Keys:** Use idempotency keys when making API calls to prevent accidental duplicate charges in case of network errors or retries.  Stripe uses the idempotency key to recognize that you've already made this call and prevents it from being processed again.
+
+*   **Anti-pattern:  Direct Client-Side API Calls with Secret Key:**  Never expose your Stripe secret key directly to the client-side code. This is a major security vulnerability that could allow malicious users to compromise your Stripe account.
+
+*   **Anti-pattern:  Relying Solely on Client-Side Validation:**  Always perform server-side validation of data received from the client before making Stripe API calls. Client-side validation can be bypassed.
+
+*   **Anti-pattern:  Ignoring Webhook Verification:**  Failing to verify the authenticity of Stripe webhooks can lead to security vulnerabilities. Always verify the webhook signature to ensure that the event originated from Stripe.
+
+## 3. Performance Considerations
+
+*   **Optimize API Calls:** Minimize the number of API calls to Stripe. Batch operations when possible to reduce latency.
+
+*   **Caching:** Cache frequently accessed data from Stripe (e.g., product information, customer details) to reduce API calls.  Invalidate the cache when data changes.
+
+*   **Use Webhook Events Efficiently:**  Process webhook events asynchronously to avoid blocking the request thread. Use a message queue or background processing system for handling webhook events.
+
+*   **Efficient Data Synchronization:**  When synchronizing data between Stripe and your application, only update the fields that have changed to minimize database write operations.
+
+*   **Minimize Data Transfer:** When retrieving data from Stripe, use the `expand` parameter to retrieve related objects in a single API call instead of making multiple calls.  However, be mindful of the size of the response and only expand the necessary fields.
+
+## 4. Security Best Practices
+
+*   **HTTPS:**  Always use HTTPS to encrypt communication between your server and Stripe's servers.
+
+*   **Tokenization:** Use Stripe's tokenization feature to securely collect payment information without storing sensitive data on your servers.  Stripe Elements and Stripe.js handle tokenization automatically.
+
+*   **PCI DSS Compliance:** Understand and comply with PCI DSS standards if you are handling any cardholder data. Stripe helps simplify PCI compliance by handling the sensitive payment information directly.
+
+*   **Two-Factor Authentication (2FA):** Enable two-factor authentication on your Stripe account to protect against unauthorized access.
+
+*   **Regular Security Audits:** Conduct regular security audits of your Stripe integration to identify and address potential vulnerabilities.
+
+*   **Webhook Verification:** Always verify the signatures of webhooks you receive from Stripe to ensure they are legitimate. Use the Stripe CLI to test webhook endpoints and signatures locally.
+
+    javascript
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    exports.handler = async (event, context) => {
+      const sig = event.headers['stripe-signature'];
+
+      let stripeEvent;
+
+      try {
+        stripeEvent = stripe.webhooks.constructEvent(event.body, sig, endpointSecret);
+      } catch (err) {
+        console.error(`Webhook signature verification failed: ${err.message}`);
+        return {
+          statusCode: 400,
+          body: `Webhook Error: ${err.message}`,
+        };
+      }
+
+      // Handle the event
+      switch (stripeEvent.type) {
+        case 'payment_intent.succeeded':
+          const paymentIntent = stripeEvent.data.object;
+          console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+          // Then define and call a method to handle the successful payment intent.
+          // handlePaymentIntentSucceeded(paymentIntent);
+          break;
+        case 'payment_method.attached':
+          const paymentMethod = stripeEvent.data.object;
+          // Then define and call a method to handle the successful attachment of a PaymentMethod.
+          // handlePaymentMethodAttached(paymentMethod);
+          break;
+        default:
+          // Unexpected event type
+          console.log(`Unhandled event type ${stripeEvent.type}.`);
+      }
+
+      // Return a 200 response to acknowledge receipt of the event
+      return {
+        statusCode: 200,
+        body: JSON.stringify({received: true}),
+      };
+    };
+
+
+*   **Rate Limiting:** Implement rate limiting on your API endpoints that interact with Stripe to prevent abuse and protect against denial-of-service attacks.
+
+*   **Principle of Least Privilege:** Grant only the necessary permissions to your Stripe API keys and service accounts.  Avoid using the master API key for all operations. Create restricted keys for specific tasks.
+
+*   **Monitor Stripe Account Activity:** Regularly monitor your Stripe account activity for suspicious or unauthorized transactions.
+
+*   **Secure Electronic Presentment (SEP):** Implement best practices for secure electronic presentment for payment, including end-to-end encryption, dynamic data encryption keys, a dedicated secure server, and multi-factor authentication. Comply with PCI DSS standards, use payment gateways with fraud detection, and automate backups.
+
+*   **Data Encryption:** Encrypt sensitive data stored on your servers to prevent unauthorized access. This includes customer data and any other information that could be used to compromise your Stripe account.
+
+*   **Firewall Protection:** Install a firewall to monitor and block any suspicious activity on your network.
+
+*   **Employee Training:** Train your employees on security best practices to prevent data breaches.
+
+## 5. Testing Approaches
+
+*   **Unit Tests:** Write unit tests to validate individual components of your Stripe integration, such as functions for creating customers, processing payments, and handling webhooks.
+
+*   **Integration Tests:** Conduct integration tests to ensure that all components of your application interact correctly with the Stripe API. Simulate various scenarios, such as successful payments, failed transactions, and network errors.
+
+*   **End-to-End Tests:** Implement end-to-end tests to verify the entire payment flow, from the user interface to the backend processing and data synchronization.
+
+*   **Mocking:** Mock the Stripe API responses during testing to simulate different scenarios without impacting the live environment. Use mock data to test edge cases and error conditions effectively.
+
+*   **Stripe Test Mode:** Use Stripe's test mode to test your integration without processing real payments.  Use the test card numbers and other test data provided by Stripe.
+
+*   **Webhook Testing:**  Use the Stripe CLI to simulate webhook events and test your webhook handlers.
+
+*   **Regression Testing:**  Perform regression testing after making changes to your Stripe integration to ensure that existing functionality is not broken.
+
+*   **A/B Testing**: A/B test different layouts and styles of the Payment Element to optimize conversion rates.
+
+## 6. Common Pitfalls and Gotchas
+
+*   **Incorrect Webhook Configuration:**  Failing to configure webhooks correctly can lead to missed events and data inconsistencies.
+
+*   **Handling Duplicate Webhook Events:**  Your application may receive duplicate webhook events.  Implement logic to handle duplicate events gracefully, such as checking if the event has already been processed before taking action.
+
+*   **Incorrect Currency Formatting:**  Ensure that you are formatting currency values correctly when making Stripe API calls.  Use the appropriate currency code and decimal format.
+
+*   **Not Handling Payment Declines:**  Implement proper error handling to handle payment declines and provide informative messages to users.
+
+*   **Failing to Update Customer Information:**  When a customer's payment information changes (e.g., new card, updated address), update the customer information in your Stripe account.
+
+*   **Ignoring Stripe API Rate Limits:**  Be aware of Stripe's API rate limits and implement retry logic to handle rate-limited requests.
+
+*   **Not Testing Edge Cases:**  Thoroughly test your Stripe integration with various edge cases, such as invalid card numbers, expired cards, and insufficient funds.
+
+*   **Using Outdated API Versions:**  Keep your Stripe API library up-to-date to benefit from the latest features, security patches, and performance improvements.
+
+## 7. Tooling and Environment
+
+*   **Stripe CLI:**  Use the Stripe CLI for tasks such as creating webhooks, testing webhook endpoints, and retrieving data from your Stripe account.
+
+*   **Stripe Dashboard:**  Use the Stripe Dashboard to monitor your account activity, view transactions, and manage customers and subscriptions.
+
+*   **Stripe API Libraries:**  Use the official Stripe API libraries for your programming language to simplify integration and ensure compatibility.
+
+*   **Environment Variables:**  Use environment variables to store your Stripe API keys and other configuration settings.  Use different environment variables for development, testing, and production environments.
+
+*   **Logging:**  Implement comprehensive logging to track API calls, errors, and other relevant events.  Use a logging framework to manage your logs and facilitate debugging.
+
+*   **Monitoring:**  Implement monitoring to track the performance and availability of your Stripe integration.  Use a monitoring tool to alert you to any issues.
+
+*   **Stripe VS Code Extension:** Consider using the Stripe VS Code Extension for autocompletion, error highlighting and more.
+
+By following these best practices, you can build a secure, reliable, and efficient Stripe integration that provides a seamless payment experience for your users.

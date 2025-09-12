@@ -33,6 +33,8 @@ dependencies = [
     "dbt-duckdb[md]>=1.9.6",
     "dbt-metricflow[dbt-duckdb]==0.8.2",
     "faker>=37.6.0",
+    "library>=3.0.121",
+    "matplotlib>=3.10.6",
 ]
 
 [project.urls]

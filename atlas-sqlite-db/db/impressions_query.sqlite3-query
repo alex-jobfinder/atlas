@@ -1,0 +1,7 @@
+-- database: ./ads.db
+
+SELECT hour_unix_epoch, hour_ts, impressions
+FROM campaign_performance w
+WHERE campaign_id = 1
+  AND hour_unix_epoch BETWEEN strftime('%s', 'now', '-14 days') AND strftime('%s', 'now')
+  order by hour_unix_epoch asc;

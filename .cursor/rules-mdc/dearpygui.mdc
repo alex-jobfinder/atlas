@@ -1,0 +1,165 @@
+---
+description: This rule outlines best practices for developing applications with the dearpygui library. It provides guidance on code organization, performance, security, testing, and common pitfalls to ensure robust and maintainable applications.
+globs: **/*.py
+---
+# Dear PyGui Best Practices
+
+This document provides a comprehensive guide to best practices for developing applications using the dearpygui library. It covers various aspects, including code organization, common patterns, performance considerations, security, testing, common pitfalls, and tooling.
+
+## 1. Code Organization and Structure
+
+- **Modular Design:**
+  - Break down your application into smaller, reusable modules or functions. This promotes code reuse, maintainability, and testability.
+  - Organize code into logical files and directories. For example, UI-related code in one module, data processing in another, etc.
+
+- **Use Classes for Complex UI Elements:**
+  - Encapsulate complex UI components into classes. This allows you to manage state, handle events, and define custom behavior more effectively.
+  - Consider inheritance to create specialized UI elements based on common base classes.
+
+- **Consistent Naming Conventions:**
+  - Follow a consistent naming convention for variables, functions, and classes. This improves code readability and reduces ambiguity.
+  - Use descriptive names that clearly indicate the purpose of the element.
+
+- **Avoid Global Variables:**
+  - Minimize the use of global variables. They can lead to unexpected side effects and make it difficult to reason about the code.
+  - If you need to share data between modules, consider using dependency injection or a dedicated data management class.
+
+- **Context Managers for Resource Management:**
+  - Leverage Dear PyGui's context managers (`with dpg.window():`, `with dpg.plot():`, etc.) to ensure proper resource allocation and deallocation.
+  - This helps prevent memory leaks and ensures that UI elements are correctly initialized and destroyed.
+
+- **Separation of Concerns (SoC):**
+  - Separate UI logic from business logic. The UI should primarily focus on displaying data and handling user input, while the business logic should handle data processing, validation, and persistence.
+  - This makes the code more modular, testable, and easier to maintain.
+
+## 2. Common Patterns and Anti-patterns
+
+- **Observer Pattern for Event Handling:**
+  - Use the observer pattern to decouple UI elements from event handlers. This allows you to easily add or remove event listeners without modifying the UI code.
+  - Dear PyGui's callback system naturally supports this pattern.
+
+- **Model-View-Controller (MVC) or Model-View-ViewModel (MVVM):**
+  - Consider using MVC or MVVM architectural patterns for larger applications. These patterns help to separate concerns and improve code organization.
+  - The model represents the data, the view represents the UI, and the controller/viewmodel acts as an intermediary between the model and the view.
+
+- **Data Binding:**
+  - Utilize Dear PyGui's data binding capabilities to automatically update UI elements when the underlying data changes. This reduces the amount of boilerplate code and improves the responsiveness of the UI.
+  - Use `dpg.set_value()` and `dpg.get_value()` to manage the data flow.
+
+- **Anti-pattern: Deeply Nested Callbacks:**
+  - Avoid deeply nested callbacks, as they can make the code difficult to read and debug.
+  - Refactor complex callbacks into smaller, more manageable functions.
+
+- **Anti-pattern: Hardcoding UI Parameters:**
+  - Avoid hardcoding UI parameters such as colors, fonts, and sizes directly in the code.
+  - Use themes or configuration files to manage UI parameters. This makes it easier to customize the UI and maintain a consistent look and feel.
+
+- **Anti-pattern: Excessive Global State:**
+  - Avoid relying heavily on global state. Instead, pass data explicitly between functions or classes.
+  - Global state can lead to unexpected side effects and make it difficult to reason about the code.
+
+## 3. Performance Considerations
+
+- **GPU-Based Rendering:**
+  - Dear PyGui leverages GPU-based rendering for efficient performance. Be mindful of the number of UI elements and the complexity of the drawing operations, as they can impact performance.
+
+- **Asynchronous Operations:**
+  - Use asynchronous operations for long-running tasks to prevent the UI from freezing. Dear PyGui supports asynchronous function calls.
+  - Use `dpg.add_thread_queue` to queue tasks for execution on a separate thread.
+
+- **Minimize UI Updates:**
+  - Minimize the number of UI updates, especially for frequently changing data. Batch updates together whenever possible.
+  - Consider using techniques like double buffering to prevent flickering.
+
+- **Efficient Data Structures:**
+  - Use efficient data structures for storing and processing data. For example, use NumPy arrays for numerical data and dictionaries for key-value pairs.
+
+- **Profiling:**
+  - Use profiling tools to identify performance bottlenecks in your code. Dear PyGui provides built-in runtime metrics.
+  - Use the `dpg.show_metrics()` to display performance information.
+
+- **Lazy Loading:**
+  - Load resources (e.g., images, fonts) only when they are needed. This can improve the startup time of the application.
+
+## 4. Security Best Practices
+
+- **Input Validation:**
+  - Always validate user input to prevent injection attacks and other security vulnerabilities. Use `dpg.add_input_text()` with appropriate validation callbacks.
+  - Sanitize input data before using it in any operations.
+
+- **Secure Data Storage:**
+  - Use secure methods for storing sensitive data, such as passwords and API keys. Avoid storing sensitive data in plain text.
+  - Consider using encryption or a secure key management system.
+
+- **Permissions and Access Control:**
+  - Implement proper permissions and access control mechanisms to restrict access to sensitive resources. Only grant users the minimum necessary permissions.
+
+- **Dependency Management:**
+  - Keep your dependencies up to date to patch security vulnerabilities. Use a dependency management tool like `pip` or `poetry` to manage your dependencies.
+
+- **Code Reviews:**
+  - Conduct regular code reviews to identify potential security vulnerabilities. Have multiple developers review the code to ensure that it meets security standards.
+
+## 5. Testing Approaches
+
+- **Unit Testing:**
+  - Write unit tests for individual modules and functions. This helps to ensure that the code behaves as expected and that changes do not introduce regressions.
+  - Use a testing framework like `pytest` or `unittest`.
+
+- **Integration Testing:**
+  - Write integration tests to verify that the different modules of the application work together correctly. This helps to identify issues that may not be apparent in unit tests.
+
+- **UI Testing:**
+  - Use UI testing tools to automate testing of the user interface. This helps to ensure that the UI is responsive and that the user experience is consistent.
+  - Consider using tools like `pywinauto` or `uiautomator` for UI testing.
+
+- **Test-Driven Development (TDD):**
+  - Consider using TDD, where you write the tests before writing the code. This helps to ensure that the code is testable and that it meets the requirements.
+
+- **Mocking and Stubbing:**
+  - Use mocking and stubbing to isolate units of code during testing. This allows you to test the code in isolation without relying on external dependencies.
+
+## 6. Common Pitfalls and Gotchas
+
+- **Tag Uniqueness:**
+  - Ensure that all item tags are unique within the Dear PyGui context. Duplicate tags can lead to unexpected behavior.
+
+- **Callback Scope:**
+  - Be aware of the scope of variables in callbacks. Use `lambda` functions or `functools.partial` to pass additional arguments to callbacks.
+
+- **Viewport and Context Management:**
+  - Properly create and destroy the Dear PyGui context and viewport. Failure to do so can lead to memory leaks or crashes.
+
+- **Thread Safety:**
+  - Be mindful of thread safety when using Dear PyGui in multithreaded applications. Use appropriate locking mechanisms to prevent race conditions.
+
+- **Widget Visibility:**
+  - Ensure that widgets are visible before attempting to interact with them. Use `dpg.show_item()` to make widgets visible.
+
+- **Font Handling:**
+  - Ensure that fonts are loaded correctly and that the correct font is selected for each UI element. Incorrect font handling can lead to display issues.
+
+## 7. Tooling and Environment
+
+- **Python Version:**
+  - Use Python 3.8 (64bit) or later.
+
+- **Package Manager:**
+  - Use `pip` or `poetry` to manage your dependencies.
+
+- **Virtual Environments:**
+  - Use virtual environments to isolate your project dependencies and prevent conflicts with other projects. Use `venv` or `conda` to create virtual environments.
+
+- **IDE:**
+  - Use an IDE such as VS Code, PyCharm, or Spyder to improve your development experience. These IDEs provide features such as code completion, debugging, and refactoring.
+
+- **Linters and Code Formatters:**
+  - Use linters like `pylint` or `flake8` to enforce coding standards and identify potential errors. Use code formatters like `black` or `autopep8` to automatically format your code.
+
+- **Debuggers:**
+  - Utilize debuggers to step through your code and identify the source of errors. Dear PyGui provides a built-in debugger.
+
+- **Dear PyGui Inspector:**
+  - Use Dear PyGui's built-in developer tools, including theme and resource inspection, and a debugger.
+
+By following these best practices, you can develop robust, maintainable, and performant applications using the dearpygui library. Remember to adapt these guidelines to your specific project requirements and coding style.

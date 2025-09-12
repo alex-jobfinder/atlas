@@ -1,0 +1,131 @@
+---
+description: This rule provides comprehensive guidelines for Vimscript development, covering code organization, performance, security, and testing. It aims to promote maintainable, efficient, and secure Vim configurations and plugins.
+globs: **/*.vim,**/*.vimrc,**/plugin/*.vim,**/ftplugin/*.vim,**/autoload/*.vim
+---
+# Vimscript Best Practices and Coding Standards
+
+This document outlines best practices and coding standards for Vimscript development, aiming to create maintainable, efficient, and secure Vim configurations and plugins.
+
+## 1. Code Organization and Structure
+
+*   **Modular Plugins:** Organize functionality into modular plugins, grouped within a directory (or code repository) sharing the plugin's name (e.g., `vim-plugin-name` or `plugin-name.vim`).
+*   **Directory Structure:**  Use the standard Vim plugin directory structure:
+    *   `plugin/`:  General commands and global scripts.
+    *   `ftplugin/`: Filetype-specific settings and commands (e.g., `ftplugin/python.vim`). Create subdirectories for specific filetypes (e.g., `ftplugin/python/`).
+    *   `autoload/`: Functions loaded on demand.  This is crucial for performance.
+    *   `doc/`: Documentation in Vim's help format (`.txt`).
+    *   `syntax/`: Syntax highlighting files.
+    *   `compiler/`: Compiler definitions.
+    *   `indent/`: Indentation rules.
+    *   `keymap/`: Key mappings specific to your plugin.
+*   **Addon Info:** Declare plugin metadata in `addon-info.json` (see `:help addon-info.json`).
+*   **Namespacing:** Use a consistent naming convention to avoid conflicts.  Prefix functions and commands with your plugin's name or a unique abbreviation.
+
+## 2. Common Patterns and Anti-patterns
+
+*   **Autoloading:** Use autoloading for functions in the `autoload/` directory. This improves Vim's startup time by loading functions only when they're first called.
+*   **Function Definition:** Define autoloaded functions with `[!]` and `[abort]`:
+    vim
+    function! s:MyFunction(arg1, arg2) abort
+      " Function implementation
+    endfunction
+
+    *   `[!]:` Allows reloading functions without errors during development.
+    *   `[abort]:` Halts function execution immediately upon encountering an error.
+*   **Command Definition:** Define commands in `plugin/commands.vim` or `ftplugin/` without `[!]:`
+    vim
+    command! MyCommand call s:MyFunction()
+
+    Omitting `[! ]` prevents silently overwriting existing commands, forcing users to resolve conflicts.
+*   **Autocommands:** Place autocommands within augroups in `plugin/autocmds.vim`:
+    vim
+    augroup MyPlugin
+      autocmd!
+      autocmd BufEnter * call s:MyFunction()
+    augroup END
+
+    *   `autocmd!`: Clears existing autocommands within the augroup before defining new ones, making your plugin re-entrant.
+    *   Use meaningful augroup names, prefixed with the plugin name.
+*   **Mappings:** Place key mappings in `plugin/mappings.vim`. Use `noremap` family of commands (`noremap`, `nnoremap`, `vnoremap`, `inoremap`, `cnoremap`).  Avoid `map`, as it respects user mappings and can lead to unexpected behavior.
+    vim
+    nnoremap <leader>m :call s:MyFunction()<CR>
+
+    *   Consider using `<Plug>` mappings for advanced keybindings.
+*   **Anti-pattern:** Avoid using `normal` command.  Always use `normal!` to prevent unexpected behavior due to user mappings.
+*   **Anti-pattern:** Avoid using `:s[ubstitute]` directly in scripts.  It moves the cursor and prints error messages.  Use functions like `search()` and `substitute()` instead.
+
+## 3. Performance Considerations
+
+*   **Autoloading:** As mentioned above, use autoloading extensively to reduce startup time.
+*   **Minimize Global Variables:**  Excessive use of global variables can impact performance. Use script-local (`s:`) variables whenever possible.
+*   **Efficient Regular Expressions:** Optimize regular expressions.  Use the appropriate magic level (`\v`, `\m`, `\M`, `\V`).  Avoid unnecessary backreferences.
+*   **Avoid `execute` command:** Using `execute` command can be slow. Use it carefully and only when necessary.
+*   **String Concatenation:**  Prefer using `join()` for concatenating lists of strings instead of repeated `.=` operations.
+*   **Conditional Logic:**  Optimize conditional logic.  Use `elseif` instead of nested `if` statements when appropriate.
+*   **Benchmarking:** Use profiling tools (e.g., `:profile`) to identify performance bottlenecks in your code.
+
+## 4. Security Best Practices
+
+*   **Input Validation:**  Validate user input to prevent injection vulnerabilities.  Sanitize data before using it in commands or functions.
+*   **External Commands:**  Be extremely cautious when executing external commands using `system()` or `!` .  Avoid passing user-supplied data directly to these commands. Use `shellescape()` to sanitize user input.
+*   **File Permissions:**  Avoid modifying file permissions unnecessarily.
+*   **Secure Temporary Files:**  When creating temporary files, use secure methods to prevent unauthorized access.
+*   **Disable potentially dangerous options:** Consider disabling potentially dangerous options like `modeline` if not needed.
+*   **Avoid `source!`:** Never use `source!` to load external files, especially if those files are not under your control.
+
+## 5. Testing Approaches
+
+*   **Unit Testing:** Write unit tests for your functions and commands.  Use a testing framework like vspec or vim-test.
+*   **Integration Testing:** Test how your plugin interacts with other plugins and Vim features.
+*   **Test-Driven Development (TDD):** Consider using TDD to write tests before implementing your code.
+*   **Continuous Integration (CI):** Integrate your tests into a CI pipeline to ensure that your code remains functional as you make changes.
+*   **Mocking:** Utilize mocking to isolate the unit under test.
+
+## 6. Common Pitfalls and Gotchas
+
+*   **Variable Scoping:** Understand variable scoping rules in Vimscript.  Use appropriate scope prefixes (`g:`, `s:`, `l:`, `a:`).
+*   **String Comparison:**  Be aware of case sensitivity when comparing strings.  Use `=~#` or `=~?` for case-insensitive comparisons.
+*   **Regular Expression Magic:**  Remember to escape special characters in regular expressions.  Use the appropriate magic level (`\v`, `\m`, `\M`, `\V`).
+*   **Error Handling:**  Implement proper error handling using `try...catch...finally` blocks.
+*   **Integer vs. String Comparison:** Be careful when comparing integers and strings, as Vimscript can produce unexpected results (e.g., `0 == 'foo'` evaluates to `true`). Use strict comparison operators where possible.
+*   **Side Effects:** Be mindful of side effects when writing functions and commands.  Avoid modifying global state unnecessarily.
+*   **Global Settings:** Avoid changing global settings with `:set` unless absolutely necessary. Use `:setlocal` instead to modify settings for the current buffer or window.
+
+## 7. Tooling and Environment
+
+*   **Vim Version:** Use a recent version of Vim or Neovim to take advantage of the latest features and bug fixes.
+*   **Plugin Manager:** Use a plugin manager like vim-plug, Vundle, or Pathogen to manage your plugins.
+*   **Linter:** Use a linter like Vint to check your code for style violations and potential errors.
+*   **Debugger:** Use a debugger like vimspector to debug your Vimscript code.
+*   **Language Server Protocol (LSP):** Consider using a Language Server Protocol (LSP) client like coc.nvim or vim-lsp for advanced code completion, diagnostics, and other features.
+*   **Syntax Highlighting:** Use a syntax highlighting plugin to improve code readability.
+*   **Color Scheme:** Choose a color scheme that you find visually appealing and easy to read.
+*   **Terminal Emulator:** Use a modern terminal emulator that supports true color and other advanced features.
+*   **EditorConfig:** Use EditorConfig to maintain consistent coding styles across different editors and IDEs.
+
+## 8. Style Guide
+
+*   **Google Vimscript Style Guide:** Follow the Google Vimscript Style Guide (https://google.github.io/styleguide/vimscriptguide.xml) for consistent code formatting and style.
+*   **Whitespace:**
+    *   Use two spaces for indents.
+    *   Do not use tabs.
+    *   Use spaces around operators.
+    *   Do not introduce trailing whitespace.
+*   **Line Length:** Restrict lines to 80 columns wide.
+*   **Naming:** Use consistent naming conventions:
+    *   `plugin-names-like-this`
+    *   `FunctionNamesLikeThis`
+    *   `CommandNamesLikeThis`
+    *   `augroup_names_like_this`
+    *   `variable_names`
+*   **Comments:** Use meaningful comments to explain your code.
+*   **Commit Emoji Convention:** Use commit emojis to indicate the type of change:
+    *   `:memo:` Add comment or doc.
+    *   `:gift:` New feature.
+    *   `:bug:` Bug fix.
+    *   `:bomb:` Breaking compatibility.
+    *   `:white_check_mark:` Write test.
+    *   `:fire:` Remove something.
+    *   `:beer:` I’m happy like reduced code complexity.
+
+By following these best practices and coding standards, you can create Vimscript code that is maintainable, efficient, secure, and enjoyable to work with.

@@ -13,6 +13,8 @@ target
 !dbt_ads_project/target/semantic_manifest.json
 # git add -f dbt_ads_project/target/semantic_manifest.json
 generate_ads_data/ads.db
+atlas-sqlite-db/db/ads.db
+z_GUI/ads.db
 
 # Ivy caches
 .bsp

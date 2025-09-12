@@ -1,0 +1,214 @@
+---
+description: This rule file provides comprehensive best practices, coding standards, and performance considerations for developing Three.js applications. It covers code organization, common patterns, security, testing, and tooling to ensure efficient and maintainable 3D web experiences.
+globs: **/*.{js,ts,jsx,tsx,vue,svelte}
+---
+# Three.js Best Practices and Coding Standards
+
+This document outlines best practices and coding standards for developing Three.js applications, ensuring code quality, performance, and maintainability.
+
+## Library Information:
+
+- Name: three.js
+- Tags: 3d, graphics, webgl, javascript
+
+## 1. Code Organization and Structure
+
+### 1.1 Project Structure
+
+- **Modular Design:** Break down your application into reusable components.  Each component should encapsulate a specific functionality (e.g., a scene, a model loader, a control system).
+- **Directory Structure:** Organize your project with a clear directory structure:
+
+  /src
+    /components        # Reusable Three.js components
+      /scene           # Scene setup and management
+        scene.js
+        scene.test.js
+      /modelLoader     # Model loading and processing
+        modelLoader.js
+        modelLoader.test.js
+      /controls        # Camera controls and interactions
+        controls.js
+        controls.test.js
+    /shaders           # Custom shaders (GLSL)
+      basic.vert
+      basic.frag
+    /models            # 3D model assets
+      model.gltf
+    /textures          # Texture assets
+      texture.png
+    /utils             # Utility functions
+      utils.js
+    /app.js            # Main application entry point
+  /dist              # Production build output
+  /node_modules      # Dependencies
+  /.cursor           # Cursor AI project rules
+  /tests             # Unit and integration tests
+
+- **Separation of Concerns:**  Clearly separate concerns like scene setup, model loading, animation logic, and user interactions into distinct modules.
+
+### 1.2 Naming Conventions
+
+- **Consistent Naming:** Use descriptive and consistent names for variables, functions, and classes.
+- **Camel Case:**  Employ camelCase for JavaScript variables and functions (e.g., `sceneWidth`, `loadModel`).
+- **Pascal Case:** Use PascalCase for class names (e.g., `OrbitControls`, `CustomShaderMaterial`).
+- **File Names:** Use lowercase with hyphens (kebab-case) for file names (e.g., `scene-manager.js`, `orbit-controls.js`).
+- **GLSL Shaders:** Use descriptive names for shader files (e.g., `basic.vert`, `complex_effect.frag`).
+
+### 1.3 Code Style
+
+- **Linting:** Use a linter (e.g., ESLint with Airbnb or Standard config) to enforce code style and catch potential errors. Configure linting rules specific for Three.js projects.
+- **Formatting:** Use a code formatter (e.g., Prettier) to automatically format your code for consistency.
+- **Comments:** Add clear and concise comments to explain complex logic or non-obvious code sections.  Use JSDoc-style comments for documenting functions and classes.
+- **Avoid Global Variables:** Minimize the use of global variables to prevent naming conflicts and improve code maintainability. Use modules and closures to encapsulate variables.
+- **Strict Mode:** Always include `"use strict";` at the beginning of your JavaScript files to enforce stricter parsing and error handling.
+
+## 2. Common Patterns and Anti-patterns
+
+### 2.1 Common Patterns
+
+- **Singleton Pattern:** Use the singleton pattern for managing global resources like the renderer or scene manager.
+- **Factory Pattern:** Employ the factory pattern to create complex objects like geometries or materials, allowing for easier configuration and reuse.
+- **Observer Pattern:** Implement the observer pattern to handle events and notifications between different parts of your application (e.g., notifying components when a model has loaded).
+- **Composition over Inheritance:** Prefer composition over inheritance for creating complex objects. This allows for greater flexibility and avoids the problems associated with deep inheritance hierarchies.
+- **Resource Management:** Implement proper resource management (disposing of geometries, materials, and textures) to prevent memory leaks.
+
+### 2.2 Anti-patterns
+
+- **Creating Objects in Render Loop:** Avoid creating new objects (e.g., `Vector3`, `Color`, `Matrix4`) inside the render loop, as this can lead to performance issues.  Reuse existing objects or create them outside the loop.
+- **Modifying Geometry Directly:** Avoid directly modifying the `vertices` array of a `Geometry` object.  Instead, use `BufferGeometry` and update the underlying buffers.
+- **Ignoring Performance Metrics:** Neglecting to monitor performance metrics (e.g., using `Stats.js`) can lead to undetected performance bottlenecks.
+- **Overusing Global Scope:** Placing too much code in the global scope can lead to naming conflicts and make the code harder to maintain.
+- **Not Disposing of Resources:** Failing to dispose of geometries, materials, and textures when they are no longer needed can cause memory leaks.
+- **Directly Manipulating the DOM in Render Loop:**  Avoid directly manipulating the DOM elements within the render loop, as this can cause performance issues.  Delegate DOM updates outside the render loop.
+
+## 3. Performance Considerations
+
+### 3.1 Rendering Optimization
+
+- **Minimize Draw Calls:** Reduce the number of draw calls by merging geometries, using instancing, or employing techniques like frustum culling.
+- **Use Instancing:** When rendering multiple instances of the same object, use `InstancedMesh` to significantly improve performance.
+- **Frustum Culling:** Implement frustum culling to prevent rendering objects that are outside the camera's view.
+- **Level of Detail (LOD):** Use LOD to render simplified versions of objects that are far away from the camera.
+- **Optimize Shaders:** Optimize your shaders by reducing the complexity of calculations and minimizing the number of texture lookups.
+- **Shadow Optimization:**  Use shadow maps sparingly and optimize shadow settings (e.g., shadow map size, bias) to balance quality and performance. Consider using baked lighting or precomputed lightmaps for static scenes.
+- **WebGLRenderer Parameters:** Configure the `WebGLRenderer` with appropriate parameters (e.g., `antialias`, `precision`) based on the target device and desired quality.
+
+### 3.2 Texture Optimization
+
+- **Texture Compression:** Use compressed textures (e.g., DDS, PVRTC, ETC) to reduce the memory footprint and improve loading times.
+- **Power of Two Textures:** Use textures with dimensions that are powers of two (e.g., 256x256, 512x512) for optimal performance across various GPUs.
+- **Mipmapping:**  Enable mipmapping for textures to improve rendering quality and reduce aliasing, especially for objects viewed at a distance.
+- **Texture Filtering:** Choose appropriate texture filtering modes (e.g., `LinearFilter`, `NearestFilter`) based on the desired visual quality and performance.
+- **Texture Size:**  Use the smallest texture size that meets your visual requirements.  Avoid using unnecessarily large textures.
+
+### 3.3 Geometry Optimization
+
+- **BufferGeometry:** Always use `BufferGeometry` instead of `Geometry` for better memory efficiency and performance.
+- **Geometry Compression:** Use Draco compression to reduce the size of your 3D models, improving loading times and reducing memory usage.
+- **Remove Unused Vertices:**  Remove any unused or duplicate vertices from your geometries to reduce the memory footprint.
+- **Optimize Vertex Attributes:**  Minimize the number of vertex attributes (e.g., position, normal, UV coordinates) to reduce memory usage and improve rendering performance.
+
+### 3.4 Animation Optimization
+
+- **RequestAnimationFrame:** Use `requestAnimationFrame` for smooth and efficient animation updates.
+- **Avoid Complex Calculations:**  Minimize complex calculations inside the animation loop to maintain a high frame rate.
+- **Optimize Skinning:** If using skinned meshes, optimize the skinning weights and matrices to reduce the computational overhead.
+- **Use Animation Groups:** Use animation groups to efficiently control and synchronize multiple animations.
+
+### 3.5 Memory Management
+
+- **Dispose of Resources:** Properly dispose of geometries, materials, textures, and render targets when they are no longer needed to prevent memory leaks. Use the `.dispose()` method.
+- **Garbage Collection:** Be mindful of JavaScript's garbage collection and avoid creating unnecessary objects that can trigger frequent garbage collection cycles.
+- **Use Texture Compression:** Using compressed textures will minimize the GPU memory usage.
+
+### 3.6 General Tips
+
+- **Profiling:** Use browser profiling tools (e.g., Chrome DevTools) to identify and address performance bottlenecks.
+- **Stats.js:** Integrate Stats.js to monitor your render loop's performance in real-time.
+- **Adaptive Performance:** Implement adaptive performance techniques to adjust the rendering quality based on the device capabilities and network conditions.
+
+## 4. Security Best Practices
+
+### 4.1 Cross-Origin Resource Sharing (CORS)
+
+- **CORS Configuration:** Configure your server to properly handle CORS requests, especially when loading textures or models from different domains.
+- **Avoid eval():** Never use `eval()` to execute code from untrusted sources, as this can introduce security vulnerabilities.
+
+### 4.2 Input Sanitization
+
+- **Sanitize User Input:** Sanitize any user input before using it in your Three.js application to prevent cross-site scripting (XSS) attacks.
+- **Validate URLs:** Validate URLs before loading textures or models to prevent malicious URLs from being used.
+
+### 4.3 Untrusted Content
+
+- **Care with 3D Model Sources:** Be cautious when using 3D models from untrusted sources, as they may contain malicious code or exploits.  Scan the model files for any suspicious code.
+- **Secure Asset Delivery:** Ensure that your assets (models, textures, shaders) are delivered over HTTPS to prevent man-in-the-middle attacks.
+
+## 5. Testing Approaches
+
+### 5.1 Unit Testing
+
+- **Test Components:** Write unit tests for your Three.js components to ensure they function correctly in isolation.
+- **Mock Dependencies:** Mock external dependencies (e.g., Three.js classes) to isolate the component being tested.
+- **Test Framework:** Use a JavaScript testing framework (e.g., Jest, Mocha, Jasmine) to write and run your unit tests.
+
+### 5.2 Integration Testing
+
+- **Test Interactions:** Write integration tests to verify the interactions between different Three.js components.
+- **Simulate User Actions:** Simulate user actions (e.g., mouse clicks, keyboard input) to test the application's behavior.
+
+### 5.3 End-to-End Testing
+
+- **Browser Automation:** Use a browser automation tool (e.g., Selenium, Puppeteer) to perform end-to-end tests of your Three.js application.
+- **Test User Flows:** Test common user flows to ensure that the application functions correctly in a real-world environment.
+
+### 5.4 Visual Regression Testing
+
+- **Capture Screenshots:** Capture screenshots of your Three.js application at different stages of testing.
+- **Compare Images:** Use a visual regression testing tool to compare the screenshots and detect any visual changes or regressions.
+
+## 6. Common Pitfalls and Gotchas
+
+- **Z-Fighting:**  Objects at the same exact same position cause flickering (Z-fighting). Try offsetting things by a tiny amount like 0.001 to make things look like they are in the same position while keeping your GPU happy.
+- **Incorrect Camera Setup:**  Ensure that your camera is properly positioned and oriented in the scene.  Check the `fov`, `aspect`, `near`, and `far` properties.
+- **Lighting Issues:**  If objects are not visible, check that you have added lights to the scene and that they are properly positioned and configured.
+- **Material Properties:**  Pay attention to the material properties (e.g., `color`, `emissive`, `roughness`, `metalness`) to achieve the desired visual appearance.
+- **Texture Loading Errors:**  Check the browser console for errors related to texture loading.  Ensure that the texture files exist and are accessible.
+- **Shader Compilation Errors:**  If using custom shaders, check the browser console for shader compilation errors.  Ensure that the shader code is valid.
+- **Coordinate Systems:** Be mindful of the coordinate systems used by Three.js and other libraries or tools that you are using. Three.js uses a right-handed coordinate system.
+- **Asynchronous Loading:** Remember that loading models and textures is an asynchronous operation. Use Promises or async/await to handle the loading process correctly.
+
+## 7. Tooling and Environment
+
+### 7.1 Development Environment
+
+- **Code Editor:** Use a code editor with good support for JavaScript, GLSL, and Three.js (e.g., VS Code with the Three.js extension).
+- **Browser DevTools:** Use browser developer tools (e.g., Chrome DevTools) for debugging, profiling, and inspecting Three.js applications.
+- **Local Server:** Use a local server (e.g., `http-server`, `live-server`) for development to avoid CORS issues.
+
+### 7.2 Build Tools
+
+- **Module Bundler:** Use a module bundler (e.g., Webpack, Parcel, Rollup) to bundle your JavaScript code and manage dependencies.
+- **Task Runner:** Use a task runner (e.g., npm scripts, Gulp, Grunt) to automate common development tasks (e.g., linting, formatting, building).
+
+### 7.3 Three.js Editor and Debugging Tools
+
+- **Three.js Editor:** Use the Three.js editor for creating and editing scenes visually.
+- **Spector.js:** Use Spector.js for debugging WebGL calls and inspecting the rendering state.
+- **r3f-devtools:** If using React Three Fiber, use r3f-devtools to inspect the React Three Fiber scene graph.
+
+### 7.4 Model Optimization Tools
+
+- **Blender:** Use Blender for creating and optimizing 3D models.
+- **glTF Pipeline:** Use the glTF pipeline tools for processing and optimizing glTF models.
+- **Draco Compression:** Use Draco compression to reduce the size of your 3D models.
+- **gltfpack:** Use gltfpack for even more efficient glTF compression and optimization.
+
+## 8. Additional Resources
+
+- **Three.js Documentation:** [https://threejs.org/docs/](https://threejs.org/docs/)
+- **Three.js Examples:** [https://threejs.org/examples/](https://threejs.org/examples/)
+- **Three.js Fundamentals:** [https://threejsfundamentals.org/](https://threejsfundamentals.org/)
+- **Discover Three.js Book:** [https://discoverthreejs.com/](https://discoverthreejs.com/)
+
+By following these best practices and coding standards, you can create high-quality, performant, and maintainable Three.js applications.

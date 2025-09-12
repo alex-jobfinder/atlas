@@ -1,6 +1,4 @@
 ---
-description:
-globs: *.sql
 alwaysApply: false
 ---
 # SQL Rules

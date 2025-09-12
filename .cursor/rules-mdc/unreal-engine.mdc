@@ -1,0 +1,245 @@
+---
+description: This rule provides comprehensive coding standards, best practices, and guidelines for Unreal Engine development, covering code organization, performance, security, testing, and tooling. Adhering to these guidelines promotes code quality, maintainability, and collaboration within Unreal Engine projects.
+globs: **/*.{h,cpp,uasset,umap,ini,build.cs,uplugin}
+---
+# Unreal Engine Coding Standards and Best Practices
+
+This document outlines the coding standards, best practices, and guidelines to follow when developing projects in Unreal Engine. Adhering to these standards ensures code quality, maintainability, and collaboration across teams. This guide is based on Epic Games' official coding standards, community best practices, and practical experience.
+
+## 1. Code Organization and Structure
+
+### 1.1. File Structure
+
+*   **Source Files:** Use `.cpp` for implementation files and `.h` for header files.
+*   **Content Files:** Organize assets (models, textures, materials, Blueprints, levels) into logical folders within the `Content` directory. Follow a consistent naming convention for assets.
+*   **Configuration Files:** Store project settings, input mappings, and other configurations in `.ini` files. Use clear and descriptive names for configuration sections and keys.
+*   **Module Structure:** Structure your project into modules. Modules encapsulate related functionality, improving code organization and build times. Utilize the `*.Build.cs` files to define module dependencies and settings.
+*   **Plugin Structure:** If creating plugins, follow Unreal Engine's plugin structure, including the `*.uplugin` descriptor file, `Source` directory for code, and `Content` directory for assets.
+
+### 1.2. Class Organization
+
+*   **Class Declaration Order:** Organize class members in the following order:
+    1.  Copyright Notice
+    2.  Class Comment Block (describing the purpose of the class)
+    3.  `GENERATED_BODY()` macro (required for UObject-derived classes)
+    4.  `UPROPERTY` declarations (Public, Protected, Private, in that order)
+    5.  `UFUNCTION` declarations (Public, Protected, Private, in that order)
+    6.  Constructors and Destructor
+    7.  `BeginPlay()`, `Tick()`, `Destroyed()`, and other lifecycle functions
+    8.  Methods grouped by functionality (e.g., Input Handling, AI, Gameplay Logic)
+    9.  State-less utility methods
+    10. `defaultproperties` (deprecated, avoid new usage)
+
+*   **Naming Conventions:**
+    *   Classes derived from `UObject` are prefixed with `U` (e.g., `UMyActorComponent`).
+    *   Classes derived from `AActor` are prefixed with `A` (e.g., `AMyCharacter`).
+    *   Classes derived from `SWidget` are prefixed with `S` (e.g., `SMyUserWidget`).
+    *   Abstract interface classes are prefixed with `I` (e.g., `IMyInterface`).
+    *   Template classes are prefixed with `T` (e.g., `TArray`).
+    *   Enums are prefixed with `E` (e.g., `EGameState`).
+    *   Boolean variables are prefixed with `b` (e.g., `bIsVisible`).
+    *   Most other classes are prefixed with `F` (e.g., `FMyStruct`).
+    *   Typedefs should be prefixed according to the type they represent (U, A, F, etc.).
+    *   Variable names should be nouns.
+    *   Method names should be verbs (describing the method's effect or return value).
+
+*   **Header Files as Contracts:** Use header files to define the public interface of a class. Hide implementation details in the `.cpp` file.
+
+### 1.3. State Organization
+
+*   **States (Deprecated):**  Unreal Engine used to have `State` keyword, but it is deprecated. Use state machines for more complex game logic.
+*   **State Machine Implementation:**
+    *   Use enums to define the different states (e.g., `ECharacterState { Idle, Walking, Running, Jumping }`).
+    *   Use a variable to store the current state (e.g., `ECharacterState CurrentState`).
+    *   Use a `switch` statement or a `TMap` to handle state transitions and logic based on the current state.
+    *   Encapsulate state-specific logic within methods.  Use prefix `OnEnter` or `OnExit` for state entry and exit methods (e.g., `OnEnterWalking()`, `OnExitWalking()`).
+
+### 1.4. Method Organization
+
+*   **Method Comments:** Provide clear and concise comments for each method, describing its purpose, parameters, and return value.
+*   **Local Variables:** Declare local variables at the beginning of the method.
+*   **Method Length:** Keep methods short and focused. If a method becomes too long, consider breaking it down into smaller, more manageable methods.
+
+## 2. Common Patterns and Anti-patterns
+
+### 2.1. Common Patterns
+
+*   **Object Pooling:** Reuse objects instead of constantly creating and destroying them, especially for frequently used objects like projectiles or particle effects.
+*   **Observer Pattern (Delegates):** Use delegates to implement event-driven systems. Delegates allow objects to subscribe to events and receive notifications when those events occur.
+*   **Component-Based Architecture:** Use components to encapsulate reusable functionality. This promotes modularity and code reuse.  Favor composition over inheritance.
+*   **State Machine:** Implement state machines to manage complex game logic and character behavior.
+*   **Data-Driven Design:** Store game data in data assets (Data Tables, Curve Tables) instead of hardcoding it in code. This allows for easy modification and iteration without recompilation.
+*   **Service Locator:** Implement a service locator pattern to provide access to global services like asset management or logging.
+
+### 2.2. Anti-patterns
+
+*   **God Classes:** Avoid creating classes that are too large and have too many responsibilities. Break down large classes into smaller, more focused classes.
+*   **Spaghetti Code:** Avoid creating code that is difficult to read and understand due to excessive branching and complex logic. Use clear and concise code, and break down complex tasks into smaller, more manageable methods.
+*   **Magic Numbers:** Avoid using hardcoded numbers in code. Use constants or variables with descriptive names instead.
+*   **Premature Optimization:** Don't optimize code before it's necessary. Focus on writing clear and correct code first, and then optimize it if performance becomes an issue.
+*   **Over-Inheritance:** Avoid excessive inheritance. Favor composition over inheritance to promote modularity and code reuse.
+*   **Tight Coupling:** Avoid creating code that is tightly coupled. Use interfaces and dependency injection to decouple components and improve code maintainability.
+
+## 3. Performance Considerations
+
+### 3.1. General Optimization
+
+*   **Profiling:** Use Unreal Engine's profiling tools (e.g., Unreal Insights, Stat commands) to identify performance bottlenecks.
+*   **Garbage Collection:** Be mindful of garbage collection. Avoid creating unnecessary objects, and release objects when they are no longer needed.
+*   **Tick Functions:** Avoid unnecessary tick functions. Only use tick functions when necessary, and keep the logic within tick functions as efficient as possible.
+*   **Blueprint Optimization:** Optimize Blueprint graphs by reducing complexity, using native functions where possible, and avoiding excessive casting.
+*   **Level of Detail (LOD):** Use LODs for meshes to reduce the number of polygons rendered at a distance.
+*   **Texture Optimization:** Optimize textures by using appropriate compression formats, reducing texture sizes, and using mipmaps.
+*   **Material Optimization:** Optimize materials by reducing the number of instructions, using simpler shaders, and avoiding complex calculations in the pixel shader.
+*   **Collision Optimization:** Optimize collision by using simple collision shapes and avoiding complex collision calculations.
+*   **Asynchronous Loading:** Load assets asynchronously to avoid blocking the main thread and causing hitches.
+*   **Native Code:** Implement performance-critical logic in C++ instead of Blueprints.
+
+### 3.2. Memory Management
+
+*   **Object Pooling:** Reuse objects to minimize allocation and deallocation overhead.
+*   **Smart Pointers:** Use smart pointers (e.g., `TSharedPtr`, `TUniquePtr`) to manage object lifetimes and prevent memory leaks.
+*   **Data Structures:** Choose appropriate data structures for your needs. Consider the performance implications of different data structures (e.g., `TArray`, `TMap`, `TSet`).
+*   **Memory Alignment:** Be aware of memory alignment. Misaligned memory access can lead to performance penalties.
+
+### 3.3. Multi-threading
+
+*   **Task Graph:** Use Unreal Engine's Task Graph system to perform tasks in parallel on multiple threads.
+*   **Thread Safety:** Ensure that your code is thread-safe when using multi-threading. Use locks and other synchronization mechanisms to prevent race conditions and data corruption.
+*   **Actor Threading:**  Avoid directly manipulating `UObject` properties from threads other than the game thread unless explicitly thread-safe.  Use `AsyncLoad` for loading assets on other threads.  Use `EnqueueUniqueRenderCommand` to update rendering data from other threads.
+
+## 4. Security Best Practices
+
+### 4.1. General Security
+
+*   **Input Validation:** Validate all user input to prevent injection attacks and other security vulnerabilities.
+*   **Data Encryption:** Encrypt sensitive data, such as passwords and credit card numbers.
+*   **Secure Communication:** Use secure communication protocols (e.g., HTTPS) to protect data transmitted over the network.
+*   **Code Obfuscation:** Obfuscate code to make it more difficult for attackers to reverse engineer your game.
+*   **Anti-Cheat Measures:** Implement anti-cheat measures to prevent cheating and hacking.
+
+### 4.2. Network Security
+
+*   **Server-Side Validation:** Perform all validation on the server to prevent clients from cheating.
+*   **Authority Checks:** Implement authority checks to ensure that only authorized clients can perform certain actions.
+*   **Rate Limiting:** Implement rate limiting to prevent denial-of-service attacks.
+*   **Secure RPCs:** Use secure Remote Procedure Calls (RPCs) to communicate between clients and the server.
+*   **Encryption:** Encrypt network traffic to prevent eavesdropping.
+*   **Avoid Trusting Client Data:** Never blindly trust client-provided data. Sanitize and validate all client input server-side.
+*   **Protect Against Exploits:** Regularly update the engine and third-party libraries to patch security vulnerabilities.
+
+### 4.3. Content Security
+
+*   **Asset Protection:** Protect assets from unauthorized access and modification.
+*   **Code Signing:** Sign code to verify its authenticity.
+*   **Watermarking:** Watermark assets to track their origin.
+*   **Encryption:** Encrypt game files to prevent unauthorized access.
+
+## 5. Testing Approaches
+
+### 5.1. Unit Testing
+
+*   **Automated Testing:** Write automated unit tests to verify the correctness of individual components and methods.
+*   **Test-Driven Development (TDD):** Consider using TDD to write tests before writing code.
+*   **Unreal Engine Testing Framework:** Use Unreal Engine's built-in testing framework to write and run tests.
+
+### 5.2. Integration Testing
+
+*   **Integration Tests:** Write integration tests to verify the interaction between different components and systems.
+*   **Automated Integration Tests:** Automate integration tests to run regularly and ensure that changes don't break existing functionality.
+
+### 5.3. Functional Testing
+
+*   **Functional Tests:** Write functional tests to verify that the game meets its functional requirements.
+*   **Manual Functional Tests:** Perform manual functional tests to test the game from a player's perspective.
+
+### 5.4. Performance Testing
+
+*   **Performance Tests:** Write performance tests to measure the game's performance and identify bottlenecks.
+*   **Automated Performance Tests:** Automate performance tests to run regularly and track performance over time.
+
+### 5.5. Regression Testing
+
+*   **Regression Tests:** Run regression tests after making changes to the code to ensure that existing functionality hasn't been broken.
+*   **Automated Regression Tests:** Automate regression tests to run regularly and catch regressions early.
+
+### 5.6 Playtesting
+
+*   **Internal Playtesting:** Conduct regular playtesting sessions with the development team to gather feedback and identify issues.
+*   **External Playtesting:** Conduct playtesting sessions with external players to get feedback from a wider audience.
+
+## 6. Common Pitfalls and Gotchas
+
+### 6.1. UObject Lifecycles
+
+*   **Garbage Collection:** Understand how Unreal Engine's garbage collection works and how to prevent memory leaks.
+*   **Circular Dependencies:** Avoid circular dependencies between `UObject`s, as they can prevent garbage collection.
+*   **Weak Pointers:** Use weak pointers (`TWeakObjectPtr`) to break circular dependencies and prevent dangling pointers.
+
+### 6.2. Blueprint Communication
+
+*   **Casting:** Avoid excessive casting in Blueprints, as it can impact performance.
+*   **Direct Access:** Avoid directly accessing variables in other Blueprints. Use interfaces or delegates instead.
+*   **Event Dispatchers:** Use event dispatchers to communicate between Blueprints in a loosely coupled manner.
+
+### 6.3. Async Operations
+
+*   **Race Conditions:** Be aware of race conditions when using asynchronous operations. Use synchronization mechanisms to prevent data corruption.
+*   **Callback Hell:** Avoid callback hell by using promises or async/await patterns.
+*   **Progress Handling:** Provide progress updates to the user when performing long-running asynchronous operations.
+
+### 6.4. Build System
+
+*   **Include Dependencies:** Ensure that all necessary include dependencies are specified in the `*.Build.cs` file.
+*   **Module Dependencies:** Ensure that all necessary module dependencies are specified in the `*.Build.cs` file.
+*   **Build Configurations:** Understand the different build configurations (Debug, Development, Shipping) and how they affect the build process.
+
+### 6.5. World Partitioning
+
+*   **HLODs:** Use Hierarchical Level of Detail (HLODs) to optimize rendering performance in large worlds.
+*   **Data Layers:** Use data layers to manage and stream different parts of the world independently.
+*   **Actor Spawning:** Be mindful of actor spawning performance in partitioned worlds. Use techniques like object pooling and asynchronous loading to optimize actor spawning.
+
+## 7. Tooling and Environment
+
+### 7.1. IDE
+
+*   **Visual Studio:** Use Visual Studio for C++ development in Unreal Engine. Install the Unreal Engine integration plugin for Visual Studio.
+*   **Rider:** Use Rider for C++ development in Unreal Engine. Install the Unreal Engine integration plugin for Rider.
+
+### 7.2. Version Control
+
+*   **Git:** Use Git for version control. Use a Git client like GitHub Desktop or SourceTree.
+*   **Perforce:** Use Perforce for version control, especially for large teams and projects. Integrate Perforce with Unreal Engine.
+
+### 7.3. Debugging Tools
+
+*   **Visual Studio Debugger:** Use the Visual Studio debugger to debug C++ code. Set breakpoints, step through code, and inspect variables.
+*   **Unreal Engine Debugger:** Use Unreal Engine's built-in debugger to debug Blueprints. Set breakpoints, step through graphs, and inspect variables.
+*   **Logs:** Use logs (`UE_LOG`) to output debugging information to the console.
+
+### 7.4. Profiling Tools
+
+*   **Unreal Insights:** Use Unreal Insights to profile the game's performance and identify bottlenecks.
+*   **Stat Commands:** Use stat commands to display performance statistics in the game window.
+*   **GPU Profiler:** Use a GPU profiler (e.g., RenderDoc) to analyze GPU performance.
+
+### 7.5. Automation
+
+*   **Automation Tool:** Utilize the Unreal Automation Tool (UAT) for automating build processes, testing, and packaging.
+*   **Scripting:** Use scripting languages (e.g., Python) to automate tasks and workflows.
+
+### 7.6. Plugins
+
+*   **Editor Plugins:** Use editor plugins to extend the functionality of the Unreal Editor and streamline workflows.
+*   **Runtime Plugins:** Use runtime plugins to add new features and functionality to the game at runtime.
+
+## 8. Additional Best Practices
+
+*   **Code Reviews:** Conduct code reviews to ensure code quality and catch potential issues.
+*   **Documentation:** Write clear and concise documentation for your code and assets.
+*   **Continuous Integration:** Use continuous integration (CI) to automate the build and testing process.
+*   **Agile Development:** Use agile development methodologies to manage the development process and adapt to changing requirements.
+*   **Community:** Engage with the Unreal Engine community. Ask questions, share knowledge, and contribute to the engine.
+
+By following these coding standards and best practices, you can create high-quality, maintainable, and performant Unreal Engine projects.

@@ -1,0 +1,179 @@
+---
+description: This rule provides comprehensive best practices for developing with the notion-api library, covering code organization, performance, security, and testing. Adhering to these guidelines ensures maintainable, efficient, and secure integrations with Notion.
+globs: **/*.{js,ts,jsx,tsx}
+---
+# notion-api Best Practices: A Comprehensive Guide
+
+This document outlines the recommended best practices for developing applications and integrations using the `notion-api` library. Following these guidelines ensures code quality, performance, security, and maintainability.
+
+## 1. Code Organization and Structure
+
+*   **Modular Design:**
+    *   Break down your integration into smaller, reusable modules or components. This promotes code reusability, testability, and maintainability.
+    *   Use separate files or directories for different functionalities (e.g., `utils.js`, `notion_service.js`, `components/`).
+
+*   **Clear Naming Conventions:**
+    *   Use descriptive and consistent names for variables, functions, and classes.  Follow standard JavaScript/TypeScript naming conventions (e.g., camelCase for variables and functions, PascalCase for classes).
+    *   Prefix Notion-related variables with `notion` to clearly identify their purpose (e.g., `notionDatabaseId`, `notionClient`).
+
+*   **Abstraction Layers:**
+    *   Create an abstraction layer between your application logic and the `notion-api` library. This isolates your code from changes in the library's API, making it easier to upgrade or switch to a different library in the future.
+    *   Define service classes or functions that encapsulate Notion-specific operations (e.g., `NotionService.createPage()`, `NotionService.queryDatabase()`).
+
+*   **Configuration Management:**
+    *   Store configuration settings (e.g., API keys, database IDs) in a separate configuration file or environment variables. This makes it easier to manage and deploy your application across different environments.
+    *   Use a library like `dotenv` to load environment variables from a `.env` file.
+
+*   **Dependency Injection:**
+    *   Consider using dependency injection to manage the dependencies of your modules. This makes it easier to test your code and swap out different implementations of dependencies.
+
+## 2. Common Patterns and Anti-patterns
+
+*   **Repository Pattern:**
+    *   Use the repository pattern to abstract data access logic.  Create repository classes that handle all interactions with the Notion API for specific entities (e.g., `PageRepository`, `DatabaseRepository`). This simplifies data access and allows for easy switching to different data sources in the future.
+
+*   **Factory Pattern:**
+    *   Employ the factory pattern to create Notion objects (e.g., pages, blocks) with consistent configurations.  This pattern helps to avoid duplication and ensures that objects are created with the correct properties.
+
+*   **Asynchronous Operations:**
+    *   Always use `async/await` or Promises to handle asynchronous operations with the Notion API. This prevents blocking the main thread and ensures that your application remains responsive.
+    *   Handle errors properly within asynchronous functions using `try/catch` blocks.
+
+*   **Anti-pattern: Deeply Nested Callbacks:**
+    *   Avoid deeply nested callbacks (callback hell). Use `async/await` or Promises to flatten asynchronous code and improve readability.
+
+*   **Anti-pattern: Hardcoding Values:**
+    *   Avoid hardcoding values directly in your code. Use configuration settings or environment variables to store configurable values.
+
+*   **Anti-pattern: Ignoring Errors:**
+    *   Never ignore errors. Always handle errors properly and log them for debugging purposes.
+
+## 3. Performance Considerations
+
+*   **Caching:**
+    *   Implement caching to reduce the number of API calls to Notion. Cache frequently accessed data, such as database schemas or user profiles.
+    *   Use a caching library like `node-cache` or Redis to store cached data.
+
+*   **Rate Limiting:**
+    *   Be aware of the Notion API rate limits (typically 3 requests per second). Implement retry mechanisms with exponential backoff to handle rate limiting errors (HTTP 429).
+    *   Monitor API usage to identify potential bottlenecks and optimize your code.
+
+*   **Efficient Data Retrieval:**
+    *   Retrieve only the necessary data from Notion. Use filters and pagination to limit the amount of data returned in API responses.
+    *   Avoid retrieving entire databases when only a subset of data is needed.
+
+*   **Batch Operations:**
+    *   Use batch operations (if supported by the Notion API in the future) to perform multiple operations in a single API call. This reduces the overhead of making multiple requests.
+
+*   **Optimize Image and File Handling:**
+    *   Optimize images and files before uploading them to Notion. Reduce file sizes and use appropriate formats.
+    *   Consider using a content delivery network (CDN) to serve images and files.
+
+## 4. Security Best Practices
+
+*   **API Key Management:**
+    *   **Never hardcode API keys directly in your source code.**
+    *   Store API keys in environment variables or a secure secret management system (e.g., AWS Secrets Manager, Azure Key Vault, HashiCorp Vault).
+    *   Use different API keys for development, staging, and production environments.
+    *   Rotate API keys regularly and when team members leave the project.
+
+*   **Input Validation:**
+    *   Validate all input data to prevent injection attacks and other security vulnerabilities.
+    *   Sanitize data before sending it to the Notion API.
+    *   Use a validation library like `joi` or `yup` to define validation schemas.
+
+*   **Output Encoding:**
+    *   Encode output data properly to prevent cross-site scripting (XSS) attacks.
+    *   Use a templating engine or a library like `DOMPurify` to sanitize HTML output.
+
+*   **Authentication and Authorization:**
+    *   Implement proper authentication and authorization mechanisms to control access to your application and the Notion API.
+    *   Use OAuth 2.0 for user authentication and authorization.
+    *   Follow the principle of least privilege: grant only the necessary permissions to users and integrations.
+
+*   **Data Encryption:**
+    *   Encrypt sensitive data both in transit and at rest.
+    *   Use HTTPS for all API communication.
+    *   Consider using a database encryption solution to protect data at rest.
+
+*   **Regular Security Audits:**
+    *   Conduct regular security audits to identify and address potential vulnerabilities.
+    *   Use security scanning tools to automatically detect security issues in your code.
+
+*   **Secret Scanning:**
+    *   Implement secret scanning in your CI/CD pipeline to prevent accidental exposure of API keys and other sensitive information in your code repository.
+    *   Use tools like GitLeaks, Detect Secrets, Trufflehog, or BitPatrol.
+
+## 5. Testing Approaches
+
+*   **Unit Testing:**
+    *   Write unit tests to verify the functionality of individual modules and components.
+    *   Use a testing framework like Jest or Mocha.
+    *   Mock the Notion API to isolate your code from external dependencies.
+
+*   **Integration Testing:**
+    *   Write integration tests to verify the interaction between different modules and components.
+    *   Test the integration with the Notion API in a staging environment.
+
+*   **End-to-End Testing:**
+    *   Write end-to-end tests to verify the entire application flow.
+    *   Use a testing framework like Cypress or Puppeteer.
+
+*   **Test-Driven Development (TDD):**
+    *   Consider using TDD to write tests before writing the actual code. This helps to ensure that your code is testable and meets the requirements.
+
+*   **Code Coverage:**
+    *   Use a code coverage tool to measure the percentage of code that is covered by tests.
+    *   Aim for high code coverage to ensure that your code is thoroughly tested.
+
+## 6. Common Pitfalls and Gotchas
+
+*   **Incorrect Data Types:**
+    *   Ensure that you are using the correct data types when interacting with the Notion API. Incorrect data types can lead to errors and unexpected behavior.
+
+*   **Missing Properties:**
+    *   Check that you are including all required properties in API requests. Missing properties can cause the API to return errors.
+
+*   **Incorrect API Endpoints:**
+    *   Double-check that you are using the correct API endpoints for the operations you are performing. Using the wrong endpoint can lead to unexpected results.
+
+*   **Authentication Issues:**
+    *   Verify that your API key is valid and that you have the necessary permissions to access the Notion API.
+
+*   **Version Compatibility:**
+    *   Ensure that your code is compatible with the version of the Notion API you are using.  Specify the `Notion-Version` header in your requests.
+
+*   **Unexpected API Changes:**
+    *   Monitor the Notion API documentation for changes and updates. Be prepared to update your code to accommodate API changes.
+
+*   **Handling Large Datasets:**
+    *   Be mindful of memory usage when processing large datasets retrieved from the Notion API. Use streaming or pagination to process data in smaller chunks.
+
+## 7. Tooling and Environment
+
+*   **Node.js and npm/yarn:**
+    *   Use Node.js as the runtime environment for your application.
+    *   Use npm or yarn as the package manager to install and manage dependencies.
+
+*   **TypeScript:**
+    *   Consider using TypeScript to add static typing to your code. This can help to prevent errors and improve code maintainability.
+
+*   **IDE/Editor:**
+    *   Use an IDE or editor with support for JavaScript/TypeScript development (e.g., Visual Studio Code, WebStorm).
+
+*   **Linting and Formatting:**
+    *   Use a linter (e.g., ESLint) to enforce coding standards and identify potential errors.
+    *   Use a code formatter (e.g., Prettier) to automatically format your code.
+
+*   **Debugging Tools:**
+    *   Use debugging tools to troubleshoot and debug your code.
+    *   Use the Node.js debugger or the browser's developer tools.
+
+*   **API Testing Tools:**
+    *   Use API testing tools (e.g., Postman, Insomnia) to test your API endpoints.
+
+*   **CI/CD Pipeline:**
+    *   Set up a CI/CD pipeline to automate the build, test, and deployment process.
+    *   Use a CI/CD tool like Jenkins, Travis CI, or CircleCI.
+
+By following these best practices, you can develop robust, secure, and maintainable integrations with the notion-api library. Remember to stay updated with the latest documentation and changes to the Notion API to ensure that your code remains compatible and efficient.

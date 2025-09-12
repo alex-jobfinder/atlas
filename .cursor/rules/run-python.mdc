@@ -1,6 +1,4 @@
 ---
-description:
-globs: *.py
 alwaysApply: false
 ---
 # Python Rules

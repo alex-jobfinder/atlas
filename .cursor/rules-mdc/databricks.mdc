@@ -1,0 +1,241 @@
+---
+description: This rule provides a comprehensive guide to Databricks development best practices, covering code organization, performance, security, testing, and common pitfalls to ensure efficient and reliable data engineering and data science workflows.
+globs: **/*.{py,sql,scala,ipynb,r}
+---
+# Databricks Development Best Practices
+
+This document outlines best practices for developing on the Databricks platform, covering various aspects from code organization to security.
+
+## 1. Code Organization and Structure
+
+*   **Project Structure:**
+    *   Adopt a consistent project structure. For Python-based projects, follow a standard layout like:
+
+        my_databricks_project/
+        ├── src/
+        │   ├── __init__.py
+        │   ├── utils.py
+        │   ├── etl/
+        │   │   ├── __init__.py
+        │   │   ├── data_ingestion.py
+        │   │   └── data_transformation.py
+        │   └── models/
+        │       ├── __init__.py
+        │       └── model_training.py
+        ├── tests/
+        │   ├── __init__.py
+        │   ├── test_utils.py
+        │   ├── test_data_ingestion.py
+        │   └── test_model_training.py
+        ├── notebooks/
+        │   ├── exploration.ipynb
+        │   └── reporting.ipynb
+        ├── conf/
+        │   └── config.yaml
+        ├── requirements.txt
+        ├── setup.py
+        └── README.md
+
+    *   For Scala-based projects, use a Maven or sbt project structure.
+
+*   **Modularization:**
+    *   Break down complex tasks into smaller, reusable modules or functions.
+    *   Use Python packages or Scala objects to encapsulate related functionality.
+    *   Favor small, single-purpose functions that are easy to test and understand.
+
+*   **Notebook Organization:**
+    *   Use notebooks for interactive exploration, prototyping, and documentation.
+    *   Keep notebooks concise and focused on a specific task.
+    *   Move reusable code into Python modules or Scala libraries.
+    *   Use `%run` magic command for sharing code between notebooks. Be mindful of scope and dependencies when using `%run`.
+    *   Use widgets for creating interactive dashboards and reports.
+
+*   **Configuration Management:**
+    *   Store configuration settings in a separate file (e.g., `config.yaml`, `application.conf`).
+    *   Use a library like `hydra` (Python) or `pureconfig` (Scala) to load and manage configuration settings.
+    *   Avoid hardcoding sensitive information (e.g., API keys, passwords) in code. Use Databricks secrets management.
+
+*   **Data Lake Organization:**
+    *   Follow a well-defined data lake structure (e.g., bronze, silver, gold layers).
+    *   Use Delta Lake for reliable and performant data storage.
+    *   Partition data based on common query patterns (e.g., by date, by region).
+
+## 2. Common Patterns and Anti-patterns
+
+*   **Patterns:**
+    *   **Data Ingestion:**
+        *   Use Auto Loader for incremental data ingestion from cloud storage.
+        *   Leverage Databricks Connectors for optimized data access from various sources (e.g., Kafka, JDBC).
+    *   **Data Transformation:**
+        *   Use Delta Live Tables (DLT) for building reliable and maintainable data pipelines.
+        *   Employ Spark SQL or DataFrames for data transformations.
+        *   Use structured streaming for real-time data processing.
+    *   **Feature Engineering:**
+        *   Use Feature Store for managing and sharing features across different models.
+        *   Create reusable feature engineering pipelines.
+    *   **Model Training:**
+        *   Use MLflow for tracking experiments, managing models, and deploying models.
+        *   Use hyperparameter optimization techniques to improve model performance.
+        *   Use distributed training for large datasets.
+    *   **Model Deployment:**
+        *   Use MLflow Model Serving or Databricks Model Serving for deploying models as REST APIs.
+        *   Monitor model performance and retrain models as needed.
+    *   **CI/CD:**
+        *   Use Databricks Asset Bundles for managing and deploying Databricks projects.
+        *   Implement CI/CD pipelines using tools like GitHub Actions, Azure DevOps, or Jenkins.
+
+*   **Anti-patterns:**
+    *   **Single Large Notebook:** Avoid creating monolithic notebooks that are difficult to maintain and debug. Break down complex tasks into smaller, more manageable notebooks or modules.
+    *   **Hardcoded Credentials:** Never hardcode sensitive information (e.g., API keys, passwords) in code. Use Databricks secrets management.
+    *   **Ignoring Data Quality:** Neglecting data quality checks can lead to inaccurate results and unreliable pipelines. Implement data validation and cleansing steps in your data pipelines.
+    *   **Over-engineering:** Avoid unnecessary complexity. Keep your code simple and easy to understand.
+    *   **Lack of Documentation:** Failing to document your code can make it difficult for others (and yourself) to understand and maintain it.
+    *   **Inefficient Data Access:** Avoid reading unnecessary data. Use filters and projections to limit the amount of data that is processed.
+    *   **Not leveraging Delta Lake Features:** Ignoring Delta Lake features such as ACID transactions, time travel, and schema evolution can lead to data corruption and pipeline failures.
+
+## 3. Performance Considerations
+
+*   **Data Partitioning:**
+    *   Partition data based on common query patterns to improve query performance. For example, partition by date or region.
+    *   Avoid over-partitioning, which can lead to many small files and reduced performance.
+
+*   **Data Caching:**
+    *   Use `spark.cache()` or `spark.persist()` to cache frequently accessed data in memory or on disk.
+    *   Choose the appropriate storage level based on the data size and access frequency.
+
+*   **Spark Configuration:**
+    *   Tune Spark configuration parameters to optimize performance. For example, adjust `spark.executor.memory`, `spark.executor.cores`, and `spark.driver.memory`.
+    *   Use the Spark UI to monitor job performance and identify bottlenecks.
+
+*   **Data Serialization:**
+    *   Use efficient data serialization formats like Parquet or ORC.
+    *   Avoid using inefficient formats like CSV for large datasets.
+
+*   **Join Optimization:**
+    *   Use broadcast joins for small tables to avoid shuffling large amounts of data.
+    *   Use sort-merge joins for large tables.
+    *   Ensure that join columns have the same data type.
+
+*   **Code Optimization:**
+    *   Use vectorized operations instead of loops whenever possible.
+    *   Avoid using `collect()` on large datasets, as it can lead to out-of-memory errors.
+    *   Use `explain()` to analyze the execution plan of Spark SQL queries and identify potential performance issues.
+
+*   **Cluster Configuration:**
+    *   Select the appropriate cluster type based on the workload (e.g., compute-optimized, memory-optimized).
+    *   Use autoscaling to dynamically adjust cluster resources based on demand.
+    *   Consider using Photon for accelerated query performance.
+
+## 4. Security Best Practices
+
+*   **Access Control:**
+    *   Use Unity Catalog to manage access control to data and other resources.
+    *   Grant users only the minimum necessary permissions.
+    *   Use role-based access control (RBAC) to simplify permission management.
+
+*   **Secrets Management:**
+    *   Use Databricks secrets management to store sensitive information (e.g., API keys, passwords).
+    *   Avoid hardcoding secrets in code or configuration files.
+
+*   **Network Security:**
+    *   Use network policies to restrict network access to Databricks clusters.
+    *   Consider using Private Link for secure access to Databricks from on-premises networks.
+
+*   **Data Encryption:**
+    *   Enable data encryption at rest and in transit.
+    *   Use customer-managed keys (CMK) for enhanced security.
+
+*   **Auditing and Monitoring:**
+    *   Enable auditing to track user activity and data access.
+    *   Monitor Databricks clusters for security threats and performance issues.
+
+*   **Workspace Isolation:**
+    *   Isolate different environments (e.g., development, staging, production) into separate Databricks workspaces.
+    *   Use separate workspaces for different business units or projects.
+
+## 5. Testing Approaches
+
+*   **Unit Testing:**
+    *   Write unit tests for individual modules or functions.
+    *   Use a testing framework like `pytest` (Python) or `ScalaTest` (Scala).
+    *   Mock external dependencies to isolate the code being tested.
+
+*   **Integration Testing:**
+    *   Write integration tests to verify the interaction between different modules or components.
+    *   Test data pipelines from end to end.
+
+*   **Data Quality Testing:**
+    *   Use data quality frameworks like `Great Expectations` or `Deequ` to validate data quality.
+    *   Define data quality rules and automatically test data against those rules.
+
+*   **Notebook Testing:**
+    *   Use `nbconvert` to execute notebooks as part of the testing process.
+    *   Write assertions in notebooks to verify the correctness of the results.
+
+*   **Continuous Integration:**
+    *   Integrate testing into the CI/CD pipeline.
+    *   Run tests automatically whenever code changes are committed.
+
+*   **Test-Driven Development (TDD):**
+    *   Consider using TDD to write tests before writing code.
+    *   This can help to ensure that the code is testable and meets the requirements.
+
+## 6. Common Pitfalls and Gotchas
+
+*   **Spark Lazy Evaluation:**
+    *   Understand that Spark transformations are lazily evaluated. Use `action` operations (e.g., `count()`, `collect()`, `write()`) to trigger computation.
+
+*   **Serialization Issues:**
+    *   Be aware of serialization issues when working with custom classes or functions.
+    *   Ensure that classes are serializable or use broadcast variables to share data across executors.
+
+*   **Out-of-Memory Errors:**
+    *   Avoid collecting large datasets into the driver node, as this can lead to out-of-memory errors.
+    *   Use appropriate data partitioning and filtering techniques to reduce the amount of data that is processed.
+
+*   **Shuffle Operations:**
+    *   Minimize shuffle operations, as they can be expensive and impact performance.
+    *   Use broadcast joins for small tables to avoid shuffling large amounts of data.
+
+*   **Incorrect Data Types:**
+    *   Ensure that data types are consistent across different tables and columns.
+    *   Use explicit schema definitions to avoid data type mismatches.
+
+*   **SQL Injection:**
+    *   Sanitize user inputs to prevent SQL injection attacks when using SQL queries.
+    *   Use parameterized queries or prepared statements.
+
+*   **Global Variables in Notebooks:**
+    *   Avoid relying on global variables in notebooks, as their values can change unexpectedly.
+    *   Pass data explicitly between cells or functions.
+
+## 7. Tooling and Environment
+
+*   **Databricks CLI:**
+    *   Use the Databricks CLI to manage Databricks workspaces, clusters, jobs, and other resources.
+
+*   **Databricks Connect:**
+    *   Use Databricks Connect to connect to Databricks clusters from local development environments.
+
+*   **Databricks Repos:**
+    *   Use Databricks Repos for version control and collaboration.
+
+*   **Delta Live Tables UI:**
+    *   Use the DLT UI to monitor and manage Delta Live Tables pipelines.
+
+*   **MLflow UI:**
+    *   Use the MLflow UI to track experiments, manage models, and deploy models.
+
+*   **Spark UI:**
+    *   Use the Spark UI to monitor job performance and identify bottlenecks.
+
+*   **Terraform:**
+    *   Use Terraform to manage Databricks infrastructure as code.
+
+*   **VS Code with Databricks Extension:**
+    *   Use VS Code with the Databricks extension for a seamless development experience.
+
+*   **Databricks Asset Bundles:**
+    * Use Databricks Asset Bundles for managing and deploying complex Databricks projects with dependencies and configurations. This helps streamline the CI/CD process and ensure consistent deployments.
+
+By following these best practices, you can develop efficient, reliable, and secure data engineering and data science workflows on the Databricks platform.

@@ -5,3 +5,5 @@ gui/*
 
 PreambleFileParser/*
 src_python_gui/archive/*
+
+# scripts_png_gen/*

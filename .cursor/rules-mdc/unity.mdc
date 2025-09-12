@@ -1,0 +1,318 @@
+---
+description: This rule file outlines comprehensive C# coding standards, best practices, and project organization guidelines for Unity game development to ensure code quality, maintainability, and performance.
+globs: **/*.cs
+---
+# Unity C# Best Practices and Coding Standards
+
+This document outlines comprehensive C# coding standards, best practices, and project organization guidelines for Unity game development. Adhering to these guidelines ensures code quality, maintainability, performance, and collaboration within a team.
+
+## 1. Code Organization and Structure
+
+### 1.1 Project Structure
+
+*   **Assets Folder:** Organize your Assets folder logically. Use a consistent naming convention for folders and files.
+    *   `Scripts`: Contains all C# scripts.
+    *   `Scenes`: Contains all Unity scenes.
+    *   `Prefabs`: Contains all prefab assets.
+    *   `Materials`: Contains all material assets.
+    *   `Textures`: Contains all texture assets.
+    *   `Audio`: Contains all audio assets.
+    *   `Models`: Contains all 3D model assets.
+    *   `Plugins`: Contains third-party plugins and libraries.
+    *   `Editor`: Contains custom editor scripts.
+    *   `Resources`: (Use sparingly) Contains assets loaded at runtime via `Resources.Load`.  Overuse can lead to performance issues and difficulty managing dependencies.  Consider Addressables instead.
+    *   `AddressableAssetsData`:  Folder generated when using Addressables.
+
+*   **Modular Design:** Break down your game into independent, reusable modules.
+
+*   **Namespaces:** Use namespaces to group related classes and prevent naming conflicts.  Follow a consistent namespace naming convention (e.g., `CompanyName.ProjectName.ModuleName`).
+
+*   **Assembly Definitions:** Utilize assembly definitions to improve compile times and enforce modularity. Create separate assemblies for different modules of your project.
+
+### 1.2 Code File Structure
+
+*   **One Class Per File:**  Generally, define only one class per file. The filename should match the class name.
+
+*   **File Header:** Include a file header with information about the script's purpose, author, and last modification date.
+
+*   **Using Directives:** Place library usings at the beginning of the file, followed by typedef-like usings.  Order using directives logically:
+    1.  System or .NET libraries
+    2.  Unity libraries
+    3.  Third-Party plugins (asset store)
+    4.  Your own utility libraries
+    5.  Project namespaces
+    6.  Type name aliases
+
+csharp
+// File: AiPathfinder.cs
+using System.Collections.Generic;
+using UnityEngine;
+
+using WaypointMap = Dictionary<Vector3, Waypoint>;
+
+namespace MyGame.AiNavigation
+{
+    public class AiPathfinder
+    {
+        ...
+    }
+}
+
+
+*   **Class Definition Order:** Define a class in the following order:
+    1.  Nested classes
+    2.  Constants
+    3.  Enums
+    4.  Properties
+    5.  Fields
+    6.  Constructors (if applicable)
+    7.  Unity Messages (e.g., `Awake`, `Start`, `Update`)
+    8.  Public methods
+    9.  Private methods
+
+csharp
+public class MyClass : MonoBehaviour
+{
+    private class MyNestedClass
+    {
+        ...
+    }
+
+    private const int SOME_CONSTANT = 1;
+
+    public enum SomeEnum
+    {
+        FirstElement,
+        SecondElement
+    }
+
+    public int SomeProperty
+    {
+        get => someField;
+    }
+
+    private int someField;
+
+    private void Start()
+    {
+        ...
+    }
+
+    public void SomePublicMethod()
+    {
+        ...
+    }
+
+    private void SomePrivateMethod()
+    {
+        ...
+    }
+}
+
+
+*   **Method Definition Order:** Prefer defining methods in the following order:
+    1.  Initialization methods
+    2.  Core functionality methods
+    3.  Helper or explanatory methods
+
+csharp
+// Initialization
+private void Initialize()
+{
+    ...
+}
+
+// Core functionality
+private void Move(Vector3 direction)
+{
+    ...
+}
+
+// Helper
+private bool CheckIfPositionIsWalkable(Vector3 position)
+{
+    ...
+}
+
+
+## 2. Common Patterns and Anti-patterns
+
+### 2.1 Common Patterns
+
+*   **Singleton:** Use the Singleton pattern for global access to a single instance of a class (e.g., GameManager, AudioManager).  Be mindful of potential testability issues and consider alternatives like dependency injection for more complex scenarios.
+
+*   **Object Pooling:** Implement object pooling for frequently created and destroyed objects to reduce garbage collection overhead (e.g., projectiles, particle effects).
+
+*   **Command Pattern:** Use the Command pattern to decouple actions from the objects that invoke them (e.g., input handling, UI interactions).
+
+*   **Observer Pattern:** Implement the Observer pattern for event-driven communication between objects (e.g., health changes, game state updates).  Use Unity's `UnityEvent` or C#'s `event` keyword for type-safe event handling.
+
+*   **State Pattern:** Use the State pattern to manage the different states of an object (e.g., player movement, AI behavior).
+
+*   **Factory Pattern:** Utilize the Factory pattern to encapsulate object creation logic and decouple client code from concrete implementations.
+
+*   **Dependency Injection:**  Employ dependency injection to reduce coupling between classes, making code more testable and maintainable.  Consider using a dependency injection framework.
+
+### 2.2 Anti-patterns
+
+*   **God Classes:** Avoid creating large, monolithic classes that handle too many responsibilities. Break down complex classes into smaller, more manageable components.
+
+*   **Spaghetti Code:** Avoid writing code that is difficult to follow and understand due to excessive branching and lack of structure.  Refactor complex code into smaller, well-defined methods.
+
+*   **Magic Numbers:** Avoid using hardcoded numerical values in your code. Define constants with meaningful names instead.
+
+*   **String Comparisons:** Avoid using string comparisons for frequent checks.  Use enums or constants instead for better performance and type safety.
+
+*   **GetComponent in Update:** Avoid calling `GetComponent` repeatedly in the `Update` method. Cache the component reference in `Awake` or `Start`.
+
+*   **FindGameObjectWithTag/Name:** Avoid using `FindGameObjectWithTag` or `FindGameObjectWithName` frequently. These methods are slow.  Cache references or use a more efficient approach.
+
+*   **Resources.Load overuse:** Avoid loading assets frequently using `Resources.Load`.  Use Addressables instead for better asset management and performance.
+
+## 3. Performance Considerations
+
+### 3.1 General Optimization
+
+*   **Profiling:** Use the Unity Profiler to identify performance bottlenecks in your game. Analyze CPU usage, memory allocation, and rendering performance.
+
+*   **Garbage Collection:** Minimize garbage collection by reusing objects and avoiding unnecessary memory allocation. Use object pooling and avoid creating temporary strings.
+
+*   **Code Optimization:** Optimize your C# code by using efficient algorithms and data structures. Avoid unnecessary loops and calculations.
+
+*   **Physics Optimization:** Optimize physics performance by reducing the number of colliders, using simple colliders, and adjusting physics settings.
+
+*   **Rendering Optimization:** Optimize rendering performance by reducing the number of draw calls, using efficient shaders, and optimizing textures.
+
+*   **Asset Optimization:** Optimize assets by using compressed textures, mipmaps, and LOD (Level of Detail) models.
+
+*   **Mobile Optimization:** Consider mobile-specific optimizations, such as reducing texture sizes, using mobile-friendly shaders, and optimizing for battery life.
+
+*   **Use Addressables:**  Use Addressables for efficient asset management, especially for large projects. Addressables allow for asynchronous loading, memory management, and content updates without requiring a full application rebuild.
+
+### 3.2 Specific Techniques
+
+*   **Caching:** Cache frequently accessed data (e.g., component references, calculations) to avoid redundant operations.
+
+*   **Coroutines:** Use coroutines for time-consuming tasks to avoid blocking the main thread.  Be mindful of coroutine lifecycle and potential memory leaks.
+
+*   **LINQ:** Use LINQ sparingly, as it can be less performant than traditional loops, especially on mobile platforms.  Profile LINQ usage to ensure it doesn't introduce performance bottlenecks.
+
+*   **String Concatenation:** Avoid using string concatenation in loops. Use `StringBuilder` instead for better performance.
+
+*   **Mathf Functions:**  Use Unity's `Mathf` functions for mathematical operations. These functions are optimized for Unity's coordinate system.
+
+*   **Raycasts:** Limit the frequency and complexity of raycasts. Use layermasks to narrow down the objects that raycasts interact with.
+
+## 4. Security Best Practices
+
+*   **Input Validation:** Validate all user input to prevent injection attacks and other security vulnerabilities.
+
+*   **Secure Data Storage:** Store sensitive data (e.g., passwords, API keys) securely using encryption and secure storage mechanisms.
+
+*   **Avoid Hardcoding Secrets:** Never hardcode sensitive information directly into your code. Use environment variables or configuration files to store secrets.
+
+*   **Server-Side Validation:** Perform validation on the server-side to prevent client-side tampering.
+
+*   **Anti-Cheat Measures:** Implement anti-cheat measures to prevent cheating and hacking in multiplayer games.
+
+*   **Secure Communication:** Use HTTPS for secure communication between the client and server.
+
+*   **Code Obfuscation:** Use code obfuscation to make it more difficult for attackers to reverse engineer your code.
+
+*   **Regular Security Audits:** Conduct regular security audits to identify and address potential security vulnerabilities.
+
+*   **Use Asset Store Packages Carefully:** Always review and vet any asset store packages you are importing. Be cautious of packages that request excessive permissions or access sensitive data.
+
+## 5. Testing Approaches
+
+### 5.1 Unit Testing
+
+*   **Unit Tests:** Write unit tests to verify the functionality of individual components and methods.
+
+*   **Test-Driven Development (TDD):** Consider using TDD to write tests before writing the code.
+
+*   **Unity Test Framework:** Use the Unity Test Framework to write and run unit tests in the Unity Editor.
+
+*   **Mocking:** Use mocking frameworks to isolate components during testing.
+
+### 5.2 Integration Testing
+
+*   **Integration Tests:** Write integration tests to verify the interaction between different components and systems.
+
+*   **Scene-Based Tests:** Create scene-based tests to verify the behavior of your game in a realistic environment.
+
+### 5.3 Playtesting
+
+*   **Regular Playtesting:** Conduct regular playtesting sessions to gather feedback and identify bugs.
+
+*   **Automated Testing:** Implement automated testing to continuously test your game for regressions.
+
+### 5.4 Code Coverage
+
+*   **Code Coverage Tools:** Use code coverage tools to measure the percentage of your code that is covered by tests.
+
+## 6. Common Pitfalls and Gotchas
+
+*   **Floating-Point Precision:** Be aware of floating-point precision issues when comparing floating-point numbers. Use `Mathf.Approximately` for comparisons.
+
+*   **NullReferenceException:** Handle potential `NullReferenceException` errors by checking for null before accessing object references.
+
+*   **IndexOutOfRangeException:** Handle potential `IndexOutOfRangeException` errors by checking array bounds before accessing elements.
+
+*   **Memory Leaks:** Be aware of potential memory leaks, especially when using coroutines and event handlers.  Ensure that resources are properly released when they are no longer needed.
+
+*   **Editor Scripting:** Be careful when writing editor scripts, as they can affect the performance and stability of the Unity Editor.
+
+*   **Asynchronous Operations:**  Handle asynchronous operations correctly to avoid blocking the main thread. Use `async` and `await` keywords for asynchronous programming.
+
+*   **Platform Differences:** Be aware of platform differences when developing cross-platform games. Test your game on different platforms to ensure compatibility.
+
+*   **Serialization Issues:** Understand how Unity serializes data and be aware of potential serialization issues. Use the `[SerializeField]` attribute to expose private fields to the Inspector.
+
+*   **Order of Execution:** Be aware of the order in which Unity calls MonoBehaviour methods (e.g., `Awake`, `OnEnable`, `Start`, `Update`, `LateUpdate`, `OnDisable`, `OnDestroy`).
+
+## 7. Tooling and Environment
+
+### 7.1 IDE (Integrated Development Environment)
+
+*   **Visual Studio:** Use Visual Studio (with the Unity extension) for C# development. Visual Studio provides excellent code completion, debugging, and refactoring features.
+
+*   **Rider:** JetBrains Rider is another excellent IDE for Unity development, offering similar features to Visual Studio with enhanced performance and cross-platform support.
+
+### 7.2 Version Control
+
+*   **Git:** Use Git for version control. Git allows you to track changes to your code and collaborate with other developers.
+
+*   **GitHub/GitLab/Bitbucket:** Host your Git repository on a platform like GitHub, GitLab, or Bitbucket.
+
+### 7.3 Asset Management
+
+*   **Unity Asset Store:** Use the Unity Asset Store to find and purchase pre-made assets for your game. Be careful when importing assets from the Asset Store and always review the code before using it.
+
+*   **Addressable Asset System:**  Use the Addressable Asset System for managing and loading assets in your game. Addressables provide better control over asset loading and memory management.
+
+### 7.4 Continuous Integration (CI)
+
+*   **Unity Cloud Build:** Use Unity Cloud Build to automate the build process. Unity Cloud Build allows you to build your game for different platforms automatically.
+
+*   **Jenkins/Travis CI/CircleCI:** Consider using other CI tools like Jenkins, Travis CI, or CircleCI for more advanced build automation and testing.
+
+### 7.5 Profiling Tools
+
+*   **Unity Profiler:** Use the Unity Profiler to identify performance bottlenecks in your game.
+
+*   **External Profilers:** Consider using external profilers like dotMemory or ANTS Performance Profiler for more in-depth performance analysis.
+
+### 7.6 Debugging Tools
+
+*   **Unity Debugger:** Use the Unity Debugger to debug your C# code. The Unity Debugger allows you to step through your code, set breakpoints, and inspect variables.
+
+*   **Logging:** Use `Debug.Log`, `Debug.LogWarning`, and `Debug.LogError` to log messages to the Unity Console.
+
+### 7.7 Code Analysis Tools
+
+*   **Roslyn Analyzers:** Use Roslyn analyzers to enforce coding standards and identify potential code quality issues.
+
+*   **StyleCop:** Use StyleCop to enforce code style rules.
+
+By following these best practices and guidelines, you can create high-quality, maintainable, and performant Unity games.
