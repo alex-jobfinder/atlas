@@ -16,6 +16,7 @@ enriched as (
 
         -- Time dimensions
         hour_ts,
+        hour_unix_epoch,
         date_trunc('day', cast(hour_ts as timestamp)) as date_day,
         date_trunc('week', cast(hour_ts as timestamp)) as date_week,
         date_trunc('month', cast(hour_ts as timestamp)) as date_month,

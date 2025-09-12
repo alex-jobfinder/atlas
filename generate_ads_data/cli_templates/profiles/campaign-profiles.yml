@@ -1,0 +1,235 @@
+# Campaign Profiles - Pre-built Scenarios for Common Netflix Ads Testing
+# Based on your existing config.yml examples with smart defaults
+
+profiles:
+  # Profile 1: High CPM TV Awareness Campaign
+  high_cpm_tv_awareness:
+    description: "Test high CPM TV awareness campaign performance (Luxury Auto pattern)"
+    base_template: "awareness_campaign"
+    focus: "campaign.target_cpm, campaign.budget, line_items.targeting_json"
+
+    test_values:
+      advertiser:
+        name: "Luxury Auto Co"
+        brand: "LuxAuto"
+        industry: "automotive"
+
+      campaign:
+        target_cpm: 20.00              # Test: Very high CPM ($20.00)
+        budget: 150000.00              # Test: Large budget ($150k)
+        objective: "AWARENESS"
+
+      line_items:
+        - targeting_json: '{"DEVICE": ["TV"], "CONTENT_GENRE": ["DRAMA", "DOCUMENTARY"], "GEO_COUNTRY": ["US"]}'
+          ad_format: "STANDARD_VIDEO"
+          bid_cpm: 20.00               # Match campaign target
+
+    # Auto-generate everything else
+    faker_auto:
+      - "campaign.flight_dates"
+      - "campaign.external_ref"
+      - "line_items.duration_seconds"
+      - "line_items.ad_server_type"
+      - "line_items.pixel_vendor"
+      - "creatives.video_specs"
+      - "creatives.audio_specs"
+      - "creatives.file_properties"
+
+    # Performance generation
+    performance:
+      generate: true
+      type: "both"
+      seed: 42
+      hours: 168
+
+  # Profile 2: Mobile Consideration Campaign
+  mobile_consideration:
+    description: "Test mobile consideration campaign (Crunchy Snacks pattern)"
+    base_template: "consideration_campaign"
+    focus: "line_items.targeting_json, line_items.ad_format, creatives.duration_seconds"
+
+    test_values:
+      advertiser:
+        name: "Crunchy Snacks"
+        brand: "Crunchy"
+        industry: "consumer_goods"
+
+      campaign:
+        objective: "CONSIDERATION"
+        target_cpm: 12.75              # Test: Lower CPM ($12.75)
+        budget: 600000.00               # Test: Smaller budget ($60k)
+
+      line_items:
+        - targeting_json: '{"DEVICE": ["MOBILE", "TABLET"], "CONTENT_GENRE": ["COMEDY", "REALITY"], "GEO_COUNTRY": ["US"]}'
+          ad_format: "STANDARD_VIDEO"
+          bid_cpm: 12.75               # Match campaign target
+
+      creatives:
+        - duration_seconds: 15              # Test: Short duration
+          placement: "PRE_ROLL"            # Test: Pre-roll placement
+
+    faker_auto:
+      - "campaign.flight_dates"
+      - "line_items.pacing_pct"
+      - "line_items.ad_server_type"
+      - "creatives.video_specs"
+      - "creatives.audio_specs"
+
+    performance:
+      generate: true
+      type: "both"
+      seed: 123
+      hours: 168
+
+  # Profile 3: Conversion Campaign with Interactive Elements
+  conversion_interactive:
+    description: "Test conversion campaign with interactive creatives (NexBank pattern)"
+    base_template: "conversion_campaign"
+    focus: "creatives.is_interactive, creatives.interactive_meta_json, line_items.targeting_json"
+
+    test_values:
+      advertiser:
+        name: "NexBank"
+        brand: "NexBank"
+        industry: "financial_services"
+
+      campaign:
+        objective: "CONVERSION"
+        target_cpm: 18.25              # Test: Conversion CPM ($18.25)
+        budget: 400000.00               # Test: Performance budget ($40k)
+
+      line_items:
+        - targeting_json: '{"DEVICE": ["MOBILE", "DESKTOP"], "CONTENT_GENRE": ["DOCUMENTARY", "BUSINESS"], "GEO_COUNTRY": ["US"], "AGE_RANGE": ["25-34", "35-44"]}'
+          ad_format: "STANDARD_VIDEO"
+          bid_cpm: 18.25               # Match campaign target
+
+      creatives:
+        - duration_seconds: 20              # Test: Medium duration
+          is_interactive: 1                 # Test: Interactive creative
+          interactive_meta_json: '{"type": "overlay", "elements": ["cta_button", "product_gallery"], "triggers": ["pause", "click"]}'
+          qr_code_url: "https://nexbank.com/app-download"  # Test: QR code integration
+
+    faker_auto:
+      - "campaign.flight_dates"
+      - "line_items.pacing_pct"
+      - "creatives.video_specs"
+      - "creatives.audio_specs"
+
+    performance:
+      generate: true
+      type: "both"
+      seed: 456
+      hours: 168
+
+  # Profile 4: Multi-Device Campaign with Advanced Targeting
+  multi_device_advanced:
+    description: "Test multi-device campaign with advanced targeting (HomeTech pattern)"
+    base_template: "consideration_campaign"
+    focus: "line_items.device_targets_json, line_items.geo_tier, creatives.placement"
+
+    test_values:
+      advertiser:
+        name: "HomeTech"
+        brand: "HomeTech"
+        industry: "technology"
+
+      campaign:
+        objective: "CONSIDERATION"
+        target_cpm: 19.50              # Test: Tech CPM ($19.50)
+        budget: 700000.00               # Test: Tech budget ($70k)
+
+      line_items:
+        - targeting_json: '{"DEVICE": ["CTV", "DESKTOP"], "CONTENT_GENRE": ["SCIENCE_FICTION", "TECH"], "GEO_COUNTRY": ["US"]}'
+          device_targets_json: '{"PLATFORM": ["IOS", "ANDROID", "WINDOWS"], "BROWSER": ["CHROME", "SAFARI", "EDGE"]}'
+          geo_tier: "DMA"                   # Test: DMA-level targeting
+          ad_format: "STANDARD_VIDEO"
+          bid_cpm: 19.50               # Match campaign target
+
+      creatives:
+        - duration_seconds: 30              # Test: Standard duration
+          placement: "MID_ROLL"            # Test: Mid-roll placement
+          is_interactive: 1                 # Test: Interactive elements
+          interactive_meta_json: '{"type": "product_demo", "elements": ["feature_showcase", "pricing_info"]}'
+
+    faker_auto:
+      - "campaign.flight_dates"
+      - "line_items.pacing_pct"
+      - "creatives.video_specs"
+      - "creatives.audio_specs"
+
+    performance:
+      generate: true
+      type: "both"
+      seed: 789
+      hours: 168
+
+# Base templates for inheritance
+base_templates:
+  awareness_campaign:
+    campaign:
+      objective: "AWARENESS"
+      status: "ACTIVE"
+      dsp_partner: "DV360"
+      budget_type: "LIFETIME"
+      currency: "USD"
+
+    line_items:
+      - ad_format: "STANDARD_VIDEO"
+        pacing_pct: 100
+        ad_server_type: "VAST_TAG"
+        pixel_vendor: "IAS"
+
+    creatives:
+      - mime_type: "VIDEO/MP4"
+        qa_status: "APPROVED"
+        aspect_ratio: "R16_9"
+        frame_rate: "30"
+
+  consideration_campaign:
+    campaign:
+      objective: "CONSIDERATION"
+      status: "ACTIVE"
+      dsp_partner: "DV360"
+      budget_type: "LIFETIME"
+      currency: "USD"
+
+    line_items:
+      - ad_format: "STANDARD_VIDEO"
+        pacing_pct: 100
+        ad_server_type: "DSP_TAG"
+        pixel_vendor: "DOUBLEVERIFY"
+
+    creatives:
+      - mime_type: "VIDEO/MP4"
+        qa_status: "APPROVED"
+        aspect_ratio: "R16_9"
+        frame_rate: "30"
+
+  conversion_campaign:
+    campaign:
+      objective: "CONVERSION"
+      status: "ACTIVE"
+      dsp_partner: "DV360"
+      budget_type: "LIFETIME"
+      currency: "USD"
+
+    line_items:
+      - ad_format: "STANDARD_VIDEO"
+        pacing_pct: 100
+        ad_server_type: "DSP_TAG"
+        pixel_vendor: "DOUBLEVERIFY"
+
+    creatives:
+      - mime_type: "VIDEO/MP4"
+        qa_status: "APPROVED"
+        aspect_ratio: "R16_9"
+        frame_rate: "30"
+
+# Usage:
+# python cli.py create-profile --name high_cpm_tv_awareness
+# python cli.py create-profile --name mobile_consideration
+# python cli.py create-profile --name conversion_interactive
+# python cli.py create-profile --name multi_device_advanced
+#
+# Each profile creates complete examples focusing on specific test scenarios
+# while auto-generating realistic context with faker data

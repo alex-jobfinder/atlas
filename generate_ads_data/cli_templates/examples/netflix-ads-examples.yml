@@ -1,0 +1,172 @@
+# Netflix Ads Data Examples - Streamlined Template Prototype
+# Based on your existing config.yml examples with smart defaults and auto-generation
+
+examples:
+  # Example 1: Luxury Auto TV Awareness Campaign
+  luxury_auto_awareness:
+    description: "High-end TV drama awareness campaign (Luxury Auto Co example)"
+    strategy: "Target premium drama/documentaries; 30s cinematic; interactive pause ads"
+    results: "+22% brand consideration; 3.5x engagement; +18% dealership traffic; -30% cost/visitor"
+
+    # Smart defaults that work together
+    advertiser:
+      name: "Luxury Auto Co"
+      contact_email: "ads@luxauto.com"
+      brand: "LuxAuto"
+      agency_name: "Vision Media"
+      # Auto-generated if not specified:
+      # faker_auto: ["status", "created_at", "updated_at"]
+
+    campaign:
+      name: "EV Awareness Launch"
+      objective: "AWARENESS"
+      status: "ACTIVE"
+      target_cpm: 15.50              # $15.50 CPM for TV
+      dsp_partner: "DV360"
+      # Auto-generated if not specified:
+      # faker_auto: ["flight_dates", "external_ref", "brand_lift_enabled", "attention_metrics_enabled"]
+
+      # Campaign settings with smart defaults
+      flight:
+        start_date: "2025-09-01"
+        end_date: "2025-10-15"
+
+      budget:
+        amount: 120000.00            # $120,000 (12M cents)
+        type: "LIFETIME"
+        currency: "USD"
+
+    line_items:
+      - name: "EV Cinematic 30s"
+        ad_format: "STANDARD_VIDEO"
+        bid_cpm: 15.50              # Match campaign target
+        pacing_pct: 100
+        targeting_json: '{"DEVICE": ["TV"], "CONTENT_GENRE": ["DRAMA", "DOCUMENTARY"], "GEO_COUNTRY": ["US"]}'
+        # Auto-generated if not specified:
+        # faker_auto: ["duration_seconds", "ad_server_type", "pixel_vendor", "geo_tier"]
+
+        creatives:
+          - asset_url: "https://cdn.example.com/assets/ev_30.mp4"
+            mime_type: "VIDEO/MP4"
+            duration_seconds: 30
+            qa_status: "APPROVED"
+            # Auto-generated if not specified:
+            # faker_auto: ["video_specs", "audio_specs", "file_properties"]
+
+    # Performance generation with smart defaults
+    performance:
+      generate: true
+      type: "both"                       # normal + extended metrics
+      seed: 42                           # Reproducible generation
+      hours: 168                         # 1 week of hourly data
+      replace: false                     # Don't overwrite existing data
+
+  # Example 2: Snack Food Mobile Consideration Campaign
+  crunchy_snacks_consideration:
+    description: "Mobile comedy consideration campaign (Crunchy Snacks example)"
+    strategy: "Comedy/reality alignment; humorous 15s; sequential storytelling; binge alignment"
+    results: "+15% awareness; +27% purchase intent; +12% sales lift; 2.3x ROI vs social"
+
+    advertiser:
+      name: "Crunchy Snacks"
+      contact_email: "media@crunchysnacks.com"
+      brand: "Crunchy"
+      agency_name: "Snackable"
+
+    campaign:
+      name: "New Flavor Consideration"
+      objective: "CONSIDERATION"
+      status: "ACTIVE"
+      target_cpm: 12.75              # $12.75 CPM for mobile
+      dsp_partner: "DV360"
+
+      flight:
+        start_date: "2025-08-15"
+        end_date: "2025-09-30"
+
+      budget:
+        amount: 60000.00             # $60,000 (6M cents)
+        type: "LIFETIME"
+        currency: "USD"
+
+    line_items:
+      - name: "Flavor 15s Spots"
+        ad_format: "STANDARD_VIDEO"
+        bid_cpm: 12.75               # Match campaign target
+        pacing_pct: 100
+        targeting_json: '{"DEVICE": ["TV", "MOBILE"], "CONTENT_GENRE": ["COMEDY", "REALITY"], "GEO_COUNTRY": ["US"]}'
+
+        creatives:
+          - asset_url: "https://cdn.example.com/assets/snack_15.mp4"
+            mime_type: "VIDEO/MP4"
+            duration_seconds: 15
+            qa_status: "APPROVED"
+
+    performance:
+      generate: true
+      type: "both"
+      seed: 123
+      hours: 168
+
+  # Example 3: Banking App Conversion Campaign
+  nexbank_conversion:
+    description: "Mobile banking conversion campaign (NexBank example)"
+    strategy: "Financial/business docs; informative 20s; QR codes; evening/weekend daypart"
+    results: "+41% app downloads; -64% CPA; +18% avg deposit; 2.5x retention"
+
+    advertiser:
+      name: "NexBank"
+      contact_email: "marketing@nexbank.com"
+      brand: "NexBank"
+      agency_name: "Growth Partners"
+
+    campaign:
+      name: "App Acquisition Q4"
+      objective: "CONVERSION"
+      status: "ACTIVE"
+      target_cpm: 18.25              # $18.25 CPM for conversion
+      dsp_partner: "DV360"
+
+      flight:
+        start_date: "2025-10-01"
+        end_date: "2025-12-31"
+
+      budget:
+        amount: 40000.00             # $40,000 (4M cents)
+        type: "LIFETIME"
+        currency: "USD"
+
+    line_items:
+      - name: "App DL 15s"
+        ad_format: "STANDARD_VIDEO"
+        bid_cpm: 18.25               # Match campaign target
+        pacing_pct: 100
+        targeting_json: '{"DEVICE": ["MOBILE", "DESKTOP"], "CONTENT_GENRE": ["DOCUMENTARY", "BUSINESS"], "GEO_COUNTRY": ["US"]}'
+
+        creatives:
+          - asset_url: "https://cdn.example.com/assets/nexbank_15.mp4"
+            mime_type: "VIDEO/MP4"
+            duration_seconds: 15
+            qa_status: "APPROVED"
+
+    performance:
+      generate: true
+      type: "both"
+      seed: 456
+      hours: 168
+
+# Global performance settings (can be overridden per example)
+global_performance:
+  default_type: "both"                   # normal, extended, or both
+  default_hours: 168                     # 1 week of hourly data
+  default_seed: 42                       # Global seed for reproducibility
+  replace_existing: false                # Don't overwrite existing data
+
+# Faker configuration for realistic data generation
+faker_config:
+  locale: "en_US"                        # US-based company names
+  realistic_patterns: true                # Use Netflix ads patterns
+  auto_relationships: true                # Ensure entities work together
+  company_name_patterns: true             # Realistic company naming
+  email_patterns: true                    # Realistic email addresses
+  targeting_patterns: true                # Realistic targeting combinations

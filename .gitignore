@@ -12,6 +12,7 @@ target
 # But keep this one file tracked
 !dbt_ads_project/target/semantic_manifest.json
 # git add -f dbt_ads_project/target/semantic_manifest.json
+generate_ads_data/ads.db
 
 # Ivy caches
 .bsp
@@ -85,3 +86,6 @@ dearpygui_gui_examples/Image-Processing-Node-Editor/node/deep_learning_node/mono
 
 #
 *.parquet
+.gitignore
+generate_ads_data/ads.db-wal
+generate_ads_data/ads.db-shm

@@ -1,0 +1,88 @@
+# Field Testing Template - Test Specific Fields with Auto-Generated Context
+# Based on your existing config.yml examples
+
+test_scenario: "Test higher CPM and targeting variations for luxury auto awareness"
+
+# Only specify what you want to test - everything else auto-generated
+test_fields:
+  campaign:
+    target_cpm: 20.00              # Test: Higher CPM than default ($20.00 vs $15.50)
+    budget: 150000.00                # Test: Larger budget than default ($150k vs $120k)
+
+  line_items:
+    - targeting_json: '{"DEVICE": ["TV"], "CONTENT_GENRE": ["DRAMA", "DOCUMENTARY", "ACTION"], "GEO_COUNTRY": ["US", "CA"]}'  # Test: Expanded targeting
+
+  creatives:
+    - duration_seconds: 45              # Test: Different duration (45s vs 30s)
+
+# Everything else auto-generated with smart defaults
+auto_generate:
+  advertiser: true                       # Generate realistic advertiser (Luxury Auto Co pattern)
+  campaign_completion: true              # Complete campaign with Netflix ads best practices
+  line_item_completion: true             # Complete line items with realistic defaults
+  creative_generation: true              # Generate realistic creatives with technical specs
+  performance_data: true                 # Generate performance metrics when complete
+
+# Smart defaults based on your existing examples
+smart_defaults:
+  advertiser:
+    pattern: "luxury_auto"               # Use Luxury Auto Co naming pattern
+    industry: "automotive"               # Generate realistic auto industry data
+
+  campaign:
+    objective: "AWARENESS"               # Default objective for luxury brands
+    dsp_partner: "DV360"                # Netflix's primary DSP
+    budget_type: "LIFETIME"             # Standard for awareness campaigns
+    status: "ACTIVE"                    # Default campaign status
+
+  line_items:
+    ad_format: "STANDARD_VIDEO"         # Netflix primary format
+    pacing_pct: 100                     # Standard pacing
+    ad_server_type: "VAST_TAG"          # Standard for TV campaigns
+    pixel_vendor: "IAS"                 # Standard verification vendor
+
+  creatives:
+    mime_type: "VIDEO/MP4"              # Netflix standard format
+    qa_status: "APPROVED"               # Realistic QA state
+    placement: "MID_ROLL"               # Standard placement for TV
+    aspect_ratio: "R16_9"               # Standard aspect ratio
+    frame_rate: "30"                    # Standard frame rate
+
+# Faker configuration for realistic data generation
+faker_config:
+  seed: 42                              # Reproducible generation
+  locale: "en_US"                       # US-based company names
+  realistic_patterns: true               # Use Netflix ads patterns
+  auto_relationships: true               # Ensure entities work together
+
+  # Specific generation patterns
+  company_naming:
+    luxury_brands: true                  # Generate luxury brand names
+    auto_industry: true                  # Auto industry specific patterns
+
+  targeting_patterns:
+    netflix_content: true                # Use Netflix content genres
+    realistic_devices: true              # Realistic device combinations
+    geographic_coverage: true            # Realistic geo targeting
+
+  creative_specs:
+    video_standards: true                # Netflix video standards
+    audio_quality: true                  # Realistic audio specs
+    file_properties: true                # Realistic file sizes/bitrates
+
+# Performance generation settings
+performance:
+  generate: true                         # Auto-generate when complete
+  type: "both"                          # normal + extended metrics
+  hours: 168                            # 1 week of hourly data
+  seed: 42                              # Reproducible performance data
+  replace: false                        # Don't overwrite existing data
+
+# Usage:
+# python cli.py test-fields --template field-testing-template.yml
+# This generates complete example focusing on your test fields:
+# - Higher CPM ($20.00)
+# - Larger budget ($150k)
+# - Expanded targeting (ACTION genre, Canada)
+# - Different duration (45s)
+# Everything else auto-generated with realistic defaults

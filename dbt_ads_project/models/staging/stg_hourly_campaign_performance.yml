@@ -11,6 +11,7 @@ models:
         id INTEGER NOT NULL,
         campaign_id INTEGER NOT NULL,
         hour_ts DATETIME NOT NULL,
+        hour_unix_epoch INTEGER NOT NULL,
         impressions INTEGER NOT NULL,
         clicks INTEGER NOT NULL,
         video_start INTEGER NOT NULL,
@@ -52,6 +53,7 @@ models:
         id: INTEGER
         campaign_id: INTEGER
         hour_ts: DATETIME
+        hour_unix_epoch: INTEGER
         impressions: INTEGER
         clicks: INTEGER
         video_start: INTEGER
@@ -109,6 +111,13 @@ models:
               granularity: hour
               is_metric_time: true   # maps to global metric_time
               is_primary_time: true   # 👈 add this
+
+      - name: hour_unix_epoch
+        description: Hour timestamp for the metrics
+        tests: [not_null]
+        meta:
+          semantic:
+            dimension: {kind: time}
 
       - name: impressions
         description: Total impressions

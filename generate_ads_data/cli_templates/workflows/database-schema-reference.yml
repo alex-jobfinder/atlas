@@ -1,0 +1,225 @@
+# Database Schema Reference
+# Complete DDL for all tables with constraints and enum values
+# Use this as a reference for valid field values and table structures
+
+# =============================================================================
+# ADVERTISERS TABLE
+# =============================================================================
+advertisers:
+  table_name: "advertisers"
+  description: "Stores advertiser information and contact details"
+  ddl: |
+    CREATE TABLE advertisers (
+      id INTEGER NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      status VARCHAR(8) DEFAULT 'ACTIVE' NOT NULL CHECK (status IN ('ACTIVE','INACTIVE','DELETED')),
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      brand VARCHAR(255),
+      contact_email VARCHAR(255) NOT NULL,
+      agency_name VARCHAR(255),
+      PRIMARY KEY (id),
+      UNIQUE (contact_email)
+    );
+
+  enum_values:
+    status: ["ACTIVE", "INACTIVE", "DELETED"]
+
+  constraints:
+    - "PRIMARY KEY (id)"
+    - "UNIQUE (contact_email)"
+    - "status CHECK constraint: ACTIVE, INACTIVE, DELETED"
+
+# =============================================================================
+# CAMPAIGNS TABLE
+# =============================================================================
+campaigns:
+  table_name: "campaigns"
+  description: "Stores campaign configuration and targeting settings"
+  ddl: |
+    CREATE TABLE campaigns (
+      id INTEGER NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      status VARCHAR(8) DEFAULT 'ACTIVE' NOT NULL CHECK (status IN ('ACTIVE','INACTIVE','DELETED')),
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      advertiser_id INTEGER NOT NULL,
+      objective VARCHAR(13) NOT NULL CHECK (objective IN ('AWARENESS','CONSIDERATION','CONVERSION')),
+      currency VARCHAR(3) DEFAULT 'USD' NOT NULL CHECK (currency IN ('USD')),
+      target_cpm INTEGER NOT NULL,
+      dsp_partner VARCHAR(14) NOT NULL CHECK (dsp_partner IN ('DV360','GOOGLE_DV360','THE_TRADE_DESK','MAGNITE','MICROSOFT')),
+      programmatic_buy_type VARCHAR(23) CHECK (programmatic_buy_type IN ('DIRECT_GUARANTEED','PROGRAMMATIC_GUARANTEED','PROGRAMMATIC_PREFERRED','PRIVATE_MARKETPLACE')),
+      programmatic_partner VARCHAR(14) CHECK (programmatic_partner IN ('DV360','GOOGLE_DV360','THE_TRADE_DESK','MAGNITE','MICROSOFT')),
+      content_adjacency_tier VARCHAR(6) CHECK (content_adjacency_tier IN ('TIER_1','TIER_2','TIER_3')),
+      brand_lift_enabled INTEGER,
+      attention_metrics_enabled INTEGER,
+      clean_room_provider VARCHAR(9) CHECK (clean_room_provider IN ('SNOWFLAKE','INFOSUM','LIVERAMP')),
+      measurement_partner VARCHAR(18) CHECK (measurement_partner IN ('NIELSEN','KANTAR','LUCID','NCSOLUTIONS','AFFINITY_SOLUTIONS','EDO')),
+      external_ref VARCHAR(64),
+      PRIMARY KEY (id),
+      CONSTRAINT ck_campaign_brand_lift_bool CHECK (brand_lift_enabled IN (0,1) OR brand_lift_enabled IS NULL),
+      CONSTRAINT ck_campaign_attention_bool CHECK (attention_metrics_enabled IN (0,1) OR attention_metrics_enabled IS NULL),
+      FOREIGN KEY(advertiser_id) REFERENCES advertisers (id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+
+  enum_values:
+    status: ["ACTIVE", "INACTIVE", "DELETED"]
+    objective: ["AWARENESS", "CONSIDERATION", "CONVERSION"]
+    currency: ["USD"]
+    dsp_partner: ["DV360", "GOOGLE_DV360", "THE_TRADE_DESK", "MAGNITE", "MICROSOFT"]
+    programmatic_buy_type: ["DIRECT_GUARANTEED", "PROGRAMMATIC_GUARANTEED", "PROGRAMMATIC_PREFERRED", "PRIVATE_MARKETPLACE"]
+    content_adjacency_tier: ["TIER_1", "TIER_2", "TIER_3"]
+    clean_room_provider: ["SNOWFLAKE", "INFOSUM", "LIVERAMP"]
+    measurement_partner: ["NIELSEN", "KANTAR", "LUCID", "NCSOLUTIONS", "AFFINITY_SOLUTIONS", "EDO"]
+
+  constraints:
+    - "PRIMARY KEY (id)"
+    - "FOREIGN KEY(advertiser_id) REFERENCES advertisers(id)"
+    - "status CHECK constraint: ACTIVE, INACTIVE, DELETED"
+    - "objective CHECK constraint: AWARENESS, CONSIDERATION, CONVERSION"
+    - "currency CHECK constraint: USD"
+    - "dsp_partner CHECK constraint: DV360, GOOGLE_DV360, THE_TRADE_DESK, MAGNITE, MICROSOFT"
+    - "brand_lift_enabled CHECK constraint: 0, 1, or NULL"
+    - "attention_metrics_enabled CHECK constraint: 0, 1, or NULL"
+
+# =============================================================================
+# LINE_ITEMS TABLE
+# =============================================================================
+line_items:
+  table_name: "line_items"
+  description: "Stores line item configuration and targeting settings"
+  ddl: |
+    CREATE TABLE line_items (
+      id INTEGER NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      status VARCHAR(8) DEFAULT 'ACTIVE' NOT NULL CHECK (status IN ('ACTIVE','INACTIVE','DELETED')),
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      campaign_id INTEGER NOT NULL,
+      ad_format VARCHAR(19) NOT NULL CHECK (ad_format IN ('STANDARD_VIDEO','INTERACTIVE_OVERLAY','PAUSE_ADS','BINGE_ADS','SPONSORSHIP')),
+      bid_cpm INTEGER NOT NULL,
+      pacing_pct INTEGER NOT NULL,
+      targeting_json TEXT NOT NULL,
+      device_targets_json TEXT,
+      duration_seconds INTEGER,
+      ad_server_type VARCHAR(8) CHECK (ad_server_type IN ('VAST_TAG','DSP_TAG')),
+      pixel_vendor VARCHAR(12) CHECK (pixel_vendor IN ('IAS','DOUBLEVERIFY')),
+      geo_tier VARCHAR(7) CHECK (geo_tier IN ('COUNTRY','REGION','DMA','CITY')),
+      PRIMARY KEY (id),
+      FOREIGN KEY(campaign_id) REFERENCES campaigns (id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+
+  enum_values:
+    status: ["ACTIVE", "INACTIVE", "DELETED"]
+    ad_format: ["STANDARD_VIDEO", "INTERACTIVE_OVERLAY", "PAUSE_ADS", "BINGE_ADS", "SPONSORSHIP"]
+    ad_server_type: ["VAST_TAG", "DSP_TAG"]
+    pixel_vendor: ["IAS", "DOUBLEVERIFY"]
+    geo_tier: ["COUNTRY", "REGION", "DMA", "CITY"]
+
+  constraints:
+    - "PRIMARY KEY (id)"
+    - "FOREIGN KEY(campaign_id) REFERENCES campaigns(id) ON DELETE CASCADE"
+    - "status CHECK constraint: ACTIVE, INACTIVE, DELETED"
+    - "ad_format CHECK constraint: STANDARD_VIDEO, INTERACTIVE_OVERLAY, PAUSE_ADS, BINGE_ADS, SPONSORSHIP"
+    - "ad_server_type CHECK constraint: VAST_TAG, DSP_TAG"
+    - "pixel_vendor CHECK constraint: IAS, DOUBLEVERIFY"
+    - "geo_tier CHECK constraint: COUNTRY, REGION, DMA, CITY"
+
+# =============================================================================
+# CREATIVES TABLE
+# =============================================================================
+creatives:
+  table_name: "creatives"
+  description: "Stores creative asset metadata and technical specifications"
+  ddl: |
+    CREATE TABLE creatives (
+      id INTEGER NOT NULL,
+      name VARCHAR(255),
+      status VARCHAR(8) DEFAULT 'ACTIVE' NOT NULL CHECK (status IN ('ACTIVE','INACTIVE','DELETED')),
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+      line_item_id INTEGER NOT NULL,
+      asset_url TEXT NOT NULL,
+      checksum VARCHAR(64),
+      mime_type VARCHAR(15) NOT NULL CHECK (mime_type IN ('VIDEO/MP4','VIDEO/QUICKTIME')),
+      duration_seconds INTEGER NOT NULL,
+      qa_status VARCHAR(8) CHECK (qa_status IN ('PENDING','APPROVED','REJECTED')),
+      placement VARCHAR(8) CHECK (placement IN ('PRE_ROLL','MID_ROLL','LIVE')),
+      file_format VARCHAR(3) CHECK (file_format IN ('MP4','MOV')),
+      width INTEGER,
+      height INTEGER,
+      frame_rate VARCHAR(6) CHECK (frame_rate IN ('23_976','24','25','29_97','30')),
+      frame_rate_mode VARCHAR(8) CHECK (frame_rate_mode IN ('CONSTANT')),
+      aspect_ratio VARCHAR(5) CHECK (aspect_ratio IN ('R16_9')),
+      scan_type VARCHAR(11) CHECK (scan_type IN ('PROGRESSIVE')),
+      video_codec_h264_profile VARCHAR(8) CHECK (video_codec_h264_profile IN ('BASELINE','MAIN','HIGH')),
+      video_codec_prores_profile VARCHAR(13) CHECK (video_codec_prores_profile IN ('PRORES_422_HQ','PRORES_422','PRORES_422_LT')),
+      chroma_subsampling VARCHAR(9) CHECK (chroma_subsampling IN ('YUV_4_2_2','YUV_4_2_0')),
+      color_primaries VARCHAR(6) CHECK (color_primaries IN ('BT_709')),
+      transfer_function VARCHAR(6) CHECK (transfer_function IN ('BT_709')),
+      bitrate_kbps INTEGER,
+      file_size_bytes INTEGER,
+      audio_codec VARCHAR(6) CHECK (audio_codec IN ('PCM','AAC_LC')),
+      audio_channels VARCHAR(12) CHECK (audio_channels IN ('STEREO','SURROUND_5_1')),
+      audio_sample_rate_hz INTEGER,
+      audio_bit_depth INTEGER,
+      safe_zone_ok INTEGER,
+      is_interactive INTEGER,
+      interactive_meta_json TEXT,
+      is_pause_ad INTEGER,
+      qr_code_url TEXT,
+      overlay_cta_text VARCHAR(64),
+      PRIMARY KEY (id),
+      FOREIGN KEY(line_item_id) REFERENCES line_items (id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+
+  enum_values:
+    status: ["ACTIVE", "INACTIVE", "DELETED"]
+    mime_type: ["VIDEO/MP4", "VIDEO/QUICKTIME"]
+    qa_status: ["PENDING", "APPROVED", "REJECTED"]
+    placement: ["PRE_ROLL", "MID_ROLL", "LIVE"]
+    file_format: ["MP4", "MOV"]
+    frame_rate: ["23_976", "24", "25", "29_97", "30"]
+    frame_rate_mode: ["CONSTANT"]
+    aspect_ratio: ["R16_9"]
+    scan_type: ["PROGRESSIVE"]
+    video_codec_h264_profile: ["BASELINE", "MAIN", "HIGH"]
+    video_codec_prores_profile: ["PRORES_422_HQ", "PRORES_422", "PRORES_422_LT"]
+    chroma_subsampling: ["YUV_4_2_2", "YUV_4_2_0"]
+    color_primaries: ["BT_709"]
+    transfer_function: ["BT_709"]
+    audio_codec: ["PCM", "AAC_LC"]
+    audio_channels: ["STEREO", "SURROUND_5_1"]
+
+  constraints:
+    - "PRIMARY KEY (id)"
+    - "FOREIGN KEY(line_item_id) REFERENCES line_items(id) ON DELETE CASCADE"
+    - "status CHECK constraint: ACTIVE, INACTIVE, DELETED"
+    - "mime_type CHECK constraint: VIDEO/MP4, VIDEO/QUICKTIME"
+    - "qa_status CHECK constraint: PENDING, APPROVED, REJECTED"
+    - "placement CHECK constraint: PRE_ROLL, MID_ROLL, LIVE"
+    - "file_format CHECK constraint: MP4, MOV"
+    - "frame_rate CHECK constraint: 23_976, 24, 25, 29_97, 30"
+    - "frame_rate_mode CHECK constraint: CONSTANT"
+    - "aspect_ratio CHECK constraint: R16_9"
+    - "scan_type CHECK constraint: PROGRESSIVE"
+    - "video_codec_h264_profile CHECK constraint: BASELINE, MAIN, HIGH"
+    - "video_codec_prores_profile CHECK constraint: PRORES_422_HQ, PRORES_422, PRORES_422_LT"
+    - "chroma_subsampling CHECK constraint: YUV_4_2_2, YUV_4_2_0"
+    - "color_primaries CHECK constraint: BT_709"
+    - "transfer_function CHECK constraint: BT_709"
+    - "audio_codec CHECK constraint: PCM, AAC_LC"
+    - "audio_channels CHECK constraint: STEREO, SURROUND_5_1"
+
+# =============================================================================
+# USAGE NOTES
+# =============================================================================
+#
+# 1. All enum values shown above are enforced at the database level
+# 2. Foreign key relationships ensure data integrity
+# 3. CHECK constraints validate field values before insertion
+# 4. Use these exact values when creating entities via API or CLI
+# 5. The DDL can be used to recreate tables in other environments
+# 6. Boolean fields (brand_lift_enabled, attention_metrics_enabled) accept 0, 1, or NULL
+# 7. JSON fields (targeting_json, device_targets_json, interactive_meta_json) should contain valid JSON
+# 8. Timestamp fields are automatically managed by the database
