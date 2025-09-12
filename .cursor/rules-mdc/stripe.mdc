@@ -31,9 +31,9 @@ This document outlines best practices for integrating the Stripe library into yo
 
     bash
     # .env.local (Next.js)
-    STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxxxxxx
-    STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxx
-    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxxxxxx
+    STRIPE_SECRET_KEY=sk_test_1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+    STRIPE_WEBHOOK_SECRET=whsec_1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
 
 
 *   **Asynchronous Operations:**  Utilize `async/await` or Promises for all Stripe API calls to avoid blocking the main thread and ensure a responsive application.
